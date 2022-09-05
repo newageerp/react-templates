@@ -1,0 +1,19 @@
+{
+  "name": "newageerp/sf-react-templates",
+  "type": "symfony-bundle",
+  "autoload": {
+    "psr-4": {
+      "Newageerp\\SfReactTemplates\\": ""
+    }
+  },
+  "require": {
+    "digitick/sepa-xml": "^2.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arturas Jegorenkovas",
+      "email": "info@newageerp.com"
+    }
+  ]
+}
