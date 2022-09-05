@@ -10,7 +10,7 @@ use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 
 /**
- * @Route(path="/app/nae-core/react-templates")
+ * @Route(path="/app/nae-core/react-templates/")
  */
 class ReactTemplatesController extends OaBaseController
 {
