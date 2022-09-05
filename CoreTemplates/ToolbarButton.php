@@ -19,7 +19,13 @@ class ToolbarButton extends Template
 
     public function getProps(): array
     {
-        return [];
+        return [
+            'iconName' => $this->getIconName(),
+            'title' => $this->getTitle(),
+            'disabled' => $this->getDisabled(),
+            'confirmation' => $this->getConfirmation(),
+            'className' => $this->getClassName(),
+        ];
     }
 
     public function getTemplateName(): string
