@@ -4,12 +4,12 @@ services:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-  Newageerp\SfReactTemplates\CoreTemplates:
+  Newageerp\SfReactTemplates\CoreTemplates\:
     resource: '../CoreTemplates/*'
     arguments: [ ]
-  Newageerp\SfReactTemplates\Template:
+  Newageerp\SfReactTemplates\Template\:
     resource: '../Template/*'
     arguments: [ ]
-  Newageerp\SfReactTemplates\Controller:
+  Newageerp\SfReactTemplates\Controller\:
     resource: '../Controller/*'
     arguments: [ ]
