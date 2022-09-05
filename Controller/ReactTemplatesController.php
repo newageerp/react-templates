@@ -16,7 +16,7 @@ class ReactTemplatesController extends OaBaseController
 {
 
     /**
-     * @Route(path="get/{templateName}", methods={"GET"})
+     * @Route(path="get/{templateName}", methods={"POST"})
      */
     public function getTemplates(Request $request): Response
     {
