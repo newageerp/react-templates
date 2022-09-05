@@ -30,6 +30,6 @@ class ReactTemplatesController extends OaBaseController
         $event = new LoadTemplateEvent($placeholder, $templateName, $templatesData);
         $this->getEventDispatcher()->dispatch($event, LoadTemplateEvent::NAME);
 
-        return $this->json(['data' => $placeholder->toArray()]);
+        return $this->json(['data' => $placeholder->toArray(), 'success' => 1]);
     }
 }

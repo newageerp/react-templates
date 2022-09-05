@@ -6,7 +6,6 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarButton extends Template
 {
-
     protected string $iconName = "";
 
     protected string $title = "";
@@ -17,6 +16,8 @@ class ToolbarButton extends Template
 
     protected string $className = "";
 
+    protected string $action = "";
+
     public function getProps(): array
     {
         return [
@@ -25,6 +26,7 @@ class ToolbarButton extends Template
             'disabled' => $this->getDisabled(),
             'confirmation' => $this->getConfirmation(),
             'className' => $this->getClassName(),
+            'action' => $this->getAction(),
         ];
     }
 
@@ -150,6 +152,30 @@ class ToolbarButton extends Template
     public function setClassName(string $className): self
     {
         $this->className = $className;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of action
+     *
+     * @return string
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * Set the value of action
+     *
+     * @param string $action
+     *
+     * @return self
+     */
+    public function setAction(string $action): self
+    {
+        $this->action = $action;
 
         return $this;
     }
