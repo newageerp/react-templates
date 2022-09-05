@@ -25,6 +25,17 @@ class LoadTemplateEvent extends Event
         $this->data = $data;
     }
 
+    public function isTemplateForEntity(string $templateName, string $entity): bool
+    {
+        if (
+            isset($this->data['entity']) && $this->data['entity'] === $entity &&
+            $this->getTemplateName() === $templateName
+        ) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Get the value of templateName
