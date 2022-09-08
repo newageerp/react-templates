@@ -161,7 +161,7 @@ class ToolbarButton extends Template
      *
      * @return string
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         return $this->action;
     }

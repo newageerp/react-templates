@@ -8,7 +8,7 @@ abstract class Template
 
     abstract public function getProps(): array;
 
-    abstract public function getAction(): string;
+    abstract public function getAction(): ?string;
 
     public function toArray(): array
     {

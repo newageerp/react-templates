@@ -13,3 +13,8 @@ services:
   Newageerp\SfReactTemplates\Controller\:
     resource: '../Controller/*'
     arguments: [ ]
+
+  Newageerp\SfReactTemplates\CoreTemplates\View\ViewContentListener:
+    arguments: [ ]
+    tags:
+      - {name: "kernel.event_listener"}

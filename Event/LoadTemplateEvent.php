@@ -25,6 +25,16 @@ class LoadTemplateEvent extends Event
         $this->data = $data;
     }
 
+    public function isTemplateForAnyEntity(string $templateName): bool
+    {
+        if (
+            $this->getTemplateName() === $templateName
+        ) {
+            return true;
+        }
+        return false;
+    }
+
     public function isTemplateForEntity(string $templateName, string $entity): bool
     {
         if (
