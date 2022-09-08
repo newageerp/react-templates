@@ -15,15 +15,15 @@ class ViewContentListener implements EventSubscriberInterface
                 $event->getData()['type'],
                 $event->getData()['id']
             );
+            $viewContent->setIsPopup(isset($event->getData()['popup']) && $event->getData()['popup']);
             
             $event->getPlaceholder()->addTemplate($viewContent);
         }
+        
     }
 
     public static function getSubscribedEvents()
     {
-        $key = static::class;
-
         return [
             LoadTemplateEvent::NAME => 'onTemplate'
         ];

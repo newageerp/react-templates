@@ -12,6 +12,8 @@ class ViewContent extends Template
 
     protected string $id = '';
 
+    protected bool $isPopup = false;
+
     public function __construct(string $schema, string $type, string $id)
     {
         $this->schema = $schema;
@@ -35,6 +37,9 @@ class ViewContent extends Template
 
     public function getTemplateName(): string
     {
+        if ($this->getIsPopup()) {
+            return 'view.popupcontent';    
+        }
         return 'view.content';
     }
 
@@ -106,6 +111,30 @@ class ViewContent extends Template
     public function setId(string $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isPopup
+     *
+     * @return bool
+     */
+    public function getIsPopup(): bool
+    {
+        return $this->isPopup;
+    }
+
+    /**
+     * Set the value of isPopup
+     *
+     * @param bool $isPopup
+     *
+     * @return self
+     */
+    public function setIsPopup(bool $isPopup): self
+    {
+        $this->isPopup = $isPopup;
 
         return $this;
     }
