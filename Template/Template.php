@@ -23,7 +23,6 @@ abstract class Template
         return [
             'comp' => $this->getTemplateName(),
             'props' => $this->getProps(),
-            'templateData' => $this->getTemplateData(),
             'action' => $this->getAction(),
         ];
     }

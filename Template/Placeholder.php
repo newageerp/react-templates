@@ -48,4 +48,15 @@ class Placeholder
         );
         return $data;
     }
+
+    public function getTemplatesData(): array
+    {
+        $data = array_map(
+            function (Template $t) {
+                return $t->getTemplateData();
+            },
+            $this->templates
+        );
+        return array_merge($data);
+    }
 }

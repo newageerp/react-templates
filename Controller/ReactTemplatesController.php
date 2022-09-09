@@ -22,10 +22,10 @@ class ReactTemplatesController extends OaBaseController
     public function getTemplates(Request $request): Response
     {
         $request = $this->transformJsonBody($request);
-        
+
         $user = $this->findUser($request);
         if (!$user) {
-            throw new Exception('Invalid user');
+            throw new \Exception('Invalid user');
         }
         AuthService::getInstance()->setUser($user);
 
@@ -37,6 +37,6 @@ class ReactTemplatesController extends OaBaseController
         $event = new LoadTemplateEvent($placeholder, $templateName, $templatesData);
         $this->getEventDispatcher()->dispatch($event, LoadTemplateEvent::NAME);
 
-        return $this->json(['data' => $placeholder->toArray(), 'success' => 1]);
+        return $this->json(['data' => $placeholder->toArray(), 'templatesData' => $placeholder->getTemplatesData(), 'success' => 1]);
     }
 }
