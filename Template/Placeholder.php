@@ -51,12 +51,15 @@ class Placeholder
 
     public function getTemplatesData(): array
     {
+        /**
+         * @var array $data
+         */
         $data = array_map(
             function (Template $t) {
                 return $t->getTemplateData();
             },
             $this->templates
         );
-        return array_merge($data);
+        return array_merge(...$data);
     }
 }
