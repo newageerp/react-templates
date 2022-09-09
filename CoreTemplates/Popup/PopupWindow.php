@@ -9,7 +9,7 @@ class PopupWindow extends Template
 {
     protected ?Placeholder $children;
 
-    public function __construct(?Placeholder $children)
+    public function __construct(?Placeholder $children = null)
     {
         $this->children = $children ? $children : new Placeholder();
     }

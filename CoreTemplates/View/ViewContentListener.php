@@ -29,7 +29,7 @@ class ViewContentListener implements EventSubscriberInterface
                 $event->getData()['id'],
                 $entity
             );
-            $isPopup = isset($event->getData()['popup']) && $event->getData()['popup'];
+            $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();

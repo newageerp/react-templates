@@ -15,6 +15,8 @@ class ViewContent extends Template
 
     protected ?object $entity = null;
 
+    protected ?int $defaultViewIndex = null;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
@@ -37,6 +39,7 @@ class ViewContent extends Template
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
             'id' => $this->getId(),
+            'defaultViewIndex' => $this->getDefaultViewIndex(),
         ];
     }
 
@@ -113,6 +116,30 @@ class ViewContent extends Template
     public function setId(string $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of defaultViewIndex
+     *
+     * @return ?int
+     */
+    public function getDefaultViewIndex(): ?int
+    {
+        return $this->defaultViewIndex;
+    }
+
+    /**
+     * Set the value of defaultViewIndex
+     *
+     * @param ?int $defaultViewIndex
+     *
+     * @return self
+     */
+    public function setDefaultViewIndex(?int $defaultViewIndex): self
+    {
+        $this->defaultViewIndex = $defaultViewIndex;
 
         return $this;
     }
