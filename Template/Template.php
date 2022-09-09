@@ -8,13 +8,22 @@ abstract class Template
 
     abstract public function getProps(): array;
 
-    abstract public function getAction(): ?string;
+    public function getTemplateData(): array
+    {
+        return [];
+    }
+
+    public function getAction(): ?string
+    {
+        return null;
+    }
 
     public function toArray(): array
     {
         return [
             'comp' => $this->getTemplateName(),
             'props' => $this->getProps(),
+            'templateData' => $this->getTemplateData(),
             'action' => $this->getAction(),
         ];
     }

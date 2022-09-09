@@ -22,6 +22,12 @@ class ReactTemplatesController extends OaBaseController
     {
         $request = $this->transformJsonBody($request);
         
+        $user = $this->findUser($request);
+        if (!$user) {
+            throw new Exception('Invalid user');
+        }
+        AuthService::getInstance()->setUser($user);
+
         $templatesData = $request->get('data');
         $templateName = $request->get('templateName');
 

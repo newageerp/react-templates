@@ -2,6 +2,7 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
+use Newageerp\SfPermissions\Service\EntityPermissionService;
 use Newageerp\SfReactTemplates\Template\Template;
 
 class ViewContent extends Template
@@ -14,11 +15,22 @@ class ViewContent extends Template
 
     protected bool $isPopup = false;
 
-    public function __construct(string $schema, string $type, string $id)
+    protected ?object $entity = null;
+
+    public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
         $this->type = $type;
         $this->id = $id;
+        $this->entity = $entity;
+    }
+
+    public function getTemplateData(): array
+    {
+        return [
+            'editable' => EntityPermissionService::checkIsEditable($this->entity),
+            'removable' => EntityPermissionService::checkIsRemovable($this->entity),
+        ];
     }
 
     public function getProps(): array
@@ -38,7 +50,7 @@ class ViewContent extends Template
     public function getTemplateName(): string
     {
         if ($this->getIsPopup()) {
-            return 'view.popupcontent';    
+            return 'view.popupcontent';
         }
         return 'view.content';
     }
