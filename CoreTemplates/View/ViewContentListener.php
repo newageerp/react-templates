@@ -2,7 +2,9 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
+use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
+use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
@@ -11,9 +13,12 @@ class ViewContentListener implements EventSubscriberInterface
 {
     protected UService $uservice;
 
-    public function __construct(UService $uservice)
+    protected EntitiesUtilsV3 $entitiesUtilsV3;
+
+    public function __construct(UService $uservice, EntitiesUtilsV3 $entitiesUtilsV3)
     {
         $this->uservice = $uservice;
+        $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
     public function onTemplate(LoadTemplateEvent $event)
@@ -37,6 +42,9 @@ class ViewContentListener implements EventSubscriberInterface
                 $event->getPlaceholder()->addTemplate($popupWindow);
             } else {
                 $event->getPlaceholder()->addTemplate($viewContent);
+
+                $toolbarTitle = new ToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
+                $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
     }
