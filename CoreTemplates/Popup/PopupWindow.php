@@ -1,22 +1,17 @@
 <?php
 
-namespace Newageerp\SfReactTemplates\CoreTemplates;
+namespace Newageerp\SfReactTemplates\CoreTemplates\Popup;
 
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class ToolbarButtonsGroup extends Template
+class PopupWindow extends Template
 {
-    protected Placeholder $children;
+    protected ?Placeholder $children;
 
-    public function __construct(Placeholder $children)
+    public function __construct(?Placeholder $children)
     {
-        $this->children = $children;
-    }
-    
-    public function getTemplateName(): string
-    {
-        return 'sf.toolbar-buttons-group';
+        $this->children = $children ? $children : new Placeholder();
     }
 
     public function getProps(): array
@@ -24,6 +19,11 @@ class ToolbarButtonsGroup extends Template
         return [
             'children' => $this->getChildren()->toArray(),
         ];
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'popup.window';
     }
 
     /**

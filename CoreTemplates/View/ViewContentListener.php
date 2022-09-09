@@ -2,6 +2,7 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
+use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
@@ -28,9 +29,15 @@ class ViewContentListener implements EventSubscriberInterface
                 $event->getData()['id'],
                 $entity
             );
-            $viewContent->setIsPopup(isset($event->getData()['popup']) && $event->getData()['popup']);
+            $isPopup = isset($event->getData()['popup']) && $event->getData()['popup'];
 
-            $event->getPlaceholder()->addTemplate($viewContent);
+            if ($isPopup) {
+                $popupWindow = new PopupWindow();
+                $popupWindow->getChildren()->addTemplate($viewContent);
+                $event->getPlaceholder()->addTemplate($popupWindow);
+            } else {
+                $event->getPlaceholder()->addTemplate($viewContent);
+            }
         }
     }
 
