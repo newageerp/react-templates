@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Newageerp\SfBaseEntity\Controller\OaBaseController;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Newageerp\SfReactTemplates\Template\Placeholder;
+use Newageerp\SfAuth\Service\AuthService;
 
 /**
  * @Route(path="/app/nae-core/react-templates/")
