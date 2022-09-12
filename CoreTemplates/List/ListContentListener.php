@@ -61,22 +61,25 @@ class ListContentListener implements EventSubscriberInterface
                             $title = $propTitle['title'];
                         }
                     }
-                    $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
-                    $alignment = $this->propertiesUtilsV3->getPropertyTableAlignment($prop, $col);
-
                     $str = new DataString($title);
                     $th = new TableTh();
-                    if ($alignment !== 'tw3-text-left') {
-                        $th->setTextAlignment($alignment);
-                    }
 
-                    if ($prop['isDb'] && $title) {
-                        $th->setFilter([
-                            'id' => PropertiesUtilsV3::swapSchemaToI($col['path']),
-                            'title' => $title,
-                            'type' => $this->propertiesUtilsV3->getDefaultPropertySearchComparison($prop, $col),
-                            'options' => $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                        ]);
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+
+                    if ($prop) {
+                        $alignment = $this->propertiesUtilsV3->getPropertyTableAlignment($prop, $col);
+                        if ($alignment !== 'tw3-text-left') {
+                            $th->setTextAlignment($alignment);
+                        }
+
+                        if ($prop['isDb'] && $title) {
+                            $th->setFilter([
+                                'id' => PropertiesUtilsV3::swapSchemaToI($col['path']),
+                                'title' => $title,
+                                'type' => $this->propertiesUtilsV3->getDefaultPropertySearchComparison($prop, $col),
+                                'options' => $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            ]);
+                        }
                     }
 
                     $th->getContents()->addTemplate($str);
