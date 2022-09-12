@@ -11,6 +11,8 @@ class TableTh extends Template
 
     protected ?string $textAlignment = null;
 
+    protected ?array $filter = null;
+
     public function __construct(?Placeholder $contents = null)
     {
         $this->contents = $contents ? $contents : new Placeholder();
@@ -26,6 +28,7 @@ class TableTh extends Template
         return [
             'contents' => $this->getContents()->toArray(),
             'textAlignment' => $this->getTextAlignment(),
+            'filter' => $this->getFilter(),
         ];
     }
 
@@ -74,6 +77,30 @@ class TableTh extends Template
     public function setContents(Placeholder $contents): self
     {
         $this->contents = $contents;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of filter
+     *
+     * @return ?array
+     */
+    public function getFilter(): ?array
+    {
+        return $this->filter;
+    }
+
+    /**
+     * Set the value of filter
+     *
+     * @param ?array $filter
+     *
+     * @return self
+     */
+    public function setFilter(?array $filter): self
+    {
+        $this->filter = $filter;
 
         return $this;
     }

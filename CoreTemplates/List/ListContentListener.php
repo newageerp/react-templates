@@ -69,6 +69,16 @@ class ListContentListener implements EventSubscriberInterface
                     if ($alignment !== 'tw3-text-left') {
                         $th->setTextAlignment($alignment);
                     }
+
+                    if ($prop['isDb'] && $title) {
+                        $th->setFilter([
+                            'id' => PropertiesUtilsV3::swapSchemaToI($col['path']),
+                            'title' => $title,
+                            'type' => $this->propertiesUtilsV3->getDefaultPropertySearchComparison($prop, $col),
+                            'options' => $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                        ]);
+                    }
+
                     $th->getContents()->addTemplate($str);
 
                     $tr->getContents()->addTemplate($th);
