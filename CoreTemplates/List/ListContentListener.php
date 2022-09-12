@@ -64,7 +64,8 @@ class ListContentListener implements EventSubscriberInterface
                     $str = new DataString($title);
                     $th = new TableTh();
 
-                    $prop = $this->propertiesUtilsV3->getPropertyForPath(isset($col['filterPath']) && $col['filterPath'] ? $col['filterPath'] : $col['path']);
+                    $filterPath = isset($col['filterPath']) && $col['filterPath'] ? $col['filterPath'] : $col['path'];
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($filterPath);
 
                     if ($prop) {
                         $alignment = $this->propertiesUtilsV3->getPropertyTableAlignment($prop, $col);
@@ -73,8 +74,34 @@ class ListContentListener implements EventSubscriberInterface
                         }
 
                         if ($prop['isDb'] && $title) {
+                            $enums = $this->propertiesUtilsV3->getPropertyEnumsList($prop);
+
+                            $propNaeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $col);
+                            if ($propNaeType === 'object') {
+                                $schema = $prop['typeFormat'];
+                                $data = $this->uservice->getListDataForSchema(
+                                    $schema,
+                                    1,
+                                    100,
+                                    ['id', '_viewTitle'],
+                                    [],
+                                    [],
+                                    $this->entitiesUtilsV3->getDefaultSortForSchema($schema),
+                                    [],
+                                    false
+                                );
+                                $enums = array_map(
+                                    function ($item) {
+                                        return [
+                                            'value' => $item->getId(),
+                                            'label' => $item->get_ViewTitle(),
+                                        ];
+                                    },
+                                    $data['data'],
+                                );
+                            }
                             $th->setFilter([
-                                'id' => PropertiesUtilsV3::swapSchemaToI($col['path']),
+                                'id' => PropertiesUtilsV3::swapSchemaToI($filterPath),
                                 'title' => $title,
                                 'type' => $this->propertiesUtilsV3->getDefaultPropertySearchComparison($prop, $col),
                                 'options' => $this->propertiesUtilsV3->getPropertyEnumsList($prop),
