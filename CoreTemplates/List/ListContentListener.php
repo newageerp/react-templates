@@ -104,7 +104,7 @@ class ListContentListener implements EventSubscriberInterface
                                 'id' => PropertiesUtilsV3::swapSchemaToI($filterPath),
                                 'title' => $title,
                                 'type' => $this->propertiesUtilsV3->getDefaultPropertySearchComparison($prop, $col),
-                                'options' => $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                                'options' => $enums,
                             ]);
                         }
                     }
