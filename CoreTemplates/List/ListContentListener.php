@@ -55,7 +55,8 @@ class ListContentListener implements EventSubscriberInterface
                     if (isset($col['customTitle']) && $col['customTitle']) {
                         $title = $col['customTitle'];
                     } else {
-                        $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+                        $titlePath = isset($col['titlePath']) ? $col['titlePath'] : $col['path'];
+                        $prop = $this->propertiesUtilsV3->getPropertyForPath($titlePath);
                         if ($prop) {
                             $title = $prop['title'];
                         }
@@ -68,7 +69,7 @@ class ListContentListener implements EventSubscriberInterface
                     $tr->getContents()->addTemplate($th);
                 }
             }
-            
+
             $listContent->getTableHeader()->addTemplate($tr);
 
             if ($isPopup) {
