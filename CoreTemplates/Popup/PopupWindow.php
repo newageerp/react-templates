@@ -49,4 +49,9 @@ class PopupWindow extends Template
 
         return $this;
     }
+
+    public function getTemplateData(): array
+    {
+        return $this->getChildren()->getTemplatesData();
+    }
 }

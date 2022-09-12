@@ -37,7 +37,7 @@ class ListContentListener implements EventSubscriberInterface
             } else {
                 $event->getPlaceholder()->addTemplate($listContent);
 
-                $toolbarTitle = new ToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
+                $toolbarTitle = new ToolbarTitle($this->entitiesUtilsV3->getTitlePluralBySlug($event->getData()['schema']));
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
