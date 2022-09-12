@@ -93,8 +93,8 @@ class ListContentListener implements EventSubscriberInterface
                                 $enums = array_map(
                                     function ($item) {
                                         return [
-                                            'value' => $item->getId(),
-                                            'label' => $item->get_ViewTitle(),
+                                            'value' => $item['id'],
+                                            'label' => $item['_viewTitle'],
                                         ];
                                     },
                                     $data['data'],
