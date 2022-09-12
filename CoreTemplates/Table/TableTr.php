@@ -11,14 +11,14 @@ class TableTr extends Template
 
     protected ?string $className = null;
 
-    public function __construct(?Placeholder $contents)
+    public function __construct(?Placeholder $contents = null)
     {
         $this->contents = $contents ? $contents : new Placeholder();
     }
 
     public function getTemplateName(): string
     {
-        return 'table.th';
+        return 'table.tr';
     }
 
     public function getProps(): array

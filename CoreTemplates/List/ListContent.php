@@ -3,6 +3,7 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
 use Newageerp\SfPermissions\Service\EntityPermissionService;
+use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
 class ListContent extends Template
@@ -11,16 +12,22 @@ class ListContent extends Template
 
     protected string $type = '';
 
+    protected Placeholder $tableHeader;
+
     public function __construct(string $schema, string $type)
     {
         $this->schema = $schema;
         $this->type = $type;
+
+        $this->tableHeader = new Placeholder();
     }
+    
 
     public function getTemplateData(): array
     {
         return [
             'creatable' => true, // TODO
+            'tableHeader' => $this->tableHeader->toArray(),
         ];
     }
 
@@ -81,6 +88,30 @@ class ListContent extends Template
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tableHeader
+     *
+     * @return Placeholder
+     */
+    public function getTableHeader(): Placeholder
+    {
+        return $this->tableHeader;
+    }
+
+    /**
+     * Set the value of tableHeader
+     *
+     * @param Placeholder $tableHeader
+     *
+     * @return self
+     */
+    public function setTableHeader(Placeholder $tableHeader): self
+    {
+        $this->tableHeader = $tableHeader;
 
         return $this;
     }

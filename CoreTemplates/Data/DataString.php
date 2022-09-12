@@ -4,7 +4,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\Data;
 
 use Newageerp\SfReactTemplates\Template\Template;
 
-class ToolbarTitle extends Template
+class DataString extends Template
 {
     protected string $contents = '';
 

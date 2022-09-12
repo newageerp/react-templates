@@ -11,7 +11,7 @@ class TableTh extends Template
 
     protected ?string $textAlignment = null;
 
-    public function __construct(?Placeholder $contents)
+    public function __construct(?Placeholder $contents = null)
     {
         $this->contents = $contents ? $contents : new Placeholder();
     }

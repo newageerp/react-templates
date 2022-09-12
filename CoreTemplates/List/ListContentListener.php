@@ -3,7 +3,12 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
+use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
+use Newageerp\SfControlpanel\Console\TabsUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Data\DataString;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
+use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTr;
+use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTh;
 use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,10 +20,20 @@ class ListContentListener implements EventSubscriberInterface
 
     protected EntitiesUtilsV3 $entitiesUtilsV3;
 
-    public function __construct(UService $uservice, EntitiesUtilsV3 $entitiesUtilsV3)
-    {
+    protected PropertiesUtilsV3 $propertiesUtilsV3;
+
+    protected TabsUtilsV3 $tabsUtilsV3;
+
+    public function __construct(
+        UService $uservice,
+        EntitiesUtilsV3 $entitiesUtilsV3,
+        TabsUtilsV3 $tabsUtilsV3,
+        PropertiesUtilsV3 $propertiesUtilsV3,
+    ) {
         $this->uservice = $uservice;
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+        $this->tabsUtilsV3 = $tabsUtilsV3;
+        $this->propertiesUtilsV3 = $propertiesUtilsV3;
     }
 
     public function onTemplate(LoadTemplateEvent $event)
@@ -29,6 +44,32 @@ class ListContentListener implements EventSubscriberInterface
                 $event->getData()['type']
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
+
+            // BUILD TR/TH
+            $tr = new TableTr();
+
+            $tab = $this->tabsUtilsV3->getTabBySchemaAndType($event->getData()['schema'], $event->getData()['type']);
+            if ($tab) {
+                foreach ($tab['columns'] as $col) {
+                    $title = '';
+                    if (isset($col['customTitle']) && $col['customTitle']) {
+                        $title = $col['customTitle'];
+                    } else {
+                        $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+                        if ($prop) {
+                            $title = $prop['title'];
+                        }
+                    }
+
+                    $str = new DataString($title);
+                    $th = new TableTh();
+                    $th->getContents()->add($str);
+
+                    $tr->getContents()->add($th);
+                }
+            }
+            
+            $listContent->getTableHeader()->addTemplate($tr);
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
