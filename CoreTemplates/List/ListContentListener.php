@@ -63,9 +63,9 @@ class ListContentListener implements EventSubscriberInterface
 
                     $str = new DataString($title);
                     $th = new TableTh();
-                    $th->getContents()->add($str);
+                    $th->getContents()->addTemplate($str);
 
-                    $tr->getContents()->add($th);
+                    $tr->getContents()->addTemplate($th);
                 }
             }
             
