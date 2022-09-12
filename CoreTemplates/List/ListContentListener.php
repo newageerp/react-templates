@@ -56,14 +56,19 @@ class ListContentListener implements EventSubscriberInterface
                         $title = $col['customTitle'];
                     } else {
                         $titlePath = isset($col['titlePath']) && $col['titlePath'] ? $col['titlePath'] : $col['path'];
-                        $prop = $this->propertiesUtilsV3->getPropertyForPath($titlePath);
-                        if ($prop) {
-                            $title = $prop['title'];
+                        $propTitle = $this->propertiesUtilsV3->getPropertyForPath($titlePath);
+                        if ($propTitle) {
+                            $title = $propTitle['title'];
                         }
                     }
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+                    $alignment = $this->propertiesUtilsV3->getPropertyTableAlignment($prop, $col);
 
                     $str = new DataString($title);
                     $th = new TableTh();
+                    if ($alignment !== 'tw3-text-left') {
+                        $th->setTextAlignment($alignment);
+                    }
                     $th->getContents()->addTemplate($str);
 
                     $tr->getContents()->addTemplate($th);
