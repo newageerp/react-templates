@@ -7,7 +7,7 @@ class Placeholder
     /**
      * @var Template[] $templates
      */
-    protected array $templates;
+    protected array $templates = [];
 
     public function addTemplate(Template $template)
     {
