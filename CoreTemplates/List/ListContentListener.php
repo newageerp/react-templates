@@ -64,7 +64,7 @@ class ListContentListener implements EventSubscriberInterface
                     $str = new DataString($title);
                     $th = new TableTh();
 
-                    $prop = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath(isset($col['filterPath']) && $col['filterPath'] ? $col['filterPath'] : $col['path']);
 
                     if ($prop) {
                         $alignment = $this->propertiesUtilsV3->getPropertyTableAlignment($prop, $col);
