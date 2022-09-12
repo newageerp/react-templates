@@ -55,7 +55,7 @@ class ListContentListener implements EventSubscriberInterface
                     if (isset($col['customTitle']) && $col['customTitle']) {
                         $title = $col['customTitle'];
                     } else {
-                        $titlePath = isset($col['titlePath']) ? $col['titlePath'] : $col['path'];
+                        $titlePath = isset($col['titlePath']) && $col['titlePath'] ? $col['titlePath'] : $col['path'];
                         $prop = $this->propertiesUtilsV3->getPropertyForPath($titlePath);
                         if ($prop) {
                             $title = $prop['title'];
