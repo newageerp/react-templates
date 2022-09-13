@@ -40,8 +40,8 @@ class ViewContentListener implements EventSubscriberInterface
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
 
-            $event = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewRightContent', $event->getData());
-            $this->eventDispatcher->dispatch($event, LoadTemplateEvent::NAME);
+            $rightContentEvent = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewRightContent', $event->getData());
+            $this->eventDispatcher->dispatch($rightContentEvent, LoadTemplateEvent::NAME);
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
