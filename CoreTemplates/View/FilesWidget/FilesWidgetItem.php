@@ -16,6 +16,8 @@ class FilesWidgetItem
 
     protected int $elementId = 0;
 
+    protected array $actions = ['view', 'download'];
+
     public function __construct(string $title, string $entity, string $folder, int $elementId)
     {
         $this->title = $title;
@@ -31,6 +33,7 @@ class FilesWidgetItem
             'folder' => $this->getEntity() . '/' . $this->getElementId() . '/' . $this->getFolder(),
             'hint' => $this->getHint(),
             'allowUpload' => $this->getAllowUpload(),
+            'actions' => $this->getActions(),
         ];
     }
 
@@ -174,6 +177,30 @@ class FilesWidgetItem
     public function setElementId(int $elementId): self
     {
         $this->elementId = $elementId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of actions
+     *
+     * @return array
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
+    }
+
+    /**
+     * Set the value of actions
+     *
+     * @param array $actions
+     *
+     * @return self
+     */
+    public function setActions(array $actions): self
+    {
+        $this->actions = $actions;
 
         return $this;
     }
