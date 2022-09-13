@@ -14,19 +14,21 @@ class FilesWidgetItem
 
     protected bool $allowUpload = true;
 
-    public function __construct(string $title, string $entity, string $folder)
+    protected int $elementId = 0;
+
+    public function __construct(string $title, string $entity, string $folder, int $elementId)
     {
         $this->title = $title;
         $this->entity = $entity;
         $this->folder = $folder;
+        $this->elementId = $elementId;
     }
 
     public function toArray()
     {
         return [
             'title' => $this->getTitle(),
-            'folder' => $this->getFolder(),
-            'entity' => $this->getEntity(),
+            'folder' => $this->getEntity() . '/' . $this->getElementId() . '/' . $this->getFolder(),
             'hint' => $this->getHint(),
             'allowUpload' => $this->getAllowUpload(),
         ];
@@ -148,6 +150,30 @@ class FilesWidgetItem
     public function setAllowUpload(bool $allowUpload): self
     {
         $this->allowUpload = $allowUpload;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of elementId
+     *
+     * @return int
+     */
+    public function getElementId(): int
+    {
+        return $this->elementId;
+    }
+
+    /**
+     * Set the value of elementId
+     *
+     * @param int $elementId
+     *
+     * @return self
+     */
+    public function setElementId(int $elementId): self
+    {
+        $this->elementId = $elementId;
 
         return $this;
     }
