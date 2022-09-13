@@ -51,4 +51,12 @@ class FilesWidget extends Template
 
         return $this;
     }
+
+    /**
+     * @var FilesWidgetItem $item
+     */
+    public function addItem(FilesWidgetItem $item)
+    {
+        $this->items[] = $item;
+    }
 }
