@@ -8,6 +8,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ViewContentListener implements EventSubscriberInterface
 {
@@ -15,10 +16,13 @@ class ViewContentListener implements EventSubscriberInterface
 
     protected EntitiesUtilsV3 $entitiesUtilsV3;
 
-    public function __construct(UService $uservice, EntitiesUtilsV3 $entitiesUtilsV3)
+    protected EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(UService $uservice, EntitiesUtilsV3 $entitiesUtilsV3, EventDispatcherInterface $eventDispatcher)
     {
         $this->uservice = $uservice;
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function onTemplate(LoadTemplateEvent $event)
@@ -35,6 +39,9 @@ class ViewContentListener implements EventSubscriberInterface
                 $entity
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
+
+            $event = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewRightContent', $event->getData());
+            $this->eventDispatcher->dispatch($event, LoadTemplateEvent::NAME);
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();

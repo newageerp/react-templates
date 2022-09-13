@@ -3,6 +3,7 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
 use Newageerp\SfPermissions\Service\EntityPermissionService;
+use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
 class ViewContent extends Template
@@ -17,12 +18,16 @@ class ViewContent extends Template
 
     protected ?int $defaultViewIndex = null;
 
+    protected Placeholder $rightContent;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
         $this->type = $type;
         $this->id = $id;
         $this->entity = $entity;
+
+        $this->rightContent = new Placeholder();
     }
 
     public function getTemplateData(): array
@@ -140,6 +145,30 @@ class ViewContent extends Template
     public function setDefaultViewIndex(?int $defaultViewIndex): self
     {
         $this->defaultViewIndex = $defaultViewIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of rightContent
+     *
+     * @return Placeholder
+     */
+    public function getRightContent(): Placeholder
+    {
+        return $this->rightContent;
+    }
+
+    /**
+     * Set the value of rightContent
+     *
+     * @param Placeholder $rightContent
+     *
+     * @return self
+     */
+    public function setRightContent(Placeholder $rightContent): self
+    {
+        $this->rightContent = $rightContent;
 
         return $this;
     }
