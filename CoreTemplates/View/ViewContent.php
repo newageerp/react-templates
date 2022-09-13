@@ -35,6 +35,7 @@ class ViewContent extends Template
         return [
             'editable' => EntityPermissionService::checkIsEditable($this->entity),
             'removable' => EntityPermissionService::checkIsRemovable($this->entity),
+            'rightContent' => $this->getRightContent()->toArray(),
         ];
     }
 
