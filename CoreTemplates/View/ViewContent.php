@@ -20,6 +20,7 @@ class ViewContent extends Template
 
     protected Placeholder $rightContent;
     protected Placeholder $afterTitleBlockContent;
+    protected Placeholder $elementToolbarAfterFieldsContent;
 
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
@@ -30,6 +31,7 @@ class ViewContent extends Template
 
         $this->rightContent = new Placeholder();
         $this->afterTitleBlockContent = new Placeholder();
+        $this->elementToolbarAfterFieldsContent = new Placeholder();
     }
 
     public function getTemplateData(): array
@@ -39,6 +41,7 @@ class ViewContent extends Template
             'removable' => EntityPermissionService::checkIsRemovable($this->entity),
             'rightContent' => $this->getRightContent()->toArray(),
             'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
+            'elementToolbarAfterFieldsContent' => $this->getElementToolbarAfterFieldsContent()->toArray(),
         ];
     }
 
@@ -197,6 +200,30 @@ class ViewContent extends Template
     public function setAfterTitleBlockContent(Placeholder $afterTitleBlockContent): self
     {
         $this->afterTitleBlockContent = $afterTitleBlockContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of elementToolbarAfterFieldsContent
+     *
+     * @return Placeholder
+     */
+    public function getElementToolbarAfterFieldsContent(): Placeholder
+    {
+        return $this->elementToolbarAfterFieldsContent;
+    }
+
+    /**
+     * Set the value of elementToolbarAfterFieldsContent
+     *
+     * @param Placeholder $elementToolbarAfterFieldsContent
+     *
+     * @return self
+     */
+    public function setElementToolbarAfterFieldsContent(Placeholder $elementToolbarAfterFieldsContent): self
+    {
+        $this->elementToolbarAfterFieldsContent = $elementToolbarAfterFieldsContent;
 
         return $this;
     }
