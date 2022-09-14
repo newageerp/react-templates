@@ -19,6 +19,7 @@ class ViewContent extends Template
     protected ?int $defaultViewIndex = null;
 
     protected Placeholder $rightContent;
+    protected Placeholder $afterTitleBlockContent;
 
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
@@ -28,6 +29,7 @@ class ViewContent extends Template
         $this->entity = $entity;
 
         $this->rightContent = new Placeholder();
+        $this->afterTitleBlockContent = new Placeholder();
     }
 
     public function getTemplateData(): array
@@ -36,6 +38,7 @@ class ViewContent extends Template
             'editable' => EntityPermissionService::checkIsEditable($this->entity),
             'removable' => EntityPermissionService::checkIsRemovable($this->entity),
             'rightContent' => $this->getRightContent()->toArray(),
+            'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
         ];
     }
 
@@ -170,6 +173,30 @@ class ViewContent extends Template
     public function setRightContent(Placeholder $rightContent): self
     {
         $this->rightContent = $rightContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of afterTitleBlockContent
+     *
+     * @return Placeholder
+     */
+    public function getAfterTitleBlockContent(): Placeholder
+    {
+        return $this->afterTitleBlockContent;
+    }
+
+    /**
+     * Set the value of afterTitleBlockContent
+     *
+     * @param Placeholder $afterTitleBlockContent
+     *
+     * @return self
+     */
+    public function setAfterTitleBlockContent(Placeholder $afterTitleBlockContent): self
+    {
+        $this->afterTitleBlockContent = $afterTitleBlockContent;
 
         return $this;
     }

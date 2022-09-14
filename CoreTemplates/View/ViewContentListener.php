@@ -43,6 +43,9 @@ class ViewContentListener implements EventSubscriberInterface
             $rightContentEvent = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewRightContent', $event->getData());
             $this->eventDispatcher->dispatch($rightContentEvent, LoadTemplateEvent::NAME);
 
+            $afterTitleBlockContentEvent = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewAfterTitleBlockContent', $event->getData());
+            $this->eventDispatcher->dispatch($afterTitleBlockContentEvent, LoadTemplateEvent::NAME);
+
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
                 $popupWindow->getChildren()->addTemplate($viewContent);
