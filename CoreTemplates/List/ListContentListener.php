@@ -94,7 +94,7 @@ class ListContentListener implements EventSubscriberInterface
                                     function ($item) {
                                         return [
                                             'value' => $item['id'],
-                                            'label' => $item['_viewTitle'],
+                                            'label' => isset($item['_viewTitle'])?$item['_viewTitle']:$item['id'],
                                         ];
                                     },
                                     $data['data'],
