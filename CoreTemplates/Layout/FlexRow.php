@@ -9,6 +9,8 @@ class FlexRow extends Template
 {
     protected Placeholder $children;
 
+    protected string $className = '';
+
     public function __construct(?Placeholder $children = null)
     {
         $this->children = $children ? $children : new Placeholder();
@@ -23,6 +25,7 @@ class FlexRow extends Template
     {
         return [
             'children' => $this->children->toArray(),
+            'className' => $this->getClassName(),
         ];
     }
 
@@ -46,6 +49,30 @@ class FlexRow extends Template
     public function setChildren(Placeholder $children): self
     {
         $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of className
+     *
+     * @return string
+     */
+    public function getClassName(): string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Set the value of className
+     *
+     * @param string $className
+     *
+     * @return self
+     */
+    public function setClassName(string $className): self
+    {
+        $this->className = $className;
 
         return $this;
     }

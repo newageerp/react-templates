@@ -12,7 +12,7 @@ class NumberWidget extends Template
 
     protected ?float $floatNumber = null;
 
-    protected ?float $floatInt = null;
+    protected ?int $intNumber = null;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class NumberWidget extends Template
         return [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'number' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getFloatInt(),
+            'number' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getIntNumber(),
             'asFloat' => !!$this->getFloatNumber()
         ];
     }
@@ -105,26 +105,27 @@ class NumberWidget extends Template
         return $this;
     }
 
+
     /**
-     * Get the value of floatInt
+     * Get the value of intNumber
      *
-     * @return ?float
+     * @return ?int
      */
-    public function getFloatInt(): ?float
+    public function getIntNumber(): ?int
     {
-        return $this->floatInt;
+        return $this->intNumber;
     }
 
     /**
-     * Set the value of floatInt
+     * Set the value of intNumber
      *
-     * @param ?float $floatInt
+     * @param ?int $intNumber
      *
      * @return self
      */
-    public function setFloatInt(?float $floatInt): self
+    public function setIntNumber(?int $intNumber): self
     {
-        $this->floatInt = $floatInt;
+        $this->intNumber = $intNumber;
 
         return $this;
     }
