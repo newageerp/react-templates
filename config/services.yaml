@@ -13,8 +13,3 @@ services:
   Newageerp\SfReactTemplates\Controller\:
     resource: '../Controller/*'
     arguments: [ ]
-  template_evt_service:
-    namespace: App\Template\
-    resource: "../src/Templates/**/*TemplateEvt"
-    tags:
-      - {name: "kernel.event_listener"}
