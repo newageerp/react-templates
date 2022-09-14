@@ -25,4 +25,28 @@ class FlexRow extends Template
             'children' => $this->children->toArray(),
         ];
     }
+
+    /**
+     * Get the value of children
+     *
+     * @return Placeholder
+     */
+    public function getChildren(): Placeholder
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set the value of children
+     *
+     * @param Placeholder $children
+     *
+     * @return self
+     */
+    public function setChildren(Placeholder $children): self
+    {
+        $this->children = $children;
+
+        return $this;
+    }
 }
