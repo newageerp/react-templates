@@ -2,14 +2,15 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields;
 
-use Newageerp\SfReactTemplates\Template\Placeholder;
-use Newageerp\SfReactTemplates\Template\Template;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormBaseField;
 
-class StringEditableField extends Template
+class StringEditableField extends FormBaseField
 {
     public function getProps(): array
     {
-        return [];
+        $props = $this->getProps();
+
+        return $props;
     }
 
     public function getTemplateName(): string

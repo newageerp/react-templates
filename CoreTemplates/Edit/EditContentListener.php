@@ -5,6 +5,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 use Newageerp\SfControlpanel\Console\EditFormsUtilsV3;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\StringEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
@@ -12,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\WideRow;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldLabel;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldSeparator;
 
 class EditContentListener implements EventSubscriberInterface
 {
@@ -81,36 +83,47 @@ class EditContentListener implements EventSubscriberInterface
         $editForm = $this->editFormsUtilsV3->getEditFormBySchemaAndType($schema, $type);
 
         foreach ($editForm['fields'] as $field) {
-            $hideLabel = false;
-            if (isset($field['hideLabel'])) {
-                $hideLabel = $field['hideLabel'];
-            }
-
-            $title = '';
-            if (isset($field['customTitle']) && $field['customTitle']) {
-                $title = $field['customTitle'];
-            } else if (isset($field['titlePath']) && $field['titlePath']) {
-                $prop = $this->propertiesUtilsV3->getPropertyForPath($field['titlePath']);
-                if ($prop) {
-                    $title = $prop['title'];
-                }
+            if ($field['type'] === 'separator') {
+                $editContent->getFormContent()->addTemplate(new FormFieldSeparator());
             } else {
-                $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
-                if ($prop) {
-                    $title = $prop['title'];
+                $hideLabel = false;
+                if (isset($field['hideLabel'])) {
+                    $hideLabel = $field['hideLabel'];
                 }
+
+                $title = '';
+                if (isset($field['customTitle']) && $field['customTitle']) {
+                    $title = $field['customTitle'];
+                } else if (isset($field['titlePath']) && $field['titlePath']) {
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($field['titlePath']);
+                    if ($prop) {
+                        $title = $prop['title'];
+                    }
+                } else {
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+                    if ($prop) {
+                        $title = $prop['title'];
+                    }
+                }
+
+                $wideRow = new WideRow();
+                $wideRow->setLabelClassName(isset($field['labelClassName']) ? $field['labelClassName'] : '');
+                $wideRow->setControlClassName(isset($field['inputClassName']) ? $field['inputClassName'] : '');
+                if (!$hideLabel) {
+                    $label = new FormFieldLabel($title);
+                    $wideRow->getLabelContent()->addTemplate($label);
+                }
+
+                $pathArray = explode(".", $field['path']);
+
+                $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+                $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
+                if ($naeType === 'string') {
+                    $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[0]));
+                }
+
+                $editContent->getFormContent()->addTemplate($wideRow);
             }
-
-            $wideRow = new WideRow();
-            $wideRow->setLabelClassName(isset($field['labelClassName']) ? $field['labelClassName'] : '');
-            $wideRow->setControlClassName(isset($field['inputClassName']) ? $field['inputClassName'] : '');
-            if (!$hideLabel) {
-                $label = new FormFieldLabel($title);
-                $wideRow->getLabelContent()->addTemplate($label);
-            }
-
-
-            $editContent->getFormContent()->addTemplate($wideRow);
         }
     }
 }
