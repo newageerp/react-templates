@@ -50,6 +50,12 @@ class EditContentListener implements EventSubscriberInterface
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
 
+            $this->fillFormContent(
+                $event->getData()['schema'],
+                $event->getData()['type'],
+                $editContent,
+            );
+
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
                 $popupWindow->getChildren()->addTemplate($editContent);
