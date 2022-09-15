@@ -1,6 +1,6 @@
 <?php
 
-namespace Newageerp\SfReactTemplates\CoreTemplates\RoFields;
+namespace Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields;
 
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
