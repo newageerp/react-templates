@@ -12,6 +12,13 @@ class EditContentPopup extends Template
 
     protected string $id = '';
 
+    public function __construct(string $schema, string $type, string $id)
+    {
+        $this->schema = $schema;
+        $this->type = $type;
+        $this->id = $id;
+    }
+
     public function getProps(): array
     {
         return [
