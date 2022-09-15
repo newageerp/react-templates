@@ -117,9 +117,11 @@ class EditContentListener implements EventSubscriberInterface
                 $pathArray = explode(".", $field['path']);
 
                 $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
-                $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
-                if ($naeType === 'string') {
-                    $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[0]));
+                if ($prop) {
+                    $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
+                    if ($naeType === 'string') {
+                        $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[0]));
+                    }
                 }
 
                 $editContent->getFormContent()->addTemplate($wideRow);
