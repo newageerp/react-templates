@@ -2,6 +2,7 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\Toolbar;
 
+use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarActionButton extends Template
@@ -10,10 +11,13 @@ class ToolbarActionButton extends Template
 
     protected string $iconName = "";
 
+    protected Placeholder $afterClickContent;
+
     public function __construct(string $title, string $iconName)
     {
         $this->title = $title;
         $this->iconName = $iconName;
+        $this->afterClickContent = new Placeholder();
     }
 
     public function getProps(): array
@@ -21,6 +25,7 @@ class ToolbarActionButton extends Template
         return [
             'iconName' => $this->getIconName(),
             'title' => $this->getTitle(),
+            'afterClickContent' => $this->getAfterClickContent()->toArray(),
         ];
     }
 
@@ -73,6 +78,30 @@ class ToolbarActionButton extends Template
     public function setIconName(string $iconName): self
     {
         $this->iconName = $iconName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of afterClickContent
+     *
+     * @return Placeholder
+     */
+    public function getAfterClickContent(): Placeholder
+    {
+        return $this->afterClickContent;
+    }
+
+    /**
+     * Set the value of afterClickContent
+     *
+     * @param Placeholder $afterClickContent
+     *
+     * @return self
+     */
+    public function setAfterClickContent(Placeholder $afterClickContent): self
+    {
+        $this->afterClickContent = $afterClickContent;
 
         return $this;
     }
