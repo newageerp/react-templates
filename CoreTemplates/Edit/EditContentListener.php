@@ -120,7 +120,7 @@ class EditContentListener implements EventSubscriberInterface
                 if ($prop) {
                     $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
                     if ($naeType === 'string') {
-                        $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[0]));
+                        $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[1]));
                     }
                 }
 
