@@ -17,7 +17,7 @@ abstract class FormBaseField extends Template
     public function getProps(): array
     {
         return [
-            'key' => $this->getKey()
+            'fieldKey' => $this->getKey()
         ];
     }
 
