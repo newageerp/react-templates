@@ -8,7 +8,7 @@ class StringEditableField extends FormBaseField
 {
     public function getProps(): array
     {
-        $props = $this->getProps();
+        $props = parent::getProps();
 
         return $props;
     }
