@@ -3,8 +3,8 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
-use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
@@ -43,7 +43,7 @@ class EditContentListener implements EventSubscriberInterface
             } else {
                 $event->getPlaceholder()->addTemplate($editContent);
 
-                $toolbarTitle = new ToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
+                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }

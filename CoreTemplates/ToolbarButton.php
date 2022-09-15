@@ -6,9 +6,9 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarButton extends Template
 {
-    protected string $iconName = "";
-
     protected string $title = "";
+    
+    protected string $iconName = "";
 
     protected bool $disabled = false;
 

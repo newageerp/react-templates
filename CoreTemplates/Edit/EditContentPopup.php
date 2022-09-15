@@ -4,7 +4,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 
 use Newageerp\SfReactTemplates\Template\Template;
 
-class EditContent extends Template
+class EditContentPopup extends Template
 {
     protected string $schema = '';
 
@@ -12,38 +12,18 @@ class EditContent extends Template
 
     protected string $id = '';
 
-    protected ?object $entity = null;
-
-    protected ?int $defaultViewIndex = null;
-
-    public function __construct(string $schema, string $type, string $id, ?object $entity)
-    {
-        $this->schema = $schema;
-        $this->type = $type;
-        $this->id = $id;
-        $this->entity = $entity;
-    }
-
-    public function getTemplateData(): array
-    {
-        return [
-            
-        ];
-    }
-
     public function getProps(): array
     {
         return [
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
             'id' => $this->getId(),
-            'defaultViewIndex' => $this->getDefaultViewIndex(),
         ];
     }
 
     public function getTemplateName(): string
     {
-        return 'edit.content';
+        return 'edit.contentpopup';
     }
 
     /**
@@ -114,30 +94,6 @@ class EditContent extends Template
     public function setId(string $id): self
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of defaultViewIndex
-     *
-     * @return ?int
-     */
-    public function getDefaultViewIndex(): ?int
-    {
-        return $this->defaultViewIndex;
-    }
-
-    /**
-     * Set the value of defaultViewIndex
-     *
-     * @param ?int $defaultViewIndex
-     *
-     * @return self
-     */
-    public function setDefaultViewIndex(?int $defaultViewIndex): self
-    {
-        $this->defaultViewIndex = $defaultViewIndex;
 
         return $this;
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Newageerp\SfReactTemplates\CoreTemplates\Toolbar;
+namespace Newageerp\SfReactTemplates\CoreTemplates\MainToolbar;
 
 use Newageerp\SfReactTemplates\Template\Template;
 
-class ToolbarTitle extends Template
+class MainToolbarTitle extends Template
 {
     protected string $title = '';
 
@@ -27,6 +27,6 @@ class ToolbarTitle extends Template
 
     public function getTemplateName(): string
     {
-        return 'toolbar.title';
+        return 'maintoolbar.title';
     }
 }

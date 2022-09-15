@@ -6,10 +6,10 @@ use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Data\DataString;
+use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTr;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTh;
-use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
@@ -124,7 +124,7 @@ class ListContentListener implements EventSubscriberInterface
             } else {
                 $event->getPlaceholder()->addTemplate($listContent);
 
-                $toolbarTitle = new ToolbarTitle($this->entitiesUtilsV3->getTitlePluralBySlug($event->getData()['schema']));
+                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitlePluralBySlug($event->getData()['schema']));
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
