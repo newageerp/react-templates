@@ -87,7 +87,7 @@ class EditContentListener implements EventSubscriberInterface
             }
 
             $title = '';
-            if (isset($field['customTitle']) || $field['customTitle']) {
+            if (isset($field['customTitle']) && $field['customTitle']) {
                 $title = $field['customTitle'];
             } else if (isset($field['titlePath']) && $field['titlePath']) {
                 $prop = $this->propertiesUtilsV3->getPropertyForPath($field['titlePath']);
