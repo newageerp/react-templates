@@ -2,6 +2,7 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 
+use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
 class EditContent extends Template
@@ -16,18 +17,22 @@ class EditContent extends Template
 
     protected ?int $defaultViewIndex = null;
 
+    protected Placeholder $formContent;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
         $this->type = $type;
         $this->id = $id;
         $this->entity = $entity;
+
+        $this->formContent = new Placeholder();
     }
 
     public function getTemplateData(): array
     {
         return [
-            
+            'formContent' => $this->getFormContent()->toArray()
         ];
     }
 
@@ -138,6 +143,30 @@ class EditContent extends Template
     public function setDefaultViewIndex(?int $defaultViewIndex): self
     {
         $this->defaultViewIndex = $defaultViewIndex;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formContent
+     *
+     * @return Placeholder
+     */
+    public function getFormContent(): Placeholder
+    {
+        return $this->formContent;
+    }
+
+    /**
+     * Set the value of formContent
+     *
+     * @param Placeholder $formContent
+     *
+     * @return self
+     */
+    public function setFormContent(Placeholder $formContent): self
+    {
+        $this->formContent = $formContent;
 
         return $this;
     }
