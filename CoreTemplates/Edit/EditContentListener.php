@@ -5,6 +5,25 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 use Newageerp\SfControlpanel\Console\EditFormsUtilsV3;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ArrayEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\AudioEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\BoolEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ColorEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\DateEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\DateTimeEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\EnumMultiNumberEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\EnumMultiTextEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\EnumNumberEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\EnumTextEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\FileEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\FileMultipleEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\FloatEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ImageEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\LargeTextEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\NumberEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ObjectEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\StatusEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\StringArrayEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\StringEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableForm;
 use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
@@ -131,6 +150,63 @@ class EditContentListener implements EventSubscriberInterface
                 $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
                 if ($prop) {
                     $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
+                    if ($naeType === 'array') {
+                        $wideRow->getControlContent()->addTemplate(new ArrayEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'audio') {
+                        $wideRow->getControlContent()->addTemplate(new AudioEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'bool') {
+                        $wideRow->getControlContent()->addTemplate(new BoolEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'color') {
+                        $wideRow->getControlContent()->addTemplate(new ColorEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'date') {
+                        $wideRow->getControlContent()->addTemplate(new DateEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'datetime') {
+                        $wideRow->getControlContent()->addTemplate(new DateTimeEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'enum_multi_number') {
+                        $wideRow->getControlContent()->addTemplate(new EnumMultiNumberEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'enum_multi_text') {
+                        $wideRow->getControlContent()->addTemplate(new EnumMultiTextEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'enum_number') {
+                        $wideRow->getControlContent()->addTemplate(new EnumNumberEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'enum_text') {
+                        $wideRow->getControlContent()->addTemplate(new EnumTextEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'file') {
+                        $wideRow->getControlContent()->addTemplate(new FileEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'fileMultiple') {
+                        $wideRow->getControlContent()->addTemplate(new FileMultipleEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'float') {
+                        $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'image') {
+                        $wideRow->getControlContent()->addTemplate(new ImageEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'text') {
+                        $wideRow->getControlContent()->addTemplate(new LargeTextEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'number') {
+                        $wideRow->getControlContent()->addTemplate(new NumberEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'object') {
+                        $wideRow->getControlContent()->addTemplate(new ObjectEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'status') {
+                        $wideRow->getControlContent()->addTemplate(new StatusEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'string_array') {
+                        $wideRow->getControlContent()->addTemplate(new StringArrayEditableField($pathArray[1]));
+                    }
                     if ($naeType === 'string') {
                         $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[1]));
                     }
