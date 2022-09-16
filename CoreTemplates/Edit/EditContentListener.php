@@ -63,14 +63,16 @@ class EditContentListener implements EventSubscriberInterface
     public function onTemplate(LoadTemplateEvent $event)
     {
         if ($event->isTemplateForAnyEntity('PageMainEdit')) {
+            $id = $event->getData()['id'] === 'new' ? 0 : $event->getData()['id'];
+            
             $entity = $this->uservice->getEntityFromSchemaAndId(
                 $event->getData()['schema'],
-                $event->getData()['id']
+                $id
             );
             $editContent = new EditContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
-                $event->getData()['id'],
+                $id,
                 $entity
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
