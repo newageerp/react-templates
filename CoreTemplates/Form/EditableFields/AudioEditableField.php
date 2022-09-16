@@ -10,7 +10,9 @@ class AudioEditableField extends FormBaseField
 {
     public function getProps(): array
     {
-        return [];
+        $props = parent::getProps();
+
+        return $props;
     }
 
     public function getTemplateName(): string
