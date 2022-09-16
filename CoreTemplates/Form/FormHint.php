@@ -5,7 +5,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\Form;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class FormLabel extends Template
+class FormHint extends Template
 {
     protected string $text = '';
 
@@ -23,7 +23,7 @@ class FormLabel extends Template
 
     public function getTemplateName(): string
     {
-        return 'form.label';
+        return 'form.hint';
     }
 
     /**

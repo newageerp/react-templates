@@ -6,6 +6,7 @@ use Newageerp\SfControlpanel\Console\EditFormsUtilsV3;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\StringEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableForm;
 use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
@@ -14,6 +15,9 @@ use Newageerp\SfUservice\Service\UService;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\WideRow;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldLabel;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldSeparator;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldTagCloud;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormHint;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormLabel;
 
 class EditContentListener implements EventSubscriberInterface
 {
@@ -80,11 +84,19 @@ class EditContentListener implements EventSubscriberInterface
 
     protected function fillFormContent(string $schema, string $type, EditContent $editContent)
     {
+        $editableForm = new EditableForm();
+
         $editForm = $this->editFormsUtilsV3->getEditFormBySchemaAndType($schema, $type);
 
         foreach ($editForm['fields'] as $field) {
-            if ($field['type'] === 'separator') {
-                $editContent->getFormContent()->addTemplate(new FormFieldSeparator());
+            if ($field['type'] === 'tagCloud') {
+                $editableForm->getChildren()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
+            } else if ($field['type'] === 'label') {
+                $editableForm->getChildren()->addTemplate(new FormLabel($field['text']));
+            } else if ($field['type'] === 'hint') {
+                $editableForm->getChildren()->addTemplate(new FormHint($field['text']));
+            } else if ($field['type'] === 'separator') {
+                $editableForm->getChildren()->addTemplate(new FormFieldSeparator());
             } else {
                 $hideLabel = false;
                 if (isset($field['hideLabel'])) {
@@ -127,5 +139,7 @@ class EditContentListener implements EventSubscriberInterface
                 $editContent->getFormContent()->addTemplate($wideRow);
             }
         }
+
+        $editContent->getFormContent()->addTemplate($editableForm);
     }
 }
