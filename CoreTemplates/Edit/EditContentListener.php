@@ -222,10 +222,10 @@ class EditContentListener implements EventSubscriberInterface
                             $objectProp['entity']
                         );
                         $objectField->setAs($prop['as']);
-                        if (isset($field) && $field['fieldDependency']) {
+                        if (isset($field['fieldDependency']) && $field['fieldDependency']) {
                             $objectField->setFieldDependency($field['fieldDependency']);
                         }
-                        if (isset($field) && $field['relKeyExtraSelect']) {
+                        if (isset($field['relKeyExtraSelect']) && $field['relKeyExtraSelect']) {
                             $objectField->setFieldExtraSelect(json_decode($field['relKeyExtraSelect'], true));
                         }
 
