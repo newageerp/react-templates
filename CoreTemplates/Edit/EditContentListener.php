@@ -242,6 +242,11 @@ class EditContentListener implements EventSubscriberInterface
                     if ($naeType === 'string') {
                         $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[1]));
                     }
+
+                    $wideRow->setFieldVisibilityData([
+                        'fieldKey' => $pathArray[1],
+                        'fieldSchema' => $prop['entity'],
+                    ]);
                 }
 
                 $editableForm->getChildren()->addTemplate($wideRow);

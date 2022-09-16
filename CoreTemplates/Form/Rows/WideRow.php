@@ -13,6 +13,8 @@ class WideRow extends Template
 
     protected ?string $controlClassName = null;
 
+    protected ?array $fieldVisibilityData = null;
+
     protected Placeholder $labelContent;
 
     protected Placeholder $controlContent;
@@ -31,6 +33,7 @@ class WideRow extends Template
             'controlClassName' => $this->getControlClassName(),
             'labelContent' => $this->getLabelContent()->toArray(),
             'controlContent' => $this->getControlContent()->toArray(),
+            'fieldVisibilityData' => $this->getFieldVisibilityData(),
         ];
     }
 
@@ -155,6 +158,30 @@ class WideRow extends Template
     public function setControlContent(?Placeholder $controlContent): self
     {
         $this->controlContent = $controlContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fieldVisibilityData
+     *
+     * @return ?array
+     */
+    public function getFieldVisibilityData(): ?array
+    {
+        return $this->fieldVisibilityData;
+    }
+
+    /**
+     * Set the value of fieldVisibilityData
+     *
+     * @param ?array $fieldVisibilityData
+     *
+     * @return self
+     */
+    public function setFieldVisibilityData(?array $fieldVisibilityData): self
+    {
+        $this->fieldVisibilityData = $fieldVisibilityData;
 
         return $this;
     }
