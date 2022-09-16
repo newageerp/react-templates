@@ -213,7 +213,7 @@ class EditContentListener implements EventSubscriberInterface
                     }
                 }
 
-                $editContent->getFormContent()->addTemplate($wideRow);
+                $editableForm->getChildren()->addTemplate($wideRow);
             }
         }
 
