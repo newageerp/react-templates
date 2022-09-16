@@ -146,8 +146,9 @@ class EditContentListener implements EventSubscriberInterface
                 }
 
                 $pathArray = explode(".", $field['path']);
+                $level1Path = $pathArray[0] . '.' . $pathArray[1];
 
-                $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+                $prop = $this->propertiesUtilsV3->getPropertyForPath($level1Path);
                 if ($prop) {
                     $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
                     if ($naeType === 'array') {
@@ -193,7 +194,7 @@ class EditContentListener implements EventSubscriberInterface
                         $wideRow->getControlContent()->addTemplate(new ImageEditableField($pathArray[1]));
                     }
                     if ($naeType === 'text') {
-                        $wideRow->getControlContent()->addTemplate(new LargeTextEditableField($pathArray[1]));
+                        $wideRow->getControlContent()->addTemplate(new LargeTextEditableField($pathArray[1], isset($prop['as']) ? $prop['as'] : ''));
                     }
                     if ($naeType === 'number') {
                         $wideRow->getControlContent()->addTemplate(new NumberEditableField($pathArray[1]));
