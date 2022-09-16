@@ -178,7 +178,7 @@ class EditContentListener implements EventSubscriberInterface
                     if ($naeType === 'enum_number') {
                         $wideRow->getControlContent()->addTemplate(
                             new EnumNumberEditableField(
-                                $pathArray[1], 
+                                $pathArray[1],
                                 $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                             )
                         );
@@ -186,7 +186,7 @@ class EditContentListener implements EventSubscriberInterface
                     if ($naeType === 'enum_text') {
                         $wideRow->getControlContent()->addTemplate(
                             new EnumTextEditableField(
-                                $pathArray[1], 
+                                $pathArray[1],
                                 $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                             )
                         );
@@ -213,7 +213,23 @@ class EditContentListener implements EventSubscriberInterface
                         $wideRow->getControlContent()->addTemplate(new NumberEditableField($pathArray[1]));
                     }
                     if ($naeType === 'object') {
-                        $wideRow->getControlContent()->addTemplate(new ObjectEditableField($pathArray[1]));
+                        $objectProp = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+
+                        $objectField = new ObjectEditableField(
+                            $pathArray[1],
+                            $prop['entity'],
+                            $pathArray[2],
+                            $objectProp['entity']
+                        );
+                        $objectField->setAs($prop['as']);
+                        if (isset($field) && $field['fieldDependency']) {
+                            $objectField->setFieldDependency($field['fieldDependency']);
+                        }
+                        if (isset($field) && $field['relKeyExtraSelect']) {
+                            $objectField->setFieldExtraSelect(json_decode($field['relKeyExtraSelect'], true));
+                        }
+
+                        $wideRow->getControlContent()->addTemplate($objectField);
                     }
                     if ($naeType === 'status') {
                         $wideRow->getControlContent()->addTemplate(new StatusEditableField($pathArray[1]));
