@@ -156,7 +156,15 @@ class EditContentListener implements EventSubscriberInterface
                 if ($prop) {
                     $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
                     if ($naeType === 'array') {
-                        $wideRow->getControlContent()->addTemplate(new ArrayEditableField($pathArray[1]));
+                        [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
+
+                        $wideRow->getControlContent()->addTemplate(
+                            new ArrayEditableField(
+                                $pathArray[1],
+                                $tabSchema,
+                                $tabType,
+                            )
+                        );
                     }
                     if ($naeType === 'audio') {
                         $wideRow->getControlContent()->addTemplate(new AudioEditableField($pathArray[1]));
