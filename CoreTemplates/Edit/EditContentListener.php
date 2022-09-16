@@ -131,7 +131,9 @@ class EditContentListener implements EventSubscriberInterface
                         $title = $prop['title'];
                     }
                 } else {
-                    $prop = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+                    $pathArray = explode(".", $field['path']);
+                    $level1Path = $pathArray[0] . '.' . $pathArray[1];
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($level1Path);
                     if ($prop) {
                         $title = $prop['title'];
                     }
