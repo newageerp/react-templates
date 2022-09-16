@@ -176,10 +176,20 @@ class EditContentListener implements EventSubscriberInterface
                         $wideRow->getControlContent()->addTemplate(new EnumMultiTextEditableField($pathArray[1]));
                     }
                     if ($naeType === 'enum_number') {
-                        $wideRow->getControlContent()->addTemplate(new EnumNumberEditableField($pathArray[1]));
+                        $wideRow->getControlContent()->addTemplate(
+                            new EnumNumberEditableField(
+                                $pathArray[1], 
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            )
+                        );
                     }
                     if ($naeType === 'enum_text') {
-                        $wideRow->getControlContent()->addTemplate(new EnumTextEditableField($pathArray[1]));
+                        $wideRow->getControlContent()->addTemplate(
+                            new EnumTextEditableField(
+                                $pathArray[1], 
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            )
+                        );
                     }
                     if ($naeType === 'file') {
                         $wideRow->getControlContent()->addTemplate(new FileEditableField($pathArray[1]));
@@ -189,6 +199,9 @@ class EditContentListener implements EventSubscriberInterface
                     }
                     if ($naeType === 'float') {
                         $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1]));
+                    }
+                    if ($naeType === 'float4') {
+                        $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1], 4));
                     }
                     if ($naeType === 'image') {
                         $wideRow->getControlContent()->addTemplate(new ImageEditableField($pathArray[1]));
