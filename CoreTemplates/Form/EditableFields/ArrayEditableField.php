@@ -14,7 +14,7 @@ class ArrayEditableField extends FormBaseField
     public function __construct(string $key, string $tabSchema, string $tabType)
     {
         parent::__construct($key);
-        
+
         $this->tabSchema = $tabSchema;
         $this->tabType = $tabType;
     }
@@ -22,6 +22,9 @@ class ArrayEditableField extends FormBaseField
     public function getProps(): array
     {
         $props = parent::getProps();
+
+        $props['tabSchema'] = $this->getTabSchema();
+        $props['tabType'] = $this->getTabType();
 
         return $props;
     }
