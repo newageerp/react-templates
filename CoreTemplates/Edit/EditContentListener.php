@@ -9,6 +9,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ArrayEditableFi
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\AudioEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\BoolEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ColorEditableField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\CustomField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\DateEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\DateTimeEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\EnumMultiNumberEditableField;
@@ -64,7 +65,7 @@ class EditContentListener implements EventSubscriberInterface
     {
         if ($event->isTemplateForAnyEntity('PageMainEdit')) {
             $id = $event->getData()['id'] === 'new' ? 0 : $event->getData()['id'];
-            
+
             $entity = $this->uservice->getEntityFromSchemaAndId(
                 $event->getData()['schema'],
                 $id
@@ -152,111 +153,121 @@ class EditContentListener implements EventSubscriberInterface
                 $pathArray = explode(".", $field['path']);
                 $level1Path = $pathArray[0] . '.' . $pathArray[1];
 
-                $prop = $this->propertiesUtilsV3->getPropertyForPath($level1Path);
-                if ($prop) {
-                    $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
-                    if ($naeType === 'array') {
-                        [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
-
-                        $wideRow->getControlContent()->addTemplate(
-                            new ArrayEditableField(
-                                $pathArray[1],
-                                $tabSchema,
-                                $tabType,
-                            )
-                        );
-                    }
-                    if ($naeType === 'audio') {
-                        $wideRow->getControlContent()->addTemplate(new AudioEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'bool') {
-                        $wideRow->getControlContent()->addTemplate(new BoolEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'color') {
-                        $wideRow->getControlContent()->addTemplate(new ColorEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'date') {
-                        $wideRow->getControlContent()->addTemplate(new DateEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'datetime') {
-                        $wideRow->getControlContent()->addTemplate(new DateTimeEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'enum_multi_number') {
-                        $wideRow->getControlContent()->addTemplate(new EnumMultiNumberEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'enum_multi_text') {
-                        $wideRow->getControlContent()->addTemplate(new EnumMultiTextEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'enum_number') {
-                        $wideRow->getControlContent()->addTemplate(
-                            new EnumNumberEditableField(
-                                $pathArray[1],
-                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                            )
-                        );
-                    }
-                    if ($naeType === 'enum_text') {
-                        $wideRow->getControlContent()->addTemplate(
-                            new EnumTextEditableField(
-                                $pathArray[1],
-                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                            )
-                        );
-                    }
-                    if ($naeType === 'file') {
-                        $wideRow->getControlContent()->addTemplate(new FileEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'fileMultiple') {
-                        $wideRow->getControlContent()->addTemplate(new FileMultipleEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'float') {
-                        $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'float4') {
-                        $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1], 4));
-                    }
-                    if ($naeType === 'image') {
-                        $wideRow->getControlContent()->addTemplate(new ImageEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'text') {
-                        $wideRow->getControlContent()->addTemplate(new LargeTextEditableField($pathArray[1], isset($prop['as']) ? $prop['as'] : ''));
-                    }
-                    if ($naeType === 'number') {
-                        $wideRow->getControlContent()->addTemplate(new NumberEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'object') {
-                        $objectProp = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
-
-                        $objectField = new ObjectEditableField(
+                if (isset($field['componentName']) && $field['componentName']) {
+                    $wideRow->getControlContent()->addTemplate(
+                        new CustomField(
                             $pathArray[1],
-                            $prop['entity'],
-                            $pathArray[2],
-                            $objectProp['entity']
-                        );
-                        $objectField->setAs($prop['as']);
-                        if (isset($field['fieldDependency']) && $field['fieldDependency']) {
-                            $objectField->setFieldDependency($field['fieldDependency']);
+                            $field['componentName']
+                        )
+                    );
+                } else {
+
+                    $prop = $this->propertiesUtilsV3->getPropertyForPath($level1Path);
+                    if ($prop) {
+                        $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $field);
+                        if ($naeType === 'array') {
+                            [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
+
+                            $wideRow->getControlContent()->addTemplate(
+                                new ArrayEditableField(
+                                    $pathArray[1],
+                                    $tabSchema,
+                                    $tabType,
+                                )
+                            );
                         }
-                        if (isset($field['relKeyExtraSelect']) && $field['relKeyExtraSelect']) {
-                            $objectField->setFieldExtraSelect(json_decode($field['relKeyExtraSelect'], true));
+                        if ($naeType === 'audio') {
+                            $wideRow->getControlContent()->addTemplate(new AudioEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'bool') {
+                            $wideRow->getControlContent()->addTemplate(new BoolEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'color') {
+                            $wideRow->getControlContent()->addTemplate(new ColorEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'date') {
+                            $wideRow->getControlContent()->addTemplate(new DateEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'datetime') {
+                            $wideRow->getControlContent()->addTemplate(new DateTimeEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'enum_multi_number') {
+                            $wideRow->getControlContent()->addTemplate(new EnumMultiNumberEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'enum_multi_text') {
+                            $wideRow->getControlContent()->addTemplate(new EnumMultiTextEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'enum_number') {
+                            $wideRow->getControlContent()->addTemplate(
+                                new EnumNumberEditableField(
+                                    $pathArray[1],
+                                    $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                                )
+                            );
+                        }
+                        if ($naeType === 'enum_text') {
+                            $wideRow->getControlContent()->addTemplate(
+                                new EnumTextEditableField(
+                                    $pathArray[1],
+                                    $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                                )
+                            );
+                        }
+                        if ($naeType === 'file') {
+                            $wideRow->getControlContent()->addTemplate(new FileEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'fileMultiple') {
+                            $wideRow->getControlContent()->addTemplate(new FileMultipleEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'float') {
+                            $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'float4') {
+                            $wideRow->getControlContent()->addTemplate(new FloatEditableField($pathArray[1], 4));
+                        }
+                        if ($naeType === 'image') {
+                            $wideRow->getControlContent()->addTemplate(new ImageEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'text') {
+                            $wideRow->getControlContent()->addTemplate(new LargeTextEditableField($pathArray[1], isset($prop['as']) ? $prop['as'] : ''));
+                        }
+                        if ($naeType === 'number') {
+                            $wideRow->getControlContent()->addTemplate(new NumberEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'object') {
+                            $objectProp = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+
+                            $objectField = new ObjectEditableField(
+                                $pathArray[1],
+                                $prop['entity'],
+                                $pathArray[2],
+                                $objectProp['entity']
+                            );
+                            $objectField->setAs($prop['as']);
+                            if (isset($field['fieldDependency']) && $field['fieldDependency']) {
+                                $objectField->setFieldDependency($field['fieldDependency']);
+                            }
+                            if (isset($field['relKeyExtraSelect']) && $field['relKeyExtraSelect']) {
+                                $objectField->setFieldExtraSelect(json_decode($field['relKeyExtraSelect'], true));
+                            }
+
+                            $wideRow->getControlContent()->addTemplate($objectField);
+                        }
+                        if ($naeType === 'status') {
+                            $wideRow->getControlContent()->addTemplate(new StatusEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'string_array') {
+                            $wideRow->getControlContent()->addTemplate(new StringArrayEditableField($pathArray[1]));
+                        }
+                        if ($naeType === 'string') {
+                            $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[1]));
                         }
 
-                        $wideRow->getControlContent()->addTemplate($objectField);
+                        $wideRow->setFieldVisibilityData([
+                            'fieldKey' => $pathArray[1],
+                            'fieldSchema' => $prop['entity'],
+                        ]);
                     }
-                    if ($naeType === 'status') {
-                        $wideRow->getControlContent()->addTemplate(new StatusEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'string_array') {
-                        $wideRow->getControlContent()->addTemplate(new StringArrayEditableField($pathArray[1]));
-                    }
-                    if ($naeType === 'string') {
-                        $wideRow->getControlContent()->addTemplate(new StringEditableField($pathArray[1]));
-                    }
-
-                    $wideRow->setFieldVisibilityData([
-                        'fieldKey' => $pathArray[1],
-                        'fieldSchema' => $prop['entity'],
-                    ]);
                 }
 
                 $editableForm->getChildren()->addTemplate($wideRow);
