@@ -72,7 +72,7 @@ class EditContentListener implements EventSubscriberInterface
             $editContent = new EditContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
-                $id,
+                $event->getData()['id'],
                 $entity
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
