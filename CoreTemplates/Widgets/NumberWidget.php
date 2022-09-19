@@ -29,8 +29,8 @@ class NumberWidget extends Template
         return [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'children' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getIntNumber(),
-            'asFloat' => !!$this->getFloatNumber(),
+            'children' => $this->getFloatNumber() !== null ? $this->getFloatNumber() : $this->getIntNumber(),
+            'asFloat' => $this->getFloatNumber() !== null,
             'currency' => $this->getCurrency(),
             'color' => $this->getColor(),
             'className' => $this->getClassName(),
