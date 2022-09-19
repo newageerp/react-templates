@@ -38,6 +38,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldSeparator;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldTagCloud;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormHint;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormLabel;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\CompactRow;
 
 class EditContentListener implements EventSubscriberInterface
 {
@@ -82,6 +83,7 @@ class EditContentListener implements EventSubscriberInterface
                 $event->getData()['schema'],
                 $event->getData()['type'],
                 $editContent,
+                isset($event->getData()['isCompact']) && $event->getData()['isCompact']
             );
 
             if ($isPopup) {
@@ -104,9 +106,9 @@ class EditContentListener implements EventSubscriberInterface
         ];
     }
 
-    protected function fillFormContent(string $schema, string $type, EditContent $editContent)
+    protected function fillFormContent(string $schema, string $type, EditContent $editContent, bool $isCompact = false)
     {
-        $editableForm = new EditableForm();
+        $editableForm = new EditableForm(null, $isCompact);
 
         $editForm = $this->editFormsUtilsV3->getEditFormBySchemaAndType($schema, $type);
 
@@ -142,7 +144,7 @@ class EditContentListener implements EventSubscriberInterface
                     }
                 }
 
-                $wideRow = new WideRow();
+                $wideRow = $isCompact ? new CompactRow() : new WideRow();
                 $wideRow->setLabelClassName(isset($field['labelClassName']) ? $field['labelClassName'] : '');
                 $wideRow->setControlClassName(isset($field['inputClassName']) ? $field['inputClassName'] : '');
                 if (!$hideLabel) {

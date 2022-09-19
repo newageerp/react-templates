@@ -9,15 +9,19 @@ class EditableForm extends Template
 {
     protected Placeholder $children;
 
-    public function __construct(?Placeholder $children = null)
+    protected bool $isCompact = false;
+
+    public function __construct(?Placeholder $children = null, bool $isCompact = false)
     {
         $this->children = $children ? $children : new Placeholder();
+        $this->isCompact = $isCompact;
     }
 
     public function getProps(): array
     {
         return [
             'children' => $this->getChildren()->toArray(),
+            'isCompact' => $this->getIsCompact(),
         ];
     }
 
@@ -46,6 +50,30 @@ class EditableForm extends Template
     public function setChildren(Placeholder $children): self
     {
         $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isCompact
+     *
+     * @return bool
+     */
+    public function getIsCompact(): bool
+    {
+        return $this->isCompact;
+    }
+
+    /**
+     * Set the value of isCompact
+     *
+     * @param bool $isCompact
+     *
+     * @return self
+     */
+    public function setIsCompact(bool $isCompact): self
+    {
+        $this->isCompact = $isCompact;
 
         return $this;
     }
