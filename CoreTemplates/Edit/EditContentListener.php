@@ -78,12 +78,15 @@ class EditContentListener implements EventSubscriberInterface
                 $entity
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
+            $isCompact = isset($event->getData()['isCompact']) && $event->getData()['isCompact'];
+
+            $editContent->setIsCompact($isCompact);
 
             $this->fillFormContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
                 $editContent,
-                isset($event->getData()['isCompact']) && $event->getData()['isCompact']
+                $isCompact
             );
 
             if ($isPopup) {
