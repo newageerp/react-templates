@@ -19,6 +19,8 @@ class EditContent extends Template
 
     protected Placeholder $formContent;
 
+    protected bool $isCompact = false;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
@@ -43,6 +45,7 @@ class EditContent extends Template
             'type' => $this->getType(),
             'id' => $this->getId(),
             'defaultViewIndex' => $this->getDefaultViewIndex(),
+            'isCompact' => $this->getIsCompact(),
         ];
     }
 
@@ -167,6 +170,30 @@ class EditContent extends Template
     public function setFormContent(Placeholder $formContent): self
     {
         $this->formContent = $formContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isCompact
+     *
+     * @return bool
+     */
+    public function getIsCompact(): bool
+    {
+        return $this->isCompact;
+    }
+
+    /**
+     * Set the value of isCompact
+     *
+     * @param bool $isCompact
+     *
+     * @return self
+     */
+    public function setIsCompact(bool $isCompact): self
+    {
+        $this->isCompact = $isCompact;
 
         return $this;
     }
