@@ -16,6 +16,10 @@ class NumberWidget extends Template
 
     protected ?string $currency = null;
 
+    protected ?string $color = null;
+
+    protected ?string $className = null;
+
     public function __construct()
     {
     }
@@ -28,6 +32,8 @@ class NumberWidget extends Template
             'children' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getIntNumber(),
             'asFloat' => !!$this->getFloatNumber(),
             'currency' => $this->getCurrency(),
+            'color' => $this->getColor(),
+            'className' => $this->getClassName(),
         ];
     }
 
@@ -153,6 +159,54 @@ class NumberWidget extends Template
     public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of color
+     *
+     * @return ?string
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set the value of color
+     *
+     * @param ?string $color
+     *
+     * @return self
+     */
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of className
+     *
+     * @return ?string
+     */
+    public function getClassName(): ?string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Set the value of className
+     *
+     * @param ?string $className
+     *
+     * @return self
+     */
+    public function setClassName(?string $className): self
+    {
+        $this->className = $className;
 
         return $this;
     }
