@@ -14,6 +14,8 @@ class NumberWidget extends Template
 
     protected ?int $intNumber = null;
 
+    protected ?string $currency = null;
+
     public function __construct()
     {
     }
@@ -23,8 +25,9 @@ class NumberWidget extends Template
         return [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'number' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getIntNumber(),
-            'asFloat' => !!$this->getFloatNumber()
+            'children' => $this->getFloatNumber() ? $this->getFloatNumber() : $this->getIntNumber(),
+            'asFloat' => !!$this->getFloatNumber(),
+            'currency' => $this->getCurrency(),
         ];
     }
 
@@ -126,6 +129,30 @@ class NumberWidget extends Template
     public function setIntNumber(?int $intNumber): self
     {
         $this->intNumber = $intNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of currency
+     *
+     * @return ?string
+     */
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Set the value of currency
+     *
+     * @param ?string $currency
+     *
+     * @return self
+     */
+    public function setCurrency(?string $currency): self
+    {
+        $this->currency = $currency;
 
         return $this;
     }
