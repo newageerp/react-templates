@@ -20,6 +20,8 @@ class NumberWidget extends Template
 
     protected ?string $className = null;
 
+    protected bool $isCompact = false;
+
     public function __construct()
     {
     }
@@ -34,6 +36,7 @@ class NumberWidget extends Template
             'currency' => $this->getCurrency(),
             'color' => $this->getColor(),
             'className' => $this->getClassName(),
+            'isCompact' => $this->getIsCompact(),
         ];
     }
 
@@ -207,6 +210,30 @@ class NumberWidget extends Template
     public function setClassName(?string $className): self
     {
         $this->className = $className;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isCompact
+     *
+     * @return bool
+     */
+    public function getIsCompact(): bool
+    {
+        return $this->isCompact;
+    }
+
+    /**
+     * Set the value of isCompact
+     *
+     * @param bool $isCompact
+     *
+     * @return self
+     */
+    public function setIsCompact(bool $isCompact): self
+    {
+        $this->isCompact = $isCompact;
 
         return $this;
     }
