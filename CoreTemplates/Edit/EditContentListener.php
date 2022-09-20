@@ -136,11 +136,32 @@ class EditContentListener implements EventSubscriberInterface
 
             foreach ($fields as $field) {
                 if ($field['type'] === 'tagCloud') {
-                    $editableForm->getChildren()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
+                    $wideRow = new WideRow();
+                    $wideRow->getControlContent()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
+                    $wideRow->setFieldVisibilityData([
+                        'fieldKey' => 'tagCloud:' . $field['tagCloudField'] . ':' . $field['tagCloudAction'],
+                        'fieldSchema' => $schema,
+                    ]);
+
+                    $editableForm->getChildren()->addTemplate($wideRow);
                 } else if ($field['type'] === 'label') {
-                    $editableForm->getChildren()->addTemplate(new FormLabel($field['text']));
+                    $wideRow = new WideRow();
+                    $wideRow->getControlContent()->addTemplate(new FormLabel($field['text']));
+                    $wideRow->setFieldVisibilityData([
+                        'fieldKey' => 'label:' . $field['text'],
+                        'fieldSchema' => $schema,
+                    ]);
+
+                    $editableForm->getChildren()->addTemplate($wideRow);
                 } else if ($field['type'] === 'hint') {
-                    $editableForm->getChildren()->addTemplate(new FormHint($field['text']));
+                    $wideRow = new WideRow();
+                    $wideRow->getControlContent()->addTemplate(new FormHint($field['text']));
+                    $wideRow->setFieldVisibilityData([
+                        'fieldKey' => 'hint:' . $field['text'],
+                        'fieldSchema' => $schema,
+                    ]);
+
+                    $editableForm->getChildren()->addTemplate($wideRow);
                 } else if ($field['type'] === 'separator') {
                     $editableForm->getChildren()->addTemplate(new FormFieldSeparator());
                 } else {
