@@ -131,6 +131,7 @@ class EditContentListener implements EventSubscriberInterface
             $flexRow = null;
             if (count($fields) > 1) {
                 $flexRow = new FlexRow();
+                $flexRow->setClassName('tw3-gap-2');
             }
 
             foreach ($fields as $field) {
