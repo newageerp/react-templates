@@ -133,7 +133,7 @@ class EditContentListener implements EventSubscriberInterface
                 $flexRow = new FlexRow();
             }
 
-            foreach ($editForm['fields'] as $field) {
+            foreach ($fields as $field) {
                 if ($field['type'] === 'tagCloud') {
                     $editableForm->getChildren()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
                 } else if ($field['type'] === 'label') {
