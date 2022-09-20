@@ -21,6 +21,10 @@ class EditContent extends Template
 
     protected bool $isCompact = false;
 
+    protected ?array $parentElement = null;
+
+    protected ?array $newStateOptions = null;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
@@ -46,6 +50,8 @@ class EditContent extends Template
             'id' => $this->getId(),
             'defaultViewIndex' => $this->getDefaultViewIndex(),
             'isCompact' => $this->getIsCompact(),
+            'parentElement' => $this->getParentElement(),
+            'newStateOptions' => $this->getNewStateOptions(),
         ];
     }
 
@@ -194,6 +200,54 @@ class EditContent extends Template
     public function setIsCompact(bool $isCompact): self
     {
         $this->isCompact = $isCompact;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of parentElement
+     *
+     * @return ?array
+     */
+    public function getParentElement(): ?array
+    {
+        return $this->parentElement;
+    }
+
+    /**
+     * Set the value of parentElement
+     *
+     * @param ?array $parentElement
+     *
+     * @return self
+     */
+    public function setParentElement(?array $parentElement): self
+    {
+        $this->parentElement = $parentElement;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of newStateOptions
+     *
+     * @return ?array
+     */
+    public function getNewStateOptions(): ?array
+    {
+        return $this->newStateOptions;
+    }
+
+    /**
+     * Set the value of newStateOptions
+     *
+     * @param ?array $newStateOptions
+     *
+     * @return self
+     */
+    public function setNewStateOptions(?array $newStateOptions): self
+    {
+        $this->newStateOptions = $newStateOptions;
 
         return $this;
     }
