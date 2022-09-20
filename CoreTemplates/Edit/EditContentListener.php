@@ -81,9 +81,12 @@ class EditContentListener implements EventSubscriberInterface
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
             $isCompact = isset($event->getData()['isCompact']) && $event->getData()['isCompact'];
 
+            $parentElement = isset($event->getData()['parentElement']) ? $event->getData()['parentElement'] : null;
+            $newStateOptions = isset($event->getData()['newStateOptions']) ? $event->getData()['newStateOptions'] : null;
+
             $editContent->setIsCompact($isCompact);
-            $editContent->setParentElement($event->getData()['parentElement']);
-            $editContent->setNewStateOptions($event->getData()['newStateOptions']);
+            $editContent->setParentElement($parentElement);
+            $editContent->setNewStateOptions($newStateOptions);
 
             $this->fillFormContent(
                 $event->getData()['schema'],
