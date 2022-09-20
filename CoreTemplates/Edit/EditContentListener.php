@@ -242,10 +242,20 @@ class EditContentListener implements EventSubscriberInterface
                                 $wideRow->getControlContent()->addTemplate(new DateTimeEditableField($pathArray[1]));
                             }
                             if ($naeType === 'enum_multi_number') {
-                                $wideRow->getControlContent()->addTemplate(new EnumMultiNumberEditableField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(
+                                    new EnumMultiNumberEditableField(
+                                        $pathArray[1],
+                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                                    )
+                                );
                             }
                             if ($naeType === 'enum_multi_text') {
-                                $wideRow->getControlContent()->addTemplate(new EnumMultiTextEditableField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(
+                                    new EnumMultiTextEditableField(
+                                        $pathArray[1],
+                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                                    )
+                                );
                             }
                             if ($naeType === 'enum_number') {
                                 $wideRow->getControlContent()->addTemplate(
