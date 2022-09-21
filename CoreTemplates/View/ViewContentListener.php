@@ -56,7 +56,7 @@ class ViewContentListener implements EventSubscriberInterface
 
             $viewContent->getFormContent()->setIsCompact($isCompact);
 
-            $this->editContentService->fillFormContent(
+            $this->viewContentService->fillFormContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
                 $viewContent->getFormContent(),
