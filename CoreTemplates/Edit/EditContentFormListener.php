@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Newageerp\SfUservice\Service\UService;
 
 
-class EditContentListener implements EventSubscriberInterface
+class EditContentFormListener implements EventSubscriberInterface
 {
     protected UService $uservice;
 
@@ -41,46 +41,26 @@ class EditContentListener implements EventSubscriberInterface
 
     public function onTemplate(LoadTemplateEvent $event)
     {
-        if ($event->isTemplateForAnyEntity('PageMainEdit')) {
-            $id = $event->getData()['id'] === 'new' ? 0 : $event->getData()['id'];
-
-            $entity = $this->uservice->getEntityFromSchemaAndId(
+        if ($event->isTemplateForAnyEntity('PageMainEditForm')) {
+            $editContent = new EditFormContent(
                 $event->getData()['schema'],
-                $id
+                $event->getData()['type']
             );
-            $editContent = new EditContent(
-                $event->getData()['schema'],
-                $event->getData()['type'],
-                $event->getData()['id'],
-                $entity
-            );
-            $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
             $isCompact = isset($event->getData()['isCompact']) && $event->getData()['isCompact'];
 
             $parentElement = isset($event->getData()['parentElement']) ? $event->getData()['parentElement'] : null;
-            $newStateOptions = isset($event->getData()['newStateOptions']) ? $event->getData()['newStateOptions'] : null;
 
-            $editContent->getFormContent()->setIsCompact($isCompact);
-            $editContent->getFormContent()->setParentElement($parentElement);
-            $editContent->setNewStateOptions($newStateOptions);
+            $editContent->setIsCompact($isCompact);
+            $editContent->setParentElement($parentElement);
 
             $this->editContentService->fillFormContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
-                $editContent->getFormContent(),
+                $editContent,
                 $isCompact
             );
 
-            if ($isPopup) {
-                $popupWindow = new PopupWindow();
-                $popupWindow->getChildren()->addTemplate($editContent);
-                $event->getPlaceholder()->addTemplate($popupWindow);
-            } else {
-                $event->getPlaceholder()->addTemplate($editContent);
-
-                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
-                $event->getPlaceholder()->addTemplate($toolbarTitle);
-            }
+            $event->getPlaceholder()->addTemplate($editContent);
         }
     }
 
@@ -90,4 +70,5 @@ class EditContentListener implements EventSubscriberInterface
             LoadTemplateEvent::NAME => 'onTemplate'
         ];
     }
+
 }

@@ -17,11 +17,7 @@ class EditContent extends Template
 
     protected ?int $defaultViewIndex = null;
 
-    protected Placeholder $formContent;
-
-    protected bool $isCompact = false;
-
-    protected ?array $parentElement = null;
+    protected EditFormContent $formContent;
 
     protected ?array $newStateOptions = null;
 
@@ -32,7 +28,7 @@ class EditContent extends Template
         $this->id = $id;
         $this->entity = $entity;
 
-        $this->formContent = new Placeholder();
+        $this->formContent = new EditFormContent($schema, $type);
     }
 
     public function getTemplateData(): array
@@ -49,8 +45,6 @@ class EditContent extends Template
             'type' => $this->getType(),
             'id' => $this->getId(),
             'defaultViewIndex' => $this->getDefaultViewIndex(),
-            'isCompact' => $this->getIsCompact(),
-            'parentElement' => $this->getParentElement(),
             'newStateOptions' => $this->getNewStateOptions(),
         ];
     }
@@ -157,78 +151,6 @@ class EditContent extends Template
     }
 
     /**
-     * Get the value of formContent
-     *
-     * @return Placeholder
-     */
-    public function getFormContent(): Placeholder
-    {
-        return $this->formContent;
-    }
-
-    /**
-     * Set the value of formContent
-     *
-     * @param Placeholder $formContent
-     *
-     * @return self
-     */
-    public function setFormContent(Placeholder $formContent): self
-    {
-        $this->formContent = $formContent;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of isCompact
-     *
-     * @return bool
-     */
-    public function getIsCompact(): bool
-    {
-        return $this->isCompact;
-    }
-
-    /**
-     * Set the value of isCompact
-     *
-     * @param bool $isCompact
-     *
-     * @return self
-     */
-    public function setIsCompact(bool $isCompact): self
-    {
-        $this->isCompact = $isCompact;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of parentElement
-     *
-     * @return ?array
-     */
-    public function getParentElement(): ?array
-    {
-        return $this->parentElement;
-    }
-
-    /**
-     * Set the value of parentElement
-     *
-     * @param ?array $parentElement
-     *
-     * @return self
-     */
-    public function setParentElement(?array $parentElement): self
-    {
-        $this->parentElement = $parentElement;
-
-        return $this;
-    }
-
-    /**
      * Get the value of newStateOptions
      *
      * @return ?array
@@ -248,6 +170,30 @@ class EditContent extends Template
     public function setNewStateOptions(?array $newStateOptions): self
     {
         $this->newStateOptions = $newStateOptions;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formContent
+     *
+     * @return EditFormContent
+     */
+    public function getFormContent(): EditFormContent
+    {
+        return $this->formContent;
+    }
+
+    /**
+     * Set the value of formContent
+     *
+     * @param EditFormContent $formContent
+     *
+     * @return self
+     */
+    public function setFormContent(EditFormContent $formContent): self
+    {
+        $this->formContent = $formContent;
 
         return $this;
     }
