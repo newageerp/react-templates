@@ -9,15 +9,19 @@ class RoForm extends Template
 {
     protected Placeholder $children;
 
-    public function __construct(?Placeholder $children = null)
+    protected bool $isCompact = false;
+
+    public function __construct(?Placeholder $children = null, bool $isCompact = false)
     {
         $this->children = $children ? $children : new Placeholder();
+        $this->isCompact = $isCompact;
     }
 
     public function getProps(): array
     {
         return [
             'children' => $this->getChildren()->toArray(),
+            'isCompact' => $this->getIsCompact(),
         ];
     }
 
@@ -48,5 +52,29 @@ class RoForm extends Template
     public function getTemplateName(): string
     {
         return 'form.roform';
+    }
+
+    /**
+     * Get the value of isCompact
+     *
+     * @return bool
+     */
+    public function getIsCompact(): bool
+    {
+        return $this->isCompact;
+    }
+
+    /**
+     * Set the value of isCompact
+     *
+     * @param bool $isCompact
+     *
+     * @return self
+     */
+    public function setIsCompact(bool $isCompact): self
+    {
+        $this->isCompact = $isCompact;
+
+        return $this;
     }
 }

@@ -2,16 +2,12 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields;
 
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormBaseField;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class ImageRoField extends Template
+class ImageRoField extends FormBaseField
 {
-    public function getProps(): array
-    {
-        return [];
-    }
-
     public function getTemplateName(): string
     {
         return 'form.ro.imagefield';

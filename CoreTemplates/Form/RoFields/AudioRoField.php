@@ -2,16 +2,12 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields;
 
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormBaseField;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class AudioRoField extends Template
+class AudioRoField extends FormBaseField
 {
-    public function getProps(): array
-    {
-        return [];
-    }
-
     public function getTemplateName(): string
     {
         return 'form.ro.audiofield';

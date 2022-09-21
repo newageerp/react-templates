@@ -22,6 +22,8 @@ class ViewContent extends Template
     protected Placeholder $afterTitleBlockContent;
     protected Placeholder $elementToolbarAfterFieldsContent;
 
+    protected ViewFormContent $formContent;
+
     public function __construct(string $schema, string $type, string $id, ?object $entity)
     {
         $this->schema = $schema;
@@ -32,6 +34,8 @@ class ViewContent extends Template
         $this->rightContent = new Placeholder();
         $this->afterTitleBlockContent = new Placeholder();
         $this->elementToolbarAfterFieldsContent = new Placeholder();
+
+        $this->formContent = new ViewFormContent($schema, $type);
     }
 
     public function getTemplateData(): array
@@ -42,6 +46,7 @@ class ViewContent extends Template
             'rightContent' => $this->getRightContent()->toArray(),
             'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
             'elementToolbarAfterFieldsContent' => $this->getElementToolbarAfterFieldsContent()->toArray(),
+            'formContent' => $this->getFormContent()->toArray()
         ];
     }
 
@@ -224,6 +229,30 @@ class ViewContent extends Template
     public function setElementToolbarAfterFieldsContent(Placeholder $elementToolbarAfterFieldsContent): self
     {
         $this->elementToolbarAfterFieldsContent = $elementToolbarAfterFieldsContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formContent
+     *
+     * @return ViewFormContent
+     */
+    public function getFormContent(): ViewFormContent
+    {
+        return $this->formContent;
+    }
+
+    /**
+     * Set the value of formContent
+     *
+     * @param ViewFormContent $formContent
+     *
+     * @return self
+     */
+    public function setFormContent(ViewFormContent $formContent): self
+    {
+        $this->formContent = $formContent;
 
         return $this;
     }

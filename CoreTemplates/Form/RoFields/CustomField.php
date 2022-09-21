@@ -6,50 +6,51 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\FormBaseField;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class EnumTextRoField extends FormBaseField
+class CustomField extends FormBaseField
 {
-    protected array $options = [];
+    protected string $componentName = '';
 
-    public function __construct(string $key, array $options)
+    public function __construct(string $key, string $componentName)
     {
         parent::__construct($key);
-        $this->options = $options;
+
+        $this->componentName = $componentName;
     }
 
     public function getProps(): array
     {
         $props = parent::getProps();
 
-        $props['options'] = $this->getOptions();
 
         return $props;
     }
 
     public function getTemplateName(): string
     {
-        return 'form.ro.enumtextfield';
+        return 'customview.' . $this->getComponentName();
     }
 
+
     /**
-     * Get the value of options
+     * Get the value of componentName
      *
-     * @return array
+     * @return string
      */
-    public function getOptions(): array
+    public function getComponentName(): string
     {
-        return $this->options;
+        return $this->componentName;
     }
 
     /**
-     * Set the value of options
+     * Set the value of componentName
      *
-     * @param array $options
+     * @param string $componentName
      *
      * @return self
      */
-    public function setOptions(array $options): self
+    public function setComponentName(string $componentName): self
     {
-        $this->options = $options;
+        $this->componentName = $componentName;
 
         return $this;
     }
