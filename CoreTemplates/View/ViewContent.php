@@ -16,8 +16,6 @@ class ViewContent extends Template
 
     protected ?object $entity = null;
 
-    protected ?int $defaultViewIndex = null;
-
     protected Placeholder $rightContent;
     protected Placeholder $afterTitleBlockContent;
     protected Placeholder $elementToolbarAfterFieldsContent;
@@ -38,25 +36,19 @@ class ViewContent extends Template
         $this->formContent = new ViewFormContent($schema, $type);
     }
 
-    public function getTemplateData(): array
+    public function getProps(): array
     {
         return [
+            'formContent' => [$this->getFormContent()->toArray()],
             'editable' => EntityPermissionService::checkIsEditable($this->entity),
             'removable' => EntityPermissionService::checkIsRemovable($this->entity),
             'rightContent' => $this->getRightContent()->toArray(),
             'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
             'elementToolbarAfterFieldsContent' => $this->getElementToolbarAfterFieldsContent()->toArray(),
-            'formContent' => $this->getFormContent()->toArray()
-        ];
-    }
 
-    public function getProps(): array
-    {
-        return [
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
             'id' => $this->getId(),
-            'defaultViewIndex' => $this->getDefaultViewIndex(),
         ];
     }
 
@@ -133,30 +125,6 @@ class ViewContent extends Template
     public function setId(string $id): self
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of defaultViewIndex
-     *
-     * @return ?int
-     */
-    public function getDefaultViewIndex(): ?int
-    {
-        return $this->defaultViewIndex;
-    }
-
-    /**
-     * Set the value of defaultViewIndex
-     *
-     * @param ?int $defaultViewIndex
-     *
-     * @return self
-     */
-    public function setDefaultViewIndex(?int $defaultViewIndex): self
-    {
-        $this->defaultViewIndex = $defaultViewIndex;
 
         return $this;
     }
