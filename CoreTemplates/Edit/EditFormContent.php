@@ -25,16 +25,10 @@ class EditFormContent extends Template
         $this->content = new Placeholder();
     }
 
-    public function getTemplateData(): array
-    {
-        return [
-            'children' => $this->getContent()->toArray()
-        ];
-    }
-
     public function getProps(): array
     {
         return [
+            'children' => $this->getContent()->toArray(),
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
             'isCompact' => $this->getIsCompact(),
