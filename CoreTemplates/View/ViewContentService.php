@@ -54,10 +54,10 @@ class ViewContentService {
     {
         $editableForm = new RoForm(null, $isCompact);
 
-        $editForm = $this->viewFormsUtilsV3->getViewFormBySchemaAndType($schema, $type);
+        $viewForm = $this->viewFormsUtilsV3->getViewFormBySchemaAndType($schema, $type);
 
         $groupedFields = [];
-        foreach ($editForm['fields'] as $key => $field) {
+        foreach ($viewForm['fields'] as $key => $field) {
             $lineGroup = isset($field['lineGroup']) && $field['lineGroup'] ? $field['lineGroup'] : 'no_line_group_' . $key;
             if (!isset($groupedFields[$lineGroup])) {
                 $groupedFields[$lineGroup] = [];

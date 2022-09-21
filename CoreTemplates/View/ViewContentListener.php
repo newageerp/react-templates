@@ -3,6 +3,7 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Db\RequestRecordProvider;
 use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
@@ -32,6 +33,12 @@ class ViewContentListener implements EventSubscriberInterface
     public function onTemplate(LoadTemplateEvent $event)
     {
         if ($event->isTemplateForAnyEntity('PageMainView')) {
+            $requestRecordProvider = new RequestRecordProvider(
+                $event->getData()['schema'],
+                $event->getData()['type'],
+                $event->getData()['id'],
+            );
+
             $entity = $this->uservice->getEntityFromSchemaAndId(
                 $event->getData()['schema'],
                 $event->getData()['id']
@@ -42,6 +49,9 @@ class ViewContentListener implements EventSubscriberInterface
                 $event->getData()['id'],
                 $entity
             );
+
+            $requestRecordProvider->getChildren()->addTemplate($viewContent);
+
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
             $isCompact = isset($event->getData()['isCompact']) && $event->getData()['isCompact'];
 
@@ -65,10 +75,10 @@ class ViewContentListener implements EventSubscriberInterface
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
-                $popupWindow->getChildren()->addTemplate($viewContent);
+                $popupWindow->getChildren()->addTemplate($requestRecordProvider);
                 $event->getPlaceholder()->addTemplate($popupWindow);
             } else {
-                $event->getPlaceholder()->addTemplate($viewContent);
+                $event->getPlaceholder()->addTemplate($requestRecordProvider);
 
                 $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
