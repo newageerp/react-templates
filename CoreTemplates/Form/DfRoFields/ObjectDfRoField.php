@@ -1,21 +1,23 @@
 <?php
 
-namespace Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields;
+namespace Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields;
 
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormBaseField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\FormDfBaseField;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
-class ObjectRoField extends FormBaseField
+class ObjectDfRoField extends FormDfBaseField
 {
     protected string $fieldSchema = '';
     protected string $relKey = '';
     protected string $relSchema = '';
     protected ?string $as = null;
 
-    public function __construct(string $key, string $fieldSchema, string $relKey, string $relSchema)
+    public function __construct(string $key, int $id, string $fieldSchema, string $relKey, string $relSchema)
     {
-        $this->key = $key;
+        parent::__construct($key, $id);
+        
         $this->fieldSchema = $fieldSchema;
         $this->relKey = $relKey;
         $this->relSchema = $relSchema;
@@ -35,7 +37,7 @@ class ObjectRoField extends FormBaseField
 
     public function getTemplateName(): string
     {
-        return 'form.ro.objectfield';
+        return 'form.dfro.objectfield';
     }
 
     /**

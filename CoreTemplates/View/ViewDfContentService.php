@@ -4,27 +4,27 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\View;
 
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfControlpanel\Console\ViewFormsUtilsV3;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\ArrayRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\AudioRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\BoolRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\ColorRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\CustomField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\DateRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\DateTimeRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\EnumMultiNumberRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\EnumMultiTextRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\EnumNumberRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\EnumTextRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\FileRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\FileMultipleRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\FloatRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\ImageRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\LargeTextRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\NumberRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\ObjectRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\StatusRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\StringArrayRoField;
-use Newageerp\SfReactTemplates\CoreTemplates\Form\RoFields\StringRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\ArrayDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\AudioDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\BoolDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\ColorDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\CustomDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\DateDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\DateTimeDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\EnumMultiNumberDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\EnumMultiTextDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\EnumNumberDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\EnumTextDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\FileDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\FileMultipleDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\FloatDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\ImageDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\LargeTextDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\NumberDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\ObjectDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\StatusDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\StringArrayDfRoField;
+use Newageerp\SfReactTemplates\CoreTemplates\Form\DfRoFields\StringDfRoField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldLabel;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldSeparator;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\FormFieldTagCloud;
@@ -36,7 +36,8 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\WideRow;
 use Newageerp\SfReactTemplates\CoreTemplates\Layout\FlexRow;
 use Newageerp\SfReactTemplates\CoreTemplates\View\ViewFormContent;
 
-class ViewContentService {
+class ViewContentService
+{
 
     protected ViewFormsUtilsV3 $viewFormsUtilsV3;
 
@@ -50,7 +51,7 @@ class ViewContentService {
         $this->propertiesUtilsV3 = $propertiesUtilsV3;
     }
 
-    public function fillFormContent(string $schema, string $type, ViewFormContent $roContent, bool $isCompact = false)
+    public function fillFormContent(int $id, string $schema, string $type, ViewFormContent $roContent, bool $isCompact = false)
     {
         $editableForm = new RoForm(null, $isCompact);
 
@@ -155,8 +156,9 @@ class ViewContentService {
 
                     if (isset($field['componentName']) && $field['componentName']) {
                         $wideRow->getControlContent()->addTemplate(
-                            new CustomField(
-                                $pathArray[1],
+                            new CustomDfRoField(
+                                $field['path'],
+                                $id,
                                 $field['componentName']
                             )
                         );
@@ -168,86 +170,92 @@ class ViewContentService {
                                 [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
 
                                 $wideRow->getControlContent()->addTemplate(
-                                    new ArrayRoField(
-                                        $pathArray[1],
+                                    new ArrayDfRoField(
+                                        $field['path'],
+                                        $id,
                                         $tabSchema,
                                         $tabType,
                                     )
                                 );
                             }
                             if ($naeType === 'audio') {
-                                $wideRow->getControlContent()->addTemplate(new AudioRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new AudioDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'bool') {
-                                $wideRow->getControlContent()->addTemplate(new BoolRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new BoolDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'color') {
-                                $wideRow->getControlContent()->addTemplate(new ColorRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new ColorDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'date') {
-                                $wideRow->getControlContent()->addTemplate(new DateRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new DateDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'datetime') {
-                                $wideRow->getControlContent()->addTemplate(new DateTimeRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new DateTimeDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'enum_multi_number') {
                                 $wideRow->getControlContent()->addTemplate(
-                                    new EnumMultiNumberRoField(
-                                        $pathArray[1],
+                                    new EnumMultiNumberDfRoField(
+                                        $field['path'],
+                                        $id,
                                         $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                                     )
                                 );
                             }
                             if ($naeType === 'enum_multi_text') {
                                 $wideRow->getControlContent()->addTemplate(
-                                    new EnumMultiTextRoField(
-                                        $pathArray[1],
+                                    new EnumMultiTextDfRoField(
+                                        $field['path'],
+                                        $id,
                                         $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                                     )
                                 );
                             }
                             if ($naeType === 'enum_number') {
                                 $wideRow->getControlContent()->addTemplate(
-                                    new EnumNumberRoField(
-                                        $pathArray[1],
+                                    new EnumNumberDfRoField(
+                                        $field['path'],
+                                        $id,
                                         $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                                     )
                                 );
                             }
                             if ($naeType === 'enum_text') {
                                 $wideRow->getControlContent()->addTemplate(
-                                    new EnumTextRoField(
-                                        $pathArray[1],
+                                    new EnumTextDfRoField(
+                                        $field['path'],
+                                        $id,
                                         $this->propertiesUtilsV3->getPropertyEnumsList($prop),
                                     )
                                 );
                             }
                             if ($naeType === 'file') {
-                                $wideRow->getControlContent()->addTemplate(new FileRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new FileDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'fileMultiple') {
-                                $wideRow->getControlContent()->addTemplate(new FileMultipleRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new FileMultipleDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'float') {
-                                $wideRow->getControlContent()->addTemplate(new FloatRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new FloatDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'float4') {
-                                $wideRow->getControlContent()->addTemplate(new FloatRoField($pathArray[1], 4));
+                                $wideRow->getControlContent()->addTemplate(new FloatDfRoField($field['path'], $id, 4));
                             }
                             if ($naeType === 'image') {
-                                $wideRow->getControlContent()->addTemplate(new ImageRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new ImageDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'text') {
-                                $wideRow->getControlContent()->addTemplate(new LargeTextRoField($pathArray[1], isset($prop['as']) ? $prop['as'] : ''));
+                                $wideRow->getControlContent()->addTemplate(new LargeTextDfRoField($field['path'], $id, isset($prop['as']) ? $prop['as'] : ''));
                             }
                             if ($naeType === 'number') {
-                                $wideRow->getControlContent()->addTemplate(new NumberRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new NumberDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'object') {
-                                $objectProp = $this->propertiesUtilsV3->getPropertyForPath($field['path']);
+                                $objectProp = $this->propertiesUtilsV3->getPropertyForPath($field['path'], $id);
 
-                                $objectField = new ObjectRoField(
-                                    $pathArray[1],
+                                $objectField = new ObjectDfRoField(
+                                    $field['path'],
+                                    $id,
                                     $prop['entity'],
                                     $pathArray[2],
                                     $objectProp['entity']
@@ -257,13 +265,13 @@ class ViewContentService {
                                 $wideRow->getControlContent()->addTemplate($objectField);
                             }
                             if ($naeType === 'status') {
-                                $wideRow->getControlContent()->addTemplate(new StatusRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new StatusDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'string_array') {
-                                $wideRow->getControlContent()->addTemplate(new StringArrayRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new StringArrayDfRoField($field['path'], $id));
                             }
                             if ($naeType === 'string') {
-                                $wideRow->getControlContent()->addTemplate(new StringRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(new StringDfRoField($field['path'], $id));
                             }
 
                             $wideRow->setFieldVisibilityData([
