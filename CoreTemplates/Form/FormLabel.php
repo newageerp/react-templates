@@ -9,6 +9,8 @@ class FormLabel extends Template
 {
     protected string $text = '';
 
+    protected ?string $paddingTop = null;
+
     public function __construct(string $text)
     {
         $this->text = $text;
@@ -18,6 +20,7 @@ class FormLabel extends Template
     {
         return [
             'text' => $this->getText(),
+            'paddingTop' => $this->getPaddingTop(),
         ];
     }
 
@@ -46,6 +49,30 @@ class FormLabel extends Template
     public function setText(string $text): self
     {
         $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of paddingTop
+     *
+     * @return ?string
+     */
+    public function getPaddingTop(): ?string
+    {
+        return $this->paddingTop;
+    }
+
+    /**
+     * Set the value of paddingTop
+     *
+     * @param ?string $paddingTop
+     *
+     * @return self
+     */
+    public function setPaddingTop(?string $paddingTop): self
+    {
+        $this->paddingTop = $paddingTop;
 
         return $this;
     }
