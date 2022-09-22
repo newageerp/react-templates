@@ -36,7 +36,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\WideRow;
 use Newageerp\SfReactTemplates\CoreTemplates\Layout\FlexRow;
 use Newageerp\SfReactTemplates\CoreTemplates\View\ViewFormContent;
 
-class ViewContentService
+class ViewDfContentService
 {
 
     protected ViewFormsUtilsV3 $viewFormsUtilsV3;
