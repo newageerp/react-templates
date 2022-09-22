@@ -80,7 +80,11 @@ class EditContentService {
                         'fieldSchema' => $schema,
                     ]);
 
-                    $editableForm->getChildren()->addTemplate($wideRow);
+                    if ($flexRow !== null) {
+                        $flexRow->getChildren()->addTemplate($wideRow);
+                    } else {
+                        $editableForm->getChildren()->addTemplate($wideRow);
+                    }
                 } else if ($field['type'] === 'label') {
                     $formLabel = new FormLabel($field['text']);
                     if ($fieldIndex === 0) {
@@ -94,7 +98,11 @@ class EditContentService {
                         'fieldSchema' => $schema,
                     ]);
 
-                    $editableForm->getChildren()->addTemplate($wideRow);
+                    if ($flexRow !== null) {
+                        $flexRow->getChildren()->addTemplate($wideRow);
+                    } else {
+                        $editableForm->getChildren()->addTemplate($wideRow);
+                    }
                 } else if ($field['type'] === 'hint') {
                     $wideRow = new WideRow();
                     $wideRow->getControlContent()->addTemplate(new FormHint($field['text']));
@@ -103,7 +111,11 @@ class EditContentService {
                         'fieldSchema' => $schema,
                     ]);
 
-                    $editableForm->getChildren()->addTemplate($wideRow);
+                    if ($flexRow !== null) {
+                        $flexRow->getChildren()->addTemplate($wideRow);
+                    } else {
+                        $editableForm->getChildren()->addTemplate($wideRow);
+                    }
                 } else if ($field['type'] === 'separator') {
                     $editableForm->getChildren()->addTemplate(new FormFieldSeparator());
                 } else {
