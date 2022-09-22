@@ -71,7 +71,7 @@ class EditContentService {
                 $flexRow->setClassName('tw3-gap-2');
             }
 
-            foreach ($fields as $field) {
+            foreach ($fields as $fieldIndex => $field) {
                 if ($field['type'] === 'tagCloud') {
                     $wideRow = new WideRow();
                     $wideRow->getControlContent()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
@@ -82,8 +82,13 @@ class EditContentService {
 
                     $editableForm->getChildren()->addTemplate($wideRow);
                 } else if ($field['type'] === 'label') {
+                    $formLabel = new FormLabel($field['text']);
+                    if ($fieldIndex === 0) {
+                        $formLabel->setPaddingTop('tw3-pt-0');
+                    }
+                    
                     $wideRow = new WideRow();
-                    $wideRow->getControlContent()->addTemplate(new FormLabel($field['text']));
+                    $wideRow->getControlContent()->addTemplate($formLabel);
                     $wideRow->setFieldVisibilityData([
                         'fieldKey' => 'label:' . $field['text'],
                         'fieldSchema' => $schema,
