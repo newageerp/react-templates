@@ -32,7 +32,7 @@ class FilesWidgetItem
             'title' => $this->getTitle(),
             'folder' => $this->getEntity() . '/' . $this->getElementId() . '/' . $this->getFolder(),
             'hint' => $this->getHint(),
-            'allowUpload' => $this->getAllowUpload(),
+            'disableUpload' => !$this->getAllowUpload(),
             'actions' => $this->getActions(),
         ];
     }
