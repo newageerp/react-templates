@@ -1,6 +1,6 @@
 <?php
 
-namespace Newageerp\SfReactTemplates\CoreTemplates\Form;
+namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
