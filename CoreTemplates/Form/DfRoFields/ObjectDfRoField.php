@@ -9,7 +9,7 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ObjectDfRoField extends FormDfBaseField
 {
-    protected string $fieldSchema = '';
+    protected string $idPath = '';
     protected string $relKey = '';
     protected string $relSchema = '';
     protected ?string $as = null;
@@ -17,7 +17,12 @@ class ObjectDfRoField extends FormDfBaseField
     public function __construct(string $key, int $id, string $fieldSchema, string $relKey, string $relSchema)
     {
         parent::__construct($key, $id);
-        
+
+        $pathArray = explode(".", $key);
+        $pathArray[count($pathArray) - 1] = 'id';
+        $idPath = implode(".", $pathArray);
+
+        $this->idPath = $idPath;
         $this->fieldSchema = $fieldSchema;
         $this->relKey = $relKey;
         $this->relSchema = $relSchema;
@@ -27,6 +32,7 @@ class ObjectDfRoField extends FormDfBaseField
     {
         $props = parent::getProps();
 
+        $props['idPath'] = $this->getIdPath();
         $props['fieldSchema'] = $this->getFieldSchema();
         $props['relKey'] = $this->getRelKey();
         $props['relSchema'] = $this->getRelSchema();
@@ -136,4 +142,27 @@ class ObjectDfRoField extends FormDfBaseField
         return $this;
     }
 
+    /**
+     * Get the value of idPath
+     *
+     * @return string
+     */
+    public function getIdPath(): string
+    {
+        return $this->idPath;
+    }
+
+    /**
+     * Set the value of idPath
+     *
+     * @param string $idPath
+     *
+     * @return self
+     */
+    public function setIdPath(string $idPath): self
+    {
+        $this->idPath = $idPath;
+
+        return $this;
+    }
 }
