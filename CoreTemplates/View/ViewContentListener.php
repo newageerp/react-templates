@@ -9,8 +9,9 @@ use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\CoreTemplates\Toolbar\ToolbarTitle;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Newageerp\SfUservice\Service\UService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Newageerp\SfUservice\Service\UService;
+
 
 class ViewContentListener implements EventSubscriberInterface
 {
