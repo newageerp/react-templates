@@ -65,9 +65,10 @@ class TableRowService
 
                 if (isset($field['componentName']) && $field['componentName']) {
                 } else {
-                    $prop = $this->getPropertiesUtilsV3()->getPropertyForPath($col['path']);
-
                     $pathArray = explode(".", $col['path']);
+                    $level1Path = $pathArray[0] . '.' . $pathArray[1];
+
+                    $prop = $this->getPropertiesUtilsV3()->getPropertyForPath($level1Path);
 
                     if ($prop) {
                         $alignment = $this->getPropertiesUtilsV3()->getPropertyTableAlignment($prop, $col);
