@@ -179,7 +179,7 @@ class TableRowService
 
                         if ($tpl) {
                             if (isset($col['link']) && $col['link'] > 0 && $naeType !== 'object') {
-                                $rsButton = new RsButtonTemplate($prop['schema']);
+                                $rsButton = new RsButtonTemplate($prop['entity']);
                                 $rsButton->setDefaultClick($col['link'] === 10);
                                 $rsButton->getChildren()->addTemplate($tpl);
 
