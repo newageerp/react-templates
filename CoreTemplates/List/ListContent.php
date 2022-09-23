@@ -14,12 +14,15 @@ class ListContent extends Template
 
     protected Placeholder $tableHeader;
 
+    protected Placeholder $tableRow;
+
     public function __construct(string $schema, string $type)
     {
         $this->schema = $schema;
         $this->type = $type;
 
         $this->tableHeader = new Placeholder();
+        $this->tableRow = new Placeholder();
     }
     
 
@@ -28,6 +31,7 @@ class ListContent extends Template
         return [
             'creatable' => true, // TODO
             'tableHeader' => $this->tableHeader->toArray(),
+            'tableRow' => $this->tableRow->toArray(),
         ];
     }
 
@@ -112,6 +116,30 @@ class ListContent extends Template
     public function setTableHeader(Placeholder $tableHeader): self
     {
         $this->tableHeader = $tableHeader;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tableRow
+     *
+     * @return Placeholder
+     */
+    public function getTableRow(): Placeholder
+    {
+        return $this->tableRow;
+    }
+
+    /**
+     * Set the value of tableRow
+     *
+     * @param Placeholder $tableRow
+     *
+     * @return self
+     */
+    public function setTableRow(Placeholder $tableRow): self
+    {
+        $this->tableRow = $tableRow;
 
         return $this;
     }

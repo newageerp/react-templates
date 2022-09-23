@@ -15,7 +15,7 @@ class ObjectRoField extends FormBaseField
 
     public function __construct(string $key, string $fieldSchema, string $relKey, string $relSchema)
     {
-        $this->key = $key;
+        parent::__construct($key);
         $this->fieldSchema = $fieldSchema;
         $this->relKey = $relKey;
         $this->relSchema = $relSchema;
