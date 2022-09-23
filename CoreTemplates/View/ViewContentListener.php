@@ -64,6 +64,12 @@ class ViewContentListener implements EventSubscriberInterface
             $elementToolbarAfterFieldsContent = new LoadTemplateEvent($viewContent->getElementToolbarAfterFieldsContent(), 'PageMainViewElementToolbarAfterFieldsContent', $event->getData());
             $this->eventDispatcher->dispatch($elementToolbarAfterFieldsContent, LoadTemplateEvent::NAME);
 
+            $elementToolbarLine2BeforeContent = new LoadTemplateEvent($viewContent->getElementToolbarLine2BeforeContent(), 'PageMainViewElementToolbarLine2BeforeContent', $event->getData());
+            $this->eventDispatcher->dispatch($elementToolbarLine2BeforeContent, LoadTemplateEvent::NAME);
+
+            $elementToolbarMoreMenuContent = new LoadTemplateEvent($viewContent->getElementToolbarMoreMenuContent(), 'PageMainViewElementToolbarMoreMenuContent', $event->getData());
+            $this->eventDispatcher->dispatch($elementToolbarMoreMenuContent, LoadTemplateEvent::NAME);
+
             $viewContent->getFormContent()->setIsCompact($isCompact);
 
             $this->viewContentService->fillFormContent(

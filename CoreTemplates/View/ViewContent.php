@@ -19,6 +19,9 @@ class ViewContent extends Template
     protected Placeholder $rightContent;
     protected Placeholder $afterTitleBlockContent;
     protected Placeholder $elementToolbarAfterFieldsContent;
+    protected Placeholder $elementToolbarLine2BeforeContent;
+
+    protected Placeholder $elementToolbarMoreMenuContent;
 
     protected ViewFormContent $formContent;
 
@@ -32,6 +35,8 @@ class ViewContent extends Template
         $this->rightContent = new Placeholder();
         $this->afterTitleBlockContent = new Placeholder();
         $this->elementToolbarAfterFieldsContent = new Placeholder();
+        $this->elementToolbarLine2BeforeContent = new Placeholder();
+        $this->elementToolbarMoreMenuContent = new Placeholder();
 
         $this->formContent = new ViewFormContent($schema, $type);
     }
@@ -45,6 +50,9 @@ class ViewContent extends Template
             'rightContent' => $this->getRightContent()->toArray(),
             'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
             'elementToolbarAfterFieldsContent' => $this->getElementToolbarAfterFieldsContent()->toArray(),
+            'elementToolbarLine2BeforeContent' => $this->getElementToolbarLine2BeforeContent()->toArray(),
+
+            'elementToolbarMoreMenuContent' => $this->getElementToolbarMoreMenuContent()->toArray(),
 
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
@@ -221,6 +229,55 @@ class ViewContent extends Template
     public function setFormContent(ViewFormContent $formContent): self
     {
         $this->formContent = $formContent;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of elementToolbarLine2BeforeContent
+     *
+     * @return Placeholder
+     */
+    public function getElementToolbarLine2BeforeContent(): Placeholder
+    {
+        return $this->elementToolbarLine2BeforeContent;
+    }
+
+    /**
+     * Set the value of elementToolbarLine2BeforeContent
+     *
+     * @param Placeholder $elementToolbarLine2BeforeContent
+     *
+     * @return self
+     */
+    public function setElementToolbarLine2BeforeContent(Placeholder $elementToolbarLine2BeforeContent): self
+    {
+        $this->elementToolbarLine2BeforeContent = $elementToolbarLine2BeforeContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of elementToolbarMoreMenuContent
+     *
+     * @return Placeholder
+     */
+    public function getElementToolbarMoreMenuContent(): Placeholder
+    {
+        return $this->elementToolbarMoreMenuContent;
+    }
+
+    /**
+     * Set the value of elementToolbarMoreMenuContent
+     *
+     * @param Placeholder $elementToolbarMoreMenuContent
+     *
+     * @return self
+     */
+    public function setElementToolbarMoreMenuContent(Placeholder $elementToolbarMoreMenuContent): self
+    {
+        $this->elementToolbarMoreMenuContent = $elementToolbarMoreMenuContent;
 
         return $this;
     }
