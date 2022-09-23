@@ -9,6 +9,7 @@ class ObjectColumn extends ListBaseColumn {
     protected string $relKey = '';
     protected string $relSchema = '';
     protected ?string $as = null;
+    protected ?string $hasLink = null;
 
     public function __construct(string $key, string $fieldSchema, string $relKey, string $relSchema)
     {
@@ -26,6 +27,7 @@ class ObjectColumn extends ListBaseColumn {
         $props['relKey'] = $this->getRelKey();
         $props['relSchema'] = $this->getRelSchema();
         $props['as'] = $this->getAs();
+        $props['hasLink'] = $this->getHasLink();
 
         return $props;
     }
@@ -131,4 +133,28 @@ class ObjectColumn extends ListBaseColumn {
         return $this;
     }
 
+
+    /**
+     * Get the value of hasLink
+     *
+     * @return ?string
+     */
+    public function getHasLink(): ?string
+    {
+        return $this->hasLink;
+    }
+
+    /**
+     * Set the value of hasLink
+     *
+     * @param ?string $hasLink
+     *
+     * @return self
+     */
+    public function setHasLink(?string $hasLink): self
+    {
+        $this->hasLink = $hasLink;
+
+        return $this;
+    }
 }

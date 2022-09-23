@@ -5,6 +5,8 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Buttons\RsButton;
+use Newageerp\SfReactTemplates\CoreTemplates\Buttons\RsButtonTemplate;
 use Newageerp\SfReactTemplates\CoreTemplates\Data\DataString;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\AudioColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\BoolColumn;
@@ -77,110 +79,118 @@ class TableRowService
                         }
 
                         $naeType = $this->propertiesUtilsV3->getPropertyNaeType($prop, $col);
-                            // if ($naeType === 'array') {
-                            //     [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
 
-                            //     $wideRow->getControlContent()->addTemplate(
-                            //         new ArrayRoField(
-                            //             $pathArray[1],
-                            //             $tabSchema,
-                            //             $tabType,
-                            //         )
-                            //     );
-                            // }
-                            if ($naeType === 'audio') {
-                                $td->getContents()->addTemplate(new AudioColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'bool') {
-                                $td->getContents()->addTemplate(new BoolColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'color') {
-                                $td->getContents()->addTemplate(new ColorColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'date') {
-                                $td->getContents()->addTemplate(new DateColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'datetime') {
-                                $td->getContents()->addTemplate(new DateTimeColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'enum_multi_number') {
-                                $td->getContents()->addTemplate(
-                                    new EnumMultiNumberColumn(
-                                        $pathArray[1],
-                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                                    )
-                                );
-                            }
-                            if ($naeType === 'enum_multi_text') {
-                                $td->getContents()->addTemplate(
-                                    new EnumMultiTextColumn(
-                                        $pathArray[1],
-                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                                    )
-                                );
-                            }
-                            if ($naeType === 'enum_number') {
-                                $td->getContents()->addTemplate(
-                                    new EnumNumberColumn(
-                                        $pathArray[1],
-                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                                    )
-                                );
-                            }
-                            if ($naeType === 'enum_text') {
-                                $td->getContents()->addTemplate(
-                                    new EnumTextColumn(
-                                        $pathArray[1],
-                                        $this->propertiesUtilsV3->getPropertyEnumsList($prop),
-                                    )
-                                );
-                            }
-                            if ($naeType === 'file') {
-                                $td->getContents()->addTemplate(new FileColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'fileMultiple') {
-                                $td->getContents()->addTemplate(new FileMultipleColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'float') {
-                                $td->getContents()->addTemplate(new FloatColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'float4') {
-                                $td->getContents()->addTemplate(new FloatColumn($pathArray[1], 4));
-                            }
-                            if ($naeType === 'image') {
-                                $td->getContents()->addTemplate(new ImageColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'text') {
-                                $td->getContents()->addTemplate(new LargeTextColumn($pathArray[1], isset($prop['as']) ? $prop['as'] : ''));
-                            }
-                            if ($naeType === 'number') {
-                                $td->getContents()->addTemplate(new NumberColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'object') {
-                                $objectProp = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
+                        $tpl = null;
+                        // if ($naeType === 'array') {
+                        //     [$tabSchema, $tabType] = explode(':', $field['arrayRelTab']);
 
-                                $objectField = new ObjectColumn(
-                                    $pathArray[1],
-                                    $prop['entity'],
-                                    $pathArray[2],
-                                    $objectProp['entity']
-                                );
-                                $objectField->setAs($prop['as']);
+                        //     $wideRow->getControlContent()->addTemplate(
+                        //         new ArrayRoField(
+                        //             $pathArray[1],
+                        //             $tabSchema,
+                        //             $tabType,
+                        //         )
+                        //     );
+                        // }
+                        if ($naeType === 'audio') {
+                            $tpl = new AudioColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'bool') {
+                            $tpl = new BoolColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'color') {
+                            $tpl = new ColorColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'date') {
+                            $tpl = new DateColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'datetime') {
+                            $tpl = new DateTimeColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'enum_multi_number') {
+                            $tpl = new EnumMultiNumberColumn(
+                                $pathArray[1],
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            );
+                        }
+                        if ($naeType === 'enum_multi_text') {
+                            $tpl = new EnumMultiTextColumn(
+                                $pathArray[1],
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            );
+                        }
+                        if ($naeType === 'enum_number') {
+                            $tpl = new EnumNumberColumn(
+                                $pathArray[1],
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            );
+                        }
+                        if ($naeType === 'enum_text') {
+                            $tpl = new EnumTextColumn(
+                                $pathArray[1],
+                                $this->propertiesUtilsV3->getPropertyEnumsList($prop),
+                            );
+                        }
+                        if ($naeType === 'file') {
+                            $tpl = new FileColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'fileMultiple') {
+                            $tpl = new FileMultipleColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'float') {
+                            $tpl = new FloatColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'float4') {
+                            $tpl = new FloatColumn($pathArray[1], 4);
+                        }
+                        if ($naeType === 'image') {
+                            $tpl = new ImageColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'text') {
+                            $tpl = new LargeTextColumn($pathArray[1], isset($prop['as']) ? $prop['as'] : '');
+                        }
+                        if ($naeType === 'number') {
+                            $tpl = new NumberColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'object') {
+                            $objectProp = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
 
-                                $td->getContents()->addTemplate($objectField);
+                            $objectField = new ObjectColumn(
+                                $pathArray[1],
+                                $prop['entity'],
+                                $pathArray[2],
+                                $objectProp['entity']
+                            );
+                            $objectField->setAs($prop['as']);
+
+                            $objectField->setHasLink((isset($col['link']) && $col['link'] > 0 ? ($col['link'] === 10 ? 'main' : 'popup') : null));
+
+                            $tpl = $objectField;
+                        }
+                        if ($naeType === 'status') {
+                            $tpl = new StatusColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'string_array') {
+                            $tpl = new StringArrayColumn($pathArray[1]);
+                        }
+                        if ($naeType === 'string') {
+                            $tpl = new StringColumn($pathArray[1]);
+                        }
+
+                        if ($tpl) {
+                            if (isset($col['link']) && $col['link'] > 0 && $naeType !== 'object') {
+                                $rsButton = new RsButtonTemplate($prop['schema']);
+                                $rsButton->setDefaultClick($col['link'] === 10);
+                                $rsButton->getChildren()->addTemplate($tpl);
+
+                                $td->getContents()->addTemplate($rsButton);
+                            } else {
+                                $td->getContents()->addTemplate($tpl);
                             }
-                            if ($naeType === 'status') {
-                                $td->getContents()->addTemplate(new StatusColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'string_array') {
-                                $td->getContents()->addTemplate(new StringArrayColumn($pathArray[1]));
-                            }
-                            if ($naeType === 'string') {
-                                $td->getContents()->addTemplate(new StringColumn($pathArray[1]));
-                            }
+                        }
                     }
                 }
-                
+
                 $tr->getContents()->addTemplate($td);
             }
         }
