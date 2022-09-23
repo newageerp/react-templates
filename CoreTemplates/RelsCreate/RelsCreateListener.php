@@ -4,10 +4,10 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\RelsCreate;
 
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Buttons\MainButton;
+use Newageerp\SfReactTemplates\CoreTemplates\Buttons\ToolbarButton;
 use Newageerp\SfReactTemplates\CoreTemplates\Buttons\ToolbarButtonWithMenu;
 use Newageerp\SfReactTemplates\CoreTemplates\Modal\Menu;
 use Newageerp\SfReactTemplates\CoreTemplates\Modal\MenuItemWithCreate;
-use Newageerp\SfReactTemplates\CoreTemplates\ToolbarButton;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,8 +37,7 @@ class RelsCreateListener implements EventSubscriberInterface
                 );
 
                 if (count($relsForEntity) > 0) {
-                    $mainButton = new MainButton();
-                    $mainButton->setIconName('plus');
+                    $mainButton = new ToolbarButton('plus');
 
                     $menu = new Menu(true);
 

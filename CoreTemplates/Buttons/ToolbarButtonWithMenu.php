@@ -7,10 +7,10 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarButtonWithMenu extends Template
 {
-    protected MainButton $button;
+    protected ToolbarButton $button;
     protected Menu $menu;
 
-    public function __construct(MainButton $button, Menu $menu)
+    public function __construct(ToolbarButton $button, Menu $menu)
     {
         $this->button = $button;
         $this->menu = $menu;
@@ -19,8 +19,8 @@ class ToolbarButtonWithMenu extends Template
     public function getProps(): array
     {
         return [
-            'button' => $this->getButton()->toArray(),
-            'menu' => $this->getMenu()->toArray(),
+            'button' => $this->getButton()->toArray()['props'],
+            'menu' => $this->getMenu()->toArray()['props'],
         ];
     }
 
@@ -33,9 +33,9 @@ class ToolbarButtonWithMenu extends Template
     /**
      * Get the value of button
      *
-     * @return MainButton
+     * @return ToolbarButton
      */
-    public function getButton(): MainButton
+    public function getButton(): ToolbarButton
     {
         return $this->button;
     }
@@ -43,11 +43,11 @@ class ToolbarButtonWithMenu extends Template
     /**
      * Set the value of button
      *
-     * @param MainButton $button
+     * @param ToolbarButton $button
      *
      * @return self
      */
-    public function setButton(MainButton $button): self
+    public function setButton(ToolbarButton $button): self
     {
         $this->button = $button;
 
