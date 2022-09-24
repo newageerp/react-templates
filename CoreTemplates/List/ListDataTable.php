@@ -9,7 +9,7 @@ class ListDataTable extends Template
 {
     protected Placeholder $header;
     protected Placeholder $row;
-    protected ?string $className;
+    protected ?string $className = null;
 
     public function __construct()
     {
