@@ -11,6 +11,12 @@ class ListDataTable extends Template
     protected Placeholder $row;
     protected ?string $className;
 
+    public function __construct()
+    {
+        $this->header = new Placeholder();
+        $this->row = new Placeholder();
+    }
+
     public function getProps(): array
     {
         return [
