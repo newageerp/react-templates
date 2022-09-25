@@ -26,7 +26,6 @@ class TableService
     public function buildListDataSourceForRel(
         string $schema,
         string $type,
-        string $targetSchema,
         string $targetKey,
         int $elementId
     ): ListDataSource {
@@ -49,9 +48,9 @@ class TableService
             $type,
         );
         $listDataSource->setSocketData([
-            'id' => $targetSchema . '.' . $targetKey . '.' . $schema . '.' . $type . '.rel',
+            'id' => $targetKey . '.' . $schema . '.' . $type . '.rel',
             'data' => [
-                $targetSchema . '.' . $targetKey . '.id' => $elementId,
+                $schema . '.' . $targetKey . '.id' => $elementId,
             ]
         ]);
         $listDataSource->getChildren()->addTemplate($listTable);
