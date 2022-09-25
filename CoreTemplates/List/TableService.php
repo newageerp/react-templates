@@ -23,7 +23,43 @@ class TableService
         $this->tabsUtilsV3 = $tabsUtilsV3;
     }
 
-    public function buildListDataSource(string $schema, string $type) : ListDataSource
+    public function buildListDataSourceForRel(
+        string $schema,
+        string $type,
+        string $targetSchema,
+        string $targetKey,
+        int $elementId
+    ): ListDataSource {
+        $listDataSource = $this->tableService->buildListDataSource(
+            $schema,
+            $type,
+        );
+        $listDataSource->setExtraFilters(
+            [
+                [
+                    'and' => [
+                        ['i.' . $targetKey, '=', $elementId, true]
+
+                    ]
+                ]
+            ]
+        );
+        $listTable = $this->tableService->buildTableData(
+            $schema,
+            $type,
+        );
+        $listDataSource->setSocketData([
+            'id' => $targetSchema . '.' . $targetKey . '.' . $schema . '.' . $type . '.rel',
+            'data' => [
+                $targetSchema . '.' . $targetKey . '.id' => $elementId,
+            ]
+        ]);
+        $listDataSource->getChildren()->addTemplate($listTable);
+
+        return $listDataSource;
+    }
+
+    public function buildListDataSource(string $schema, string $type): ListDataSource
     {
         $tabQs = $this->tabsUtilsV3->getTabQsFields($schema, $type);
         $tabSort = $this->tabsUtilsV3->getTabSort($schema, $type);
