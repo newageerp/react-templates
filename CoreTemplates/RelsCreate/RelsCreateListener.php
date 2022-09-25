@@ -54,6 +54,9 @@ class RelsCreateListener implements EventSubscriberInterface
                             $el['target'],
                             isset($el['forcePopup']) && $el['forcePopup'],
                         );
+                        if (isset($el['createOptions']) && $el['createOptions']) {
+                            $item->setCreateOptions($el['createOptions']);
+                        }
                         $menu->getChildren()->addTemplate($item);
                     }
                     $event->getPlaceholder()->addTemplate($button);
