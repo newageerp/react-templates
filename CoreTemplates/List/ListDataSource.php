@@ -20,6 +20,8 @@ class ListDataSource extends Template
     protected bool $scrollToHeaderOnLoad = true;
     protected bool $disableVerticalMargin = false;
 
+    protected ?array $socketData = null;
+
     public function __construct(string $schema, string $type)
     {
         $this->schema = $schema;
@@ -32,6 +34,8 @@ class ListDataSource extends Template
         return [
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
+
+            'socketData' => $this->getSocketData(),
 
             'children' => $this->getChildren()->toArray(),
             'hidePaging' => $this->getHidePaging(),
@@ -260,6 +264,30 @@ class ListDataSource extends Template
     public function setDisableVerticalMargin(bool $disableVerticalMargin): self
     {
         $this->disableVerticalMargin = $disableVerticalMargin;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of socketData
+     *
+     * @return ?array
+     */
+    public function getSocketData(): ?array
+    {
+        return $this->socketData;
+    }
+
+    /**
+     * Set the value of socketData
+     *
+     * @param ?array $socketData
+     *
+     * @return self
+     */
+    public function setSocketData(?array $socketData): self
+    {
+        $this->socketData = $socketData;
 
         return $this;
     }
