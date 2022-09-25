@@ -47,8 +47,9 @@ class RelsCreateListener implements EventSubscriberInterface
                     );
 
                     foreach ($relsForEntity as $el) {
+                        $title = isset($el['title']) && $el['title'] ? $el['title'] : $this->entitiesUtilsV3->getTitleBySlug($el['target']);
                         $item = new MenuItemWithCreate(
-                            $this->entitiesUtilsV3->getTitleBySlug($el['target']),
+                            $title,
                             $event->getData()['id'],
                             $el['source'],
                             $el['target'],
