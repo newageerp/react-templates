@@ -29,7 +29,7 @@ class TableService
         string $targetKey,
         int $elementId
     ): ListDataSource {
-        $listDataSource = $this->tableService->buildListDataSource(
+        $listDataSource = $this->buildListDataSource(
             $schema,
             $type,
         );
@@ -43,7 +43,7 @@ class TableService
                 ]
             ]
         );
-        $listTable = $this->tableService->buildTableData(
+        $listTable = $this->buildTableData(
             $schema,
             $type,
         );
