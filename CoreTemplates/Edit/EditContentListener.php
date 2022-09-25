@@ -42,15 +42,18 @@ class EditContentListener implements EventSubscriberInterface
     public function onTemplate(LoadTemplateEvent $event)
     {
         if ($event->isTemplateForAnyEntity('PageMainEdit')) {
+            $schema = $event->getData()['schema'];
+            $type = isset($event->getData()['type']) && $event->getData()['type'] ? $event->getData()['type'] : 'main';
+
             $id = $event->getData()['id'] === 'new' ? 0 : $event->getData()['id'];
 
             $entity = $this->uservice->getEntityFromSchemaAndId(
-                $event->getData()['schema'],
+                $schema,
                 $id
             );
             $editContent = new EditContent(
-                $event->getData()['schema'],
-                $event->getData()['type'],
+                $schema,
+                $type,
                 $event->getData()['id'],
                 $entity
             );
@@ -65,8 +68,8 @@ class EditContentListener implements EventSubscriberInterface
             $editContent->setNewStateOptions($newStateOptions);
 
             $this->editContentService->fillFormContent(
-                $event->getData()['schema'],
-                $event->getData()['type'],
+                $schema,
+                $type,
                 $editContent->getFormContent(),
                 $isCompact
             );
@@ -78,7 +81,7 @@ class EditContentListener implements EventSubscriberInterface
             } else {
                 $event->getPlaceholder()->addTemplate($editContent);
 
-                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($event->getData()['schema']));
+                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitleBySlug($schema));
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
