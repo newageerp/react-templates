@@ -17,6 +17,8 @@ class ViewContent extends Template
     protected ?object $entity = null;
 
     protected Placeholder $rightContent;
+    protected Placeholder $bottomContent;
+
     protected Placeholder $afterTitleBlockContent;
     protected Placeholder $elementToolbarAfterFieldsContent;
     protected Placeholder $elementToolbarLine2BeforeContent;
@@ -33,6 +35,8 @@ class ViewContent extends Template
         $this->entity = $entity;
 
         $this->rightContent = new Placeholder();
+        $this->bottomContent = new Placeholder();
+
         $this->afterTitleBlockContent = new Placeholder();
         $this->elementToolbarAfterFieldsContent = new Placeholder();
         $this->elementToolbarLine2BeforeContent = new Placeholder();
@@ -47,7 +51,10 @@ class ViewContent extends Template
             'formContent' => [$this->getFormContent()->toArray()],
             'editable' => EntityPermissionService::checkIsEditable($this->entity),
             'removable' => EntityPermissionService::checkIsRemovable($this->entity),
+
             'rightContent' => $this->getRightContent()->toArray(),
+            'bottomContent' => $this->getBottomContent()->toArray(),
+
             'afterTitleBlockContent' => $this->getAfterTitleBlockContent()->toArray(),
             'elementToolbarAfterFieldsContent' => $this->getElementToolbarAfterFieldsContent()->toArray(),
             'elementToolbarLine2BeforeContent' => $this->getElementToolbarLine2BeforeContent()->toArray(),
@@ -278,6 +285,30 @@ class ViewContent extends Template
     public function setElementToolbarMoreMenuContent(Placeholder $elementToolbarMoreMenuContent): self
     {
         $this->elementToolbarMoreMenuContent = $elementToolbarMoreMenuContent;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of bottomContent
+     *
+     * @return Placeholder
+     */
+    public function getBottomContent(): Placeholder
+    {
+        return $this->bottomContent;
+    }
+
+    /**
+     * Set the value of bottomContent
+     *
+     * @param Placeholder $bottomContent
+     *
+     * @return self
+     */
+    public function setBottomContent(Placeholder $bottomContent): self
+    {
+        $this->bottomContent = $bottomContent;
 
         return $this;
     }

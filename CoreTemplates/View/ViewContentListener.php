@@ -59,6 +59,9 @@ class ViewContentListener implements EventSubscriberInterface
             $rightContentEvent = new LoadTemplateEvent($viewContent->getRightContent(), 'PageMainViewRightContent', $event->getData());
             $this->eventDispatcher->dispatch($rightContentEvent, LoadTemplateEvent::NAME);
 
+            $bottomContentEvent = new LoadTemplateEvent($viewContent->getBottomContent(), 'PageMainViewBottomContent', $event->getData());
+            $this->eventDispatcher->dispatch($bottomContentEvent, LoadTemplateEvent::NAME);
+
             $afterTitleBlockContentEvent = new LoadTemplateEvent($viewContent->getAfterTitleBlockContent(), 'PageMainViewAfterTitleBlockContent', $event->getData());
             $this->eventDispatcher->dispatch($afterTitleBlockContentEvent, LoadTemplateEvent::NAME);
 
