@@ -81,12 +81,16 @@ class TableService
 
     public function buildListDataSource(string $schema, string $type): ListDataSource
     {
+        $tab = $this->tabsUtilsV3->getTabBySchemaAndType($schema, $type);
         $tabQs = $this->tabsUtilsV3->getTabQsFields($schema, $type);
         $tabSort = $this->tabsUtilsV3->getTabSort($schema, $type);
 
         $listDataSource = new ListDataSource($schema, $type);
         $listDataSource->setQuickSearchFields($tabQs);
         $listDataSource->setSort($tabSort);
+        if (isset($tab['pageSize']) && $tab['pageSize']) {
+            $listDataSource->setPageSize($tab['pageSize']);
+        }
 
         $filters = [];
         if ($fs = $this->tabsUtilsV3->getTabFilter($schema, $type)) {
