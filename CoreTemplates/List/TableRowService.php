@@ -173,7 +173,10 @@ class TableRowService
                             $tpl = $objectField;
                         }
                         if ($naeType === 'status') {
-                            $tpl = new StatusColumn($pathArray[1]);
+                            $tpl = new StatusColumn(
+                                $pathArray[1],
+                                $prop['entity']
+                            );
                         }
                         if ($naeType === 'string_array') {
                             $tpl = new StringArrayColumn($pathArray[1]);

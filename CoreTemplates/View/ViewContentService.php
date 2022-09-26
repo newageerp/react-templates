@@ -36,7 +36,8 @@ use Newageerp\SfReactTemplates\CoreTemplates\Form\Rows\WideRow;
 use Newageerp\SfReactTemplates\CoreTemplates\Layout\FlexRow;
 use Newageerp\SfReactTemplates\CoreTemplates\View\ViewFormContent;
 
-class ViewContentService {
+class ViewContentService
+{
 
     protected ViewFormsUtilsV3 $viewFormsUtilsV3;
 
@@ -257,7 +258,12 @@ class ViewContentService {
                                 $wideRow->getControlContent()->addTemplate($objectField);
                             }
                             if ($naeType === 'status') {
-                                $wideRow->getControlContent()->addTemplate(new StatusRoField($pathArray[1]));
+                                $wideRow->getControlContent()->addTemplate(
+                                    new StatusRoField(
+                                        $pathArray[1],
+                                        $prop['entity']
+                                    )
+                                );
                             }
                             if ($naeType === 'string_array') {
                                 $wideRow->getControlContent()->addTemplate(new StringArrayRoField($pathArray[1]));

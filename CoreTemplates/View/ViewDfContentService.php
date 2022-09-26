@@ -265,7 +265,13 @@ class ViewDfContentService
                                 $wideRow->getControlContent()->addTemplate($objectField);
                             }
                             if ($naeType === 'status') {
-                                $wideRow->getControlContent()->addTemplate(new StatusDfRoField($field['path'], $id));
+                                $wideRow->getControlContent()->addTemplate(
+                                    new StatusDfRoField(
+                                        $field['path'],
+                                        $id,
+                                        $prop['entity']
+                                    )
+                                );
                             }
                             if ($naeType === 'string_array') {
                                 $wideRow->getControlContent()->addTemplate(new StringArrayDfRoField($field['path'], $id));
