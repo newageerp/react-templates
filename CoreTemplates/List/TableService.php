@@ -6,6 +6,7 @@ use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Cards\WhiteCard;
 use Newageerp\SfReactTemplates\Template\Placeholder;
+use Newageerp\SfReactTemplates\Template\Template;
 
 class TableService
 {
@@ -39,7 +40,7 @@ class TableService
         string $targetKey,
         int $elementId,
         ?int $wrapWithCard = self::NOWRAP,
-    ): ListDataSource {
+    ): Template {
         $listDataSource = $this->buildListDataSource(
             $schema,
             $type,
