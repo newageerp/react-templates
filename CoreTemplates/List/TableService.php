@@ -70,7 +70,7 @@ class TableService
         if ($wrapWithCard >= self::WRAPWITHCARD) {
             $whiteCard = new WhiteCard();
             if ($wrapWithCard === self::WRAPWITHCARDANDTITLE) {
-                $whiteCard->setTitle($this->getEntitiesUtilsV3()->getTitlePluralBySlug('contact'));
+                $whiteCard->setTitle($this->getEntitiesUtilsV3()->getTitlePluralBySlug($schema));
             }
             $whiteCard->getChildren()->addTemplate($listDataSource);
             return $whiteCard;
