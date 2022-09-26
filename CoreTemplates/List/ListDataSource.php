@@ -22,6 +22,8 @@ class ListDataSource extends Template
 
     protected ?array $socketData = null;
 
+    protected int $pageSize = 20;
+
     public function __construct(string $schema, string $type)
     {
         $this->schema = $schema;
@@ -44,6 +46,8 @@ class ListDataSource extends Template
             'extraFilters' => $this->getExtraFilters(),
             'scrollToHeaderOnLoad' => $this->getScrollToHeaderOnLoad(),
             'disableVerticalMargin' => $this->getDisableVerticalMargin(),
+
+            'pageSize' => $this->getPageSize(),
         ];
     }
 
@@ -288,6 +292,30 @@ class ListDataSource extends Template
     public function setSocketData(?array $socketData): self
     {
         $this->socketData = $socketData;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pageSize
+     *
+     * @return int
+     */
+    public function getPageSize(): int
+    {
+        return $this->pageSize;
+    }
+
+    /**
+     * Set the value of pageSize
+     *
+     * @param int $pageSize
+     *
+     * @return self
+     */
+    public function setPageSize(int $pageSize): self
+    {
+        $this->pageSize = $pageSize;
 
         return $this;
     }
