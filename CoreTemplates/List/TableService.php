@@ -2,32 +2,43 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
+use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\Cards\WhiteCard;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 
 class TableService
 {
+    public const NOWRAP = 0;
+    public const WRAPWITHCARD = 10;
+    public const WRAPWITHCARDANDTITLE = 20;
+
     protected TableHeaderService $tableHeaderService;
 
     protected TableRowService $tableRowService;
 
     protected TabsUtilsV3 $tabsUtilsV3;
 
+    protected EntitiesUtilsV3 $entitiesUtilsV3;
+
     public function __construct(
         TableHeaderService $tableHeaderService,
         TableRowService $tableRowService,
         TabsUtilsV3 $tabsUtilsV3,
+        EntitiesUtilsV3 $entitiesUtilsV3,
     ) {
         $this->tableHeaderService = $tableHeaderService;
         $this->tableRowService = $tableRowService;
         $this->tabsUtilsV3 = $tabsUtilsV3;
+        $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
     public function buildListDataSourceForRel(
         string $schema,
         string $type,
         string $targetKey,
-        int $elementId
+        int $elementId,
+        ?int $wrapWithCard = self::NOWRAP,
     ): ListDataSource {
         $listDataSource = $this->buildListDataSource(
             $schema,
@@ -54,6 +65,15 @@ class TableService
             ]
         ]);
         $listDataSource->getChildren()->addTemplate($listTable);
+
+        if ($wrapWithCard >= self::WRAPWITHCARD) {
+            $whiteCard = new WhiteCard();
+            if ($wrapWithCard === self::WRAPWITHCARDANDTITLE) {
+                $whiteCard->setTitle($this->getEntitiesUtilsV3()->getTitlePluralBySlug('contact'));
+            }
+            $whiteCard->getChildren()->addTemplate($listDataSource);
+            return $whiteCard;
+        }
 
         return $listDataSource;
     }
@@ -93,5 +113,29 @@ class TableService
         $tableData->getRow()->addTemplate($tbody);
 
         return $tableData;
+    }
+
+    /**
+     * Get the value of entitiesUtilsV3
+     *
+     * @return EntitiesUtilsV3
+     */
+    public function getEntitiesUtilsV3(): EntitiesUtilsV3
+    {
+        return $this->entitiesUtilsV3;
+    }
+
+    /**
+     * Set the value of entitiesUtilsV3
+     *
+     * @param EntitiesUtilsV3 $entitiesUtilsV3
+     *
+     * @return self
+     */
+    public function setEntitiesUtilsV3(EntitiesUtilsV3 $entitiesUtilsV3): self
+    {
+        $this->entitiesUtilsV3 = $entitiesUtilsV3;
+
+        return $this;
     }
 }
