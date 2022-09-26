@@ -67,11 +67,11 @@ class TableRowService
                 $pathArray = explode(".", $col['path']);
                 $level1Path = $pathArray[0] . '.' . $pathArray[1];
 
-                if (isset($field['componentName']) && $field['componentName']) {
+                if (isset($col['componentName']) && $col['componentName']) {
                     $td->getContents()->addTemplate(
                         new CustomColumn(
                             $pathArray[1],
-                            $field['componentName']
+                            $col['componentName']
                         )
                     );
                 } else {
