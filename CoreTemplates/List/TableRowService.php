@@ -9,6 +9,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\Buttons\RsButtonTemplate;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\AudioColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\BoolColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\ColorColumn;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\CustomColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\DateColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\DateTimeColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\EnumMultiNumberColumn;
@@ -63,11 +64,17 @@ class TableRowService
 
                 $td = new TableTd();
 
-                if (isset($field['componentName']) && $field['componentName']) {
-                } else {
-                    $pathArray = explode(".", $col['path']);
-                    $level1Path = $pathArray[0] . '.' . $pathArray[1];
+                $pathArray = explode(".", $col['path']);
+                $level1Path = $pathArray[0] . '.' . $pathArray[1];
 
+                if (isset($field['componentName']) && $field['componentName']) {
+                    $td->getContents()->addTemplate(
+                        new CustomColumn(
+                            $pathArray[1],
+                            $field['componentName']
+                        )
+                    );
+                } else {
                     $prop = $this->getPropertiesUtilsV3()->getPropertyForPath($level1Path);
 
                     if ($prop) {
