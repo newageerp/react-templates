@@ -178,6 +178,13 @@ class TableRowService
                                 $prop['entity']
                             );
                         }
+                        if ($naeType === 'status-short') {
+                            $tpl = new StatusColumn(
+                                $pathArray[1],
+                                $prop['entity']
+                            );
+                            $tpl->setIsSmall(true);
+                        }
                         if ($naeType === 'string_array') {
                             $tpl = new StringArrayColumn($pathArray[1]);
                         }

@@ -7,6 +7,8 @@ use Newageerp\SfReactTemplates\CoreTemplates\List\ListBaseColumn;
 class StatusColumn extends ListBaseColumn {
     protected string $schema = '';
 
+    protected bool $isSmall = false;
+
     public function __construct(string $key, string $schema)
     {
         parent::__construct($key);
@@ -18,6 +20,7 @@ class StatusColumn extends ListBaseColumn {
         $props = parent::getProps();
 
         $props['schema'] = $this->getSchema();
+        $props['isSmall'] = $this->getIsSmall();
 
         return $props;
     }
@@ -47,6 +50,30 @@ class StatusColumn extends ListBaseColumn {
     public function setSchema(string $schema): self
     {
         $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isSmall
+     *
+     * @return bool
+     */
+    public function getIsSmall(): bool
+    {
+        return $this->isSmall;
+    }
+
+    /**
+     * Set the value of isSmall
+     *
+     * @param bool $isSmall
+     *
+     * @return self
+     */
+    public function setIsSmall(bool $isSmall): self
+    {
+        $this->isSmall = $isSmall;
 
         return $this;
     }
