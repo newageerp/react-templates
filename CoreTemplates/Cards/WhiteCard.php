@@ -11,6 +11,8 @@ class WhiteCard extends Template
 
     protected bool $isCompact = false;
 
+    protected ?string $title = null;
+
     public function __construct(?Placeholder $children = null)
     {
         $this->children = $children ? $children : new Placeholder();
@@ -21,6 +23,7 @@ class WhiteCard extends Template
         return [
             'children' => $this->getChildren()->toArray(),
             'isCompact' => $this->getIsCompact(),
+            'title' => $this->getTitle(),
         ];
     }
 
@@ -73,6 +76,30 @@ class WhiteCard extends Template
     public function setIsCompact(bool $isCompact): self
     {
         $this->isCompact = $isCompact;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     *
+     * @return ?string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @param ?string $title
+     *
+     * @return self
+     */
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

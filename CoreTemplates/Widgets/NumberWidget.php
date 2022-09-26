@@ -237,4 +237,5 @@ class NumberWidget extends Template
 
         return $this;
     }
+
 }
