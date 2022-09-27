@@ -16,15 +16,19 @@ class ListContent extends Template
 
     protected Placeholder $tableRow;
 
-    public function __construct(string $schema, string $type)
+    protected ListToolbar $toolbar;
+
+    public function __construct(string $schema, string $type, ?ListToolbar $toolbar = null)
     {
         $this->schema = $schema;
         $this->type = $type;
 
         $this->tableHeader = new Placeholder();
         $this->tableRow = new Placeholder();
+
+        $this->toolbar = $toolbar ? $toolbar : new ListToolbar();
     }
-    
+
 
     public function getTemplateData(): array
     {
@@ -32,6 +36,8 @@ class ListContent extends Template
             'creatable' => true, // TODO
             'tableHeader' => $this->tableHeader->toArray(),
             'tableRow' => $this->tableRow->toArray(),
+
+            'toolbar' => $this->getToolbar()->toArray(),
         ];
     }
 
@@ -140,6 +146,30 @@ class ListContent extends Template
     public function setTableRow(Placeholder $tableRow): self
     {
         $this->tableRow = $tableRow;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of toolbar
+     *
+     * @return ListToolbar
+     */
+    public function getToolbar(): ListToolbar
+    {
+        return $this->toolbar;
+    }
+
+    /**
+     * Set the value of toolbar
+     *
+     * @param ListToolbar $toolbar
+     *
+     * @return self
+     */
+    public function setToolbar(ListToolbar $toolbar): self
+    {
+        $this->toolbar = $toolbar;
 
         return $this;
     }
