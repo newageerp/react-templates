@@ -26,16 +26,20 @@ class ListContentListener implements EventSubscriberInterface
 
     protected TabsUtilsV3 $tabsUtilsV3;
 
+    protected TableService $tableService;
+
     public function __construct(
         EntitiesUtilsV3 $entitiesUtilsV3,
         TableHeaderService $tableHeaderService,
         TableRowService $tableRowService,
         TabsUtilsV3 $tabsUtilsV3,
+        TableService $tableService,
     ) {
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
         $this->tableHeaderService = $tableHeaderService;
         $this->tableRowService = $tableRowService;
         $this->tabsUtilsV3 = $tabsUtilsV3;
+        $this->tableService = $tableService;
     }
 
     public function onTemplate(LoadTemplateEvent $event)
@@ -47,87 +51,11 @@ class ListContentListener implements EventSubscriberInterface
             );
             $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
 
-            $tr = $this->tableHeaderService->buildHeaderRow(
+            $listDataSource = $this->getTableService()->buildListDataSourceWithToolbar(
                 $event->getData()['schema'],
                 $event->getData()['type'],
             );
-            $listContent->getTableHeader()->addTemplate($tr);
-
-            $tr = $this->tableRowService->buildDataRow(
-                $event->getData()['schema'],
-                $event->getData()['type'],
-            );
-            $listContent->getTableRow()->addTemplate($tr);
-
-            // toolbar
-            $tab = $this->getTabsUtilsV3()->getTabBySchemaAndType(
-                $event->getData()['schema'],
-                $event->getData()['type'],
-            );
-            if ($tab) {
-                // CREATE BUTTON
-                $disableCreate = isset($tab['disableCreate']) && $tab['disableCreate'];
-                if (
-                    !$disableCreate &&
-                    $this->getEntitiesUtilsV3()->checkIsCreatable(
-                        $event->getData()['schema'],
-                        AuthService::getInstance()->getUser()->getPermissionGroup(),
-                    )
-                ) {
-                    $listContent->getToolbar()->getToolbarLeft()->addTemplate(
-                        new ToolbarNewButton($event->getData()['schema'])
-                    );
-                }
-
-                // QS
-                $qsFields = $this->getTabsUtilsV3()->getTabQsFields(
-                    $event->getData()['schema'],
-                    $event->getData()['type'],
-                );
-                if (count($qsFields) > 0) {
-                    $listContent->getToolbar()->getToolbarLeft()->addTemplate(
-                        new ToolbarQs($qsFields)
-                    );
-                }
-
-                // TABS SWITCH
-                $tabsSwitch = $this->getTabsUtilsV3()->getTabsSwitchOptions(
-                    $event->getData()['schema'],
-                    $event->getData()['type'],
-                );
-                if (count($tabsSwitch) > 0) {
-                    $listContent->getToolbar()->getToolbarLeft()->addTemplate(
-                        new ToolbarTabSwitch(
-                            $event->getData()['schema'],
-                            $event->getData()['type'],
-                            $tabsSwitch
-                        )
-                    );
-                }
-
-                // TABS EXPORT
-                if (isset($tab['exports']) && $tab['exports']) {
-                    $listContent->getToolbar()->getToolbarRight()->addTemplate(
-                        new ToolbarExport($event->getData()['schema'], $tab['exports'])
-                    );
-                }
-
-                // SORT
-                $sort = $this->getTabsUtilsV3()->getTabSort(
-                    $event->getData()['schema'],
-                    $event->getData()['type'],
-                );
-                if (count($sort) > 0) {
-                    $listContent->getToolbar()->getToolbarRight()->addTemplate(
-                        new ToolbarSort($event->getData()['schema'], $sort)
-                    );
-                }
-
-                // DETAILED SEARCH
-                $listContent->getToolbar()->getToolbarRight()->addTemplate(
-                    new ToolbarDetailedSearch($event->getData()['schema'])
-                );
-            }
+            $listContent->getChildren()->addTemplate($listDataSource);
 
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
@@ -193,6 +121,30 @@ class ListContentListener implements EventSubscriberInterface
     public function setEntitiesUtilsV3(EntitiesUtilsV3 $entitiesUtilsV3): self
     {
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tableService
+     *
+     * @return TableService
+     */
+    public function getTableService(): TableService
+    {
+        return $this->tableService;
+    }
+
+    /**
+     * Set the value of tableService
+     *
+     * @param TableService $tableService
+     *
+     * @return self
+     */
+    public function setTableService(TableService $tableService): self
+    {
+        $this->tableService = $tableService;
 
         return $this;
     }

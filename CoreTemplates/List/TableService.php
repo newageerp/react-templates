@@ -2,9 +2,16 @@
 
 namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
+use Newageerp\SfAuth\Service\AuthService;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Cards\WhiteCard;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarDetailedSearch;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarExport;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarNewButton;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarQs;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarSort;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarTabSwitch;
 use Newageerp\SfReactTemplates\Template\Placeholder;
 use Newageerp\SfReactTemplates\Template\Template;
 
@@ -37,6 +44,93 @@ class TableService
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
+    public function buildListDataSourceWithToolbar(
+        string $schema,
+        string $type,
+    ) {
+        $listDataSource = $this->buildListDataSource(
+            $schema,
+            $type,
+        );
+        $listTable = $this->buildTableData(
+            $schema,
+            $type,
+        );
+        $listDataSource->getChildren()->addTemplate($listTable);
+
+        // toolbar
+        $tab = $this->getTabsUtilsV3()->getTabBySchemaAndType(
+            $schema,
+            $type,
+        );
+        if ($tab) {
+            // CREATE BUTTON
+            $disableCreate = isset($tab['disableCreate']) && $tab['disableCreate'];
+            if (
+                !$disableCreate &&
+                $this->getEntitiesUtilsV3()->checkIsCreatable(
+                    $schema,
+                    AuthService::getInstance()->getUser()->getPermissionGroup(),
+                )
+            ) {
+                $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
+                    new ToolbarNewButton($schema)
+                );
+            }
+
+            // QS
+            $qsFields = $this->getTabsUtilsV3()->getTabQsFields(
+                $schema,
+                $type,
+            );
+            if (count($qsFields) > 0) {
+                $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
+                    new ToolbarQs($qsFields)
+                );
+            }
+
+            // TABS SWITCH
+            $tabsSwitch = $this->getTabsUtilsV3()->getTabsSwitchOptions(
+                $schema,
+                $type,
+            );
+            if (count($tabsSwitch) > 0) {
+                $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
+                    new ToolbarTabSwitch(
+                        $schema,
+                        $type,
+                        $tabsSwitch
+                    )
+                );
+            }
+
+            // TABS EXPORT
+            if (isset($tab['exports']) && $tab['exports']) {
+                $listDataSource->getToolbar()->getToolbarRight()->addTemplate(
+                    new ToolbarExport($schema, $tab['exports'])
+                );
+            }
+
+            // SORT
+            $sort = $this->getTabsUtilsV3()->getTabSort(
+                $schema,
+                $type,
+            );
+            if (count($sort) > 0) {
+                $listDataSource->getToolbar()->getToolbarRight()->addTemplate(
+                    new ToolbarSort($schema, $sort)
+                );
+            }
+
+            // DETAILED SEARCH
+            $listDataSource->getToolbar()->getToolbarRight()->addTemplate(
+                new ToolbarDetailedSearch($schema)
+            );
+        }
+
+        return $listDataSource;
+    }
+
     public function buildListDataSourceForRel(
         string $schema,
         string $type,
@@ -48,16 +142,13 @@ class TableService
             $schema,
             $type,
         );
-        $listDataSource->setExtraFilters(
-            [
-                [
-                    'and' => [
-                        ['i.' . $targetKey, '=', $elementId, true]
-
-                    ]
-                ]
+        $filters = $listDataSource->getExtraFilters();
+        $filters[] = [
+            'and' => [
+                ['i.' . $targetKey, '=', $elementId, true]
             ]
-        );
+        ];
+        $listDataSource->setExtraFilters($filters);
         $listTable = $this->buildTableData(
             $schema,
             $type,
@@ -91,11 +182,9 @@ class TableService
     public function buildListDataSource(string $schema, string $type): ListDataSource
     {
         $tab = $this->tabsUtilsV3->getTabBySchemaAndType($schema, $type);
-        $tabQs = $this->tabsUtilsV3->getTabQsFields($schema, $type);
         $tabSort = $this->tabsUtilsV3->getTabSort($schema, $type);
 
         $listDataSource = new ListDataSource($schema, $type);
-        $listDataSource->setQuickSearchFields($tabQs);
         $listDataSource->setSort($tabSort);
         if (isset($tab['pageSize']) && $tab['pageSize']) {
             $listDataSource->setPageSize($tab['pageSize']);
@@ -149,6 +238,30 @@ class TableService
     public function setEntitiesUtilsV3(EntitiesUtilsV3 $entitiesUtilsV3): self
     {
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tabsUtilsV3
+     *
+     * @return TabsUtilsV3
+     */
+    public function getTabsUtilsV3(): TabsUtilsV3
+    {
+        return $this->tabsUtilsV3;
+    }
+
+    /**
+     * Set the value of tabsUtilsV3
+     *
+     * @param TabsUtilsV3 $tabsUtilsV3
+     *
+     * @return self
+     */
+    public function setTabsUtilsV3(TabsUtilsV3 $tabsUtilsV3): self
+    {
+        $this->tabsUtilsV3 = $tabsUtilsV3;
 
         return $this;
     }

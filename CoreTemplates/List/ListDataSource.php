@@ -8,8 +8,9 @@ use Newageerp\SfReactTemplates\Template\Template;
 class ListDataSource extends Template
 {
     protected Placeholder $children;
+    protected ListToolbar $toolbar;
+
     protected bool $hidePaging = false;
-    protected array $quickSearchFields = [];
     protected array $sort = [];
 
     protected string $schema = '';
@@ -18,7 +19,6 @@ class ListDataSource extends Template
     protected array $extraFilters = [];
 
     protected bool $scrollToHeaderOnLoad = true;
-    protected bool $disableVerticalMargin = false;
 
     protected ?array $socketData = null;
 
@@ -29,6 +29,7 @@ class ListDataSource extends Template
         $this->schema = $schema;
         $this->type = $type;
         $this->children = new Placeholder();
+        $this->toolbar = new ListToolbar();
     }
 
     public function getProps(): array
@@ -41,13 +42,13 @@ class ListDataSource extends Template
 
             'children' => $this->getChildren()->toArray(),
             'hidePaging' => $this->getHidePaging(),
-            'quickSearchFields' => $this->getQuickSearchFields(),
             'sort' => $this->getSort(),
             'extraFilters' => $this->getExtraFilters(),
             'scrollToHeaderOnLoad' => $this->getScrollToHeaderOnLoad(),
-            'disableVerticalMargin' => $this->getDisableVerticalMargin(),
 
             'pageSize' => $this->getPageSize(),
+
+            'toolbar' => [$this->getToolbar()->toArray()],
         ];
     }
 
@@ -100,30 +101,6 @@ class ListDataSource extends Template
     public function setHidePaging(bool $hidePaging): self
     {
         $this->hidePaging = $hidePaging;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of quickSearchFields
-     *
-     * @return array
-     */
-    public function getQuickSearchFields(): array
-    {
-        return $this->quickSearchFields;
-    }
-
-    /**
-     * Set the value of quickSearchFields
-     *
-     * @param array $quickSearchFields
-     *
-     * @return self
-     */
-    public function setQuickSearchFields(array $quickSearchFields): self
-    {
-        $this->quickSearchFields = $quickSearchFields;
 
         return $this;
     }
@@ -249,30 +226,6 @@ class ListDataSource extends Template
     }
 
     /**
-     * Get the value of disableVerticalMargin
-     *
-     * @return bool
-     */
-    public function getDisableVerticalMargin(): bool
-    {
-        return $this->disableVerticalMargin;
-    }
-
-    /**
-     * Set the value of disableVerticalMargin
-     *
-     * @param bool $disableVerticalMargin
-     *
-     * @return self
-     */
-    public function setDisableVerticalMargin(bool $disableVerticalMargin): self
-    {
-        $this->disableVerticalMargin = $disableVerticalMargin;
-
-        return $this;
-    }
-
-    /**
      * Get the value of socketData
      *
      * @return ?array
@@ -316,6 +269,30 @@ class ListDataSource extends Template
     public function setPageSize(int $pageSize): self
     {
         $this->pageSize = $pageSize;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of toolbar
+     *
+     * @return ListToolbar
+     */
+    public function getToolbar(): ListToolbar
+    {
+        return $this->toolbar;
+    }
+
+    /**
+     * Set the value of toolbar
+     *
+     * @param ListToolbar $toolbar
+     *
+     * @return self
+     */
+    public function setToolbar(ListToolbar $toolbar): self
+    {
+        $this->toolbar = $toolbar;
 
         return $this;
     }

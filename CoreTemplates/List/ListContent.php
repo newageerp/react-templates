@@ -12,33 +12,13 @@ class ListContent extends Template
 
     protected string $type = '';
 
-    protected Placeholder $tableHeader;
+    protected Placeholder $children;
 
-    protected Placeholder $tableRow;
-
-    protected ListToolbar $toolbar;
-
-    public function __construct(string $schema, string $type, ?ListToolbar $toolbar = null)
+    public function __construct(string $schema, string $type)
     {
         $this->schema = $schema;
         $this->type = $type;
-
-        $this->tableHeader = new Placeholder();
-        $this->tableRow = new Placeholder();
-
-        $this->toolbar = $toolbar ? $toolbar : new ListToolbar();
-    }
-
-
-    public function getTemplateData(): array
-    {
-        return [
-            'creatable' => true, // TODO
-            'tableHeader' => $this->tableHeader->toArray(),
-            'tableRow' => $this->tableRow->toArray(),
-
-            'toolbar' => $this->getToolbar()->toArray(),
-        ];
+        $this->children = new Placeholder();
     }
 
     public function getProps(): array
@@ -46,6 +26,7 @@ class ListContent extends Template
         return [
             'schema' => $this->getSchema(),
             'type' => $this->getType(),
+            'children' => $this->getChildren()->toArray(),
         ];
     }
 
@@ -102,74 +83,27 @@ class ListContent extends Template
         return $this;
     }
 
+
     /**
-     * Get the value of tableHeader
+     * Get the value of children
      *
      * @return Placeholder
      */
-    public function getTableHeader(): Placeholder
+    public function getChildren(): Placeholder
     {
-        return $this->tableHeader;
+        return $this->children;
     }
 
     /**
-     * Set the value of tableHeader
+     * Set the value of children
      *
-     * @param Placeholder $tableHeader
+     * @param Placeholder $children
      *
      * @return self
      */
-    public function setTableHeader(Placeholder $tableHeader): self
+    public function setChildren(Placeholder $children): self
     {
-        $this->tableHeader = $tableHeader;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of tableRow
-     *
-     * @return Placeholder
-     */
-    public function getTableRow(): Placeholder
-    {
-        return $this->tableRow;
-    }
-
-    /**
-     * Set the value of tableRow
-     *
-     * @param Placeholder $tableRow
-     *
-     * @return self
-     */
-    public function setTableRow(Placeholder $tableRow): self
-    {
-        $this->tableRow = $tableRow;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of toolbar
-     *
-     * @return ListToolbar
-     */
-    public function getToolbar(): ListToolbar
-    {
-        return $this->toolbar;
-    }
-
-    /**
-     * Set the value of toolbar
-     *
-     * @param ListToolbar $toolbar
-     *
-     * @return self
-     */
-    public function setToolbar(ListToolbar $toolbar): self
-    {
-        $this->toolbar = $toolbar;
+        $this->children = $children;
 
         return $this;
     }
