@@ -12,7 +12,10 @@ class TableService
 {
     public const NOWRAP = 0;
     public const WRAPWITHCARD = 10;
+    public const WRAPWITHCARDCOMPACT = 11;
+
     public const WRAPWITHCARDANDTITLE = 20;
+    public const WRAPWITHCARDANDTITLECOMPACT = 21;
 
     protected TableHeaderService $tableHeaderService;
 
@@ -69,8 +72,14 @@ class TableService
 
         if ($wrapWithCard >= self::WRAPWITHCARD) {
             $whiteCard = new WhiteCard();
-            if ($wrapWithCard === self::WRAPWITHCARDANDTITLE) {
+            if ($wrapWithCard === self::WRAPWITHCARDCOMPACT) {
+                $whiteCard->setIsCompact(true);
+            }
+            if ($wrapWithCard >= self::WRAPWITHCARDANDTITLE) {
                 $whiteCard->setTitle($this->getEntitiesUtilsV3()->getTitlePluralBySlug($schema));
+                if ($wrapWithCard === self::WRAPWITHCARDANDTITLECOMPACT) {
+                    $whiteCard->setIsCompact(true);
+                }
             }
             $whiteCard->getChildren()->addTemplate($listDataSource);
             return $whiteCard;
