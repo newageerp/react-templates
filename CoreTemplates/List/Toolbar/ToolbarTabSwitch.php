@@ -8,11 +8,14 @@ class ToolbarTabSwitch extends Template
 {
     protected string $schema;
 
+    protected string $type;
+
     protected array $tabs = [];
 
-    public function __construct(string $schema, array $tabs)
+    public function __construct(string $schema, string $type, array $tabs)
     {
         $this->schema = $schema;
+        $this->type = $type;
         $this->tabs = $tabs;
     }
 
@@ -20,6 +23,7 @@ class ToolbarTabSwitch extends Template
     {
         return [
             'schema' => $this->getSchema(),
+            'type' => $this->getType(),
             'tabs' => $this->getTabs(),
         ];
     }
@@ -73,6 +77,30 @@ class ToolbarTabSwitch extends Template
     public function setSchema(string $schema): self
     {
         $this->schema = $schema;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of type
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @param string $type
+     *
+     * @return self
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

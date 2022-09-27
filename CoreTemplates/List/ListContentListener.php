@@ -96,7 +96,11 @@ class ListContentListener implements EventSubscriberInterface
                 );
                 if (count($tabsSwitch) > 0) {
                     $listContent->getToolbar()->getToolbarLeft()->addTemplate(
-                        new ToolbarTabSwitch($tabsSwitch)
+                        new ToolbarTabSwitch(
+                            $event->getData()['schema'],
+                            $event->getData()['type'],
+                            $tabsSwitch
+                        )
                     );
                 }
 
