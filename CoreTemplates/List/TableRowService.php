@@ -108,6 +108,7 @@ class TableRowService
                         }
                         if ($naeType === 'date') {
                             $tpl = new DateColumn($pathArray[1]);
+                            $td->setClassName('tw3-whitespace-nowrap');
                         }
                         if ($naeType === 'datetime') {
                             $tpl = new DateTimeColumn($pathArray[1]);
@@ -162,7 +163,7 @@ class TableRowService
 
                             $fieldPath = $pathArray;
                             unset($fieldPath[0]);
-                            
+
                             $idPath = array_values($fieldPath);
                             $idPath[count($idPath) - 1] = 'id';
 

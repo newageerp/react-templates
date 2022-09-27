@@ -11,6 +11,8 @@ class TableTd extends Template
 
     protected ?string $textAlignment = null;
 
+    protected ?string $className = null;
+
 
     public function __construct(?Placeholder $contents = null)
     {
@@ -27,6 +29,7 @@ class TableTd extends Template
         return [
             'contents' => $this->getContents()->toArray(),
             'textAlignment' => $this->getTextAlignment(),
+            'className' => $this->getClassName(),
         ];
     }
 
@@ -75,6 +78,30 @@ class TableTd extends Template
     public function setContents(Placeholder $contents): self
     {
         $this->contents = $contents;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of className
+     *
+     * @return ?string
+     */
+    public function getClassName(): ?string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Set the value of className
+     *
+     * @param ?string $className
+     *
+     * @return self
+     */
+    public function setClassName(?string $className): self
+    {
+        $this->className = $className;
 
         return $this;
     }
