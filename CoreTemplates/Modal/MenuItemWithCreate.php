@@ -11,6 +11,7 @@ class MenuItemWithCreate extends MenuItem
     protected string $sourceSchema = '';
     protected ?bool $forcePopup = null;
     protected array $createOptions = [];
+    protected array $scopes = [];
 
     public function __construct(
         string $children,
@@ -36,6 +37,7 @@ class MenuItemWithCreate extends MenuItem
         $props['sourceSchema'] = $this->getSourceSchema();
         $props['forcePopup'] = $this->getForcePopup();
         $props['createOptions'] = $this->getCreateOptions();
+        $props['scopes'] = $this->getScopes();
 
         return $props;
     }
@@ -161,6 +163,30 @@ class MenuItemWithCreate extends MenuItem
     public function setCreateOptions(array $createOptions): self
     {
         $this->createOptions = $createOptions;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of scopes
+     *
+     * @return array
+     */
+    public function getScopes(): array
+    {
+        return $this->scopes;
+    }
+
+    /**
+     * Set the value of scopes
+     *
+     * @param array $scopes
+     *
+     * @return self
+     */
+    public function setScopes(array $scopes): self
+    {
+        $this->scopes = $scopes;
 
         return $this;
     }

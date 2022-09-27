@@ -58,6 +58,14 @@ class RelsCreateListener implements EventSubscriberInterface
                         if (isset($el['createOptions']) && $el['createOptions']) {
                             $item->setCreateOptions($el['createOptions']);
                         }
+                        $scopes = [];
+                        if (isset($el['showScopes'])) {
+                            $scopes['showScopes'] = $el['showScopes'];
+                        }
+                        if (isset($el['hideScopes'])) {
+                            $scopes['hideScopes'] = $el['hideScopes'];
+                        }
+                        $item->setScopes($scopes);
                         $menu->getChildren()->addTemplate($item);
                     }
                     $event->getPlaceholder()->addTemplate($button);
