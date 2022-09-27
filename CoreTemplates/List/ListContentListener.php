@@ -55,6 +55,7 @@ class ListContentListener implements EventSubscriberInterface
                 $event->getData()['schema'],
                 $event->getData()['type'],
             );
+            $listDataSource->setScrollToHeaderOnLoad(true);
             $listContent->getChildren()->addTemplate($listDataSource);
 
             if ($isPopup) {
