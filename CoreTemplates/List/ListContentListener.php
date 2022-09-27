@@ -69,6 +69,43 @@ class ListContentListener implements EventSubscriberInterface
                 $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
+
+        if ($event->isTemplateForAnyEntity('PageInlineList')) {
+            $listContent = new ListContent(
+                $event->getData()['schema'],
+                $event->getData()['type'],
+            );
+            $isPopup = isset($event->getData()['isPopup']) && $event->getData()['isPopup'];
+
+            $listDataSource = $this->getTableService()->buildListDataSource(
+                $event->getData()['schema'],
+                $event->getData()['type'],
+            );
+            if (isset($event->getData()['extraFilters']) && $event->getData()['extraFilters']) {
+                $listDataSource->setExtraFilters(
+                    $event->getData()['extraFilters']
+                );
+            }
+            $listTable = $this->getTableService()->buildTableData(
+                $event->getData()['schema'],
+                $event->getData()['type'],
+            );
+
+            $listDataSource->getChildren()->addTemplate($listTable);
+
+            $listContent->getChildren()->addTemplate($listDataSource);
+
+            if ($isPopup) {
+                $popupWindow = new PopupWindow();
+                $popupWindow->getChildren()->addTemplate($listContent);
+                $event->getPlaceholder()->addTemplate($popupWindow);
+            } else {
+                $event->getPlaceholder()->addTemplate($listContent);
+
+                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitlePluralBySlug($event->getData()['schema']));
+                $event->getPlaceholder()->addTemplate($toolbarTitle);
+            }
+        }
     }
 
     public static function getSubscribedEvents()
