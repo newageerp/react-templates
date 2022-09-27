@@ -162,7 +162,8 @@ class TableRowService
 
                             $fieldPath = $pathArray;
                             unset($fieldPath[0]);
-                            $idPath = array_values($pathArray);
+                            
+                            $idPath = array_values($fieldPath);
                             $idPath[count($idPath) - 1] = 'id';
 
                             $fieldkey = implode(".", $fieldPath);
