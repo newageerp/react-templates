@@ -5,6 +5,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 use Newageerp\SfAuth\Service\AuthService;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarDetailedSearch;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarExport;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarNewButton;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarQs;
@@ -121,6 +122,11 @@ class ListContentListener implements EventSubscriberInterface
                         new ToolbarSort($event->getData()['schema'], $sort)
                     );
                 }
+
+                // DETAILED SEARCH
+                $listContent->getToolbar()->getToolbarRight()->addTemplate(
+                    new ToolbarDetailedSearch($event->getData()['schema'])
+                );
             }
 
             if ($isPopup) {
