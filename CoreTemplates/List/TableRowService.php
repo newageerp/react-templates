@@ -160,10 +160,17 @@ class TableRowService
                         if ($naeType === 'object') {
                             $objectProp = $this->propertiesUtilsV3->getPropertyForPath($col['path']);
 
+                            $fieldPath = $pathArray;
+                            unset($fieldPath[0]);
+                            $idPath = array_values($pathArray);
+                            $idPath[count($idPath) - 1] = 'id';
+
+                            $fieldkey = implode(".", $fieldPath);
+                            $idKey = implode(".", $idPath);
+
                             $objectField = new ObjectColumn(
-                                $pathArray[1],
-                                $prop['entity'],
-                                $pathArray[2],
+                                $fieldkey,
+                                $idKey,
                                 $objectProp['entity']
                             );
                             $objectField->setAs($prop['as']);

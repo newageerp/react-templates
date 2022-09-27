@@ -5,17 +5,15 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\List\Columns;
 use Newageerp\SfReactTemplates\CoreTemplates\List\ListBaseColumn;
 
 class ObjectColumn extends ListBaseColumn {
-    protected string $fieldSchema = '';
-    protected string $relKey = '';
+    protected string $idKey = '';
     protected string $relSchema = '';
     protected ?string $as = null;
     protected ?string $hasLink = null;
 
-    public function __construct(string $key, string $fieldSchema, string $relKey, string $relSchema)
+    public function __construct(string $key, string $idKey, string $relSchema)
     {
         parent::__construct($key);
-        $this->fieldSchema = $fieldSchema;
-        $this->relKey = $relKey;
+        $this->idKey = $idKey;
         $this->relSchema = $relSchema;
     }
 
@@ -23,8 +21,7 @@ class ObjectColumn extends ListBaseColumn {
     {
         $props = parent::getProps();
 
-        $props['fieldSchema'] = $this->getFieldSchema();
-        $props['relKey'] = $this->getRelKey();
+        $props['idKey'] = $this->getIdKey();
         $props['relSchema'] = $this->getRelSchema();
         $props['as'] = $this->getAs();
         $props['hasLink'] = $this->getHasLink();
@@ -35,54 +32,6 @@ class ObjectColumn extends ListBaseColumn {
     public function getTemplateName(): string
     {
         return 'list.ro.objectcolumn';
-    }
-
-    /**
-     * Get the value of fieldSchema
-     *
-     * @return string
-     */
-    public function getFieldSchema(): string
-    {
-        return $this->fieldSchema;
-    }
-
-    /**
-     * Set the value of fieldSchema
-     *
-     * @param string $fieldSchema
-     *
-     * @return self
-     */
-    public function setFieldSchema(string $fieldSchema): self
-    {
-        $this->fieldSchema = $fieldSchema;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of relKey
-     *
-     * @return string
-     */
-    public function getRelKey(): string
-    {
-        return $this->relKey;
-    }
-
-    /**
-     * Set the value of relKey
-     *
-     * @param string $relKey
-     *
-     * @return self
-     */
-    public function setRelKey(string $relKey): self
-    {
-        $this->relKey = $relKey;
-
-        return $this;
     }
 
     /**
@@ -154,6 +103,30 @@ class ObjectColumn extends ListBaseColumn {
     public function setHasLink(?string $hasLink): self
     {
         $this->hasLink = $hasLink;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idKey
+     *
+     * @return string
+     */
+    public function getIdKey(): string
+    {
+        return $this->idKey;
+    }
+
+    /**
+     * Set the value of idKey
+     *
+     * @param string $idKey
+     *
+     * @return self
+     */
+    public function setIdKey(string $idKey): self
+    {
+        $this->idKey = $idKey;
 
         return $this;
     }
