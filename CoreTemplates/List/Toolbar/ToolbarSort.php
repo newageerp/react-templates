@@ -6,10 +6,13 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarSort extends Template
 {
+    protected string $schema;
+
     protected array $sort;
-    
-    public function __construct(array $sort)
+
+    public function __construct(string $schema, array $sort)
     {
+        $this->schema = $schema;
         $this->sort = $sort;
     }
 
@@ -21,7 +24,8 @@ class ToolbarSort extends Template
     public function getProps(): array
     {
         return [
-            'sort' => $this->getSort(),
+            'defaultSort' => $this->getSort(),
+            'schema' => $this->getSchema(),
         ];
     }
 
@@ -45,6 +49,30 @@ class ToolbarSort extends Template
     public function setSort(array $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of schema
+     *
+     * @return string
+     */
+    public function getSchema(): string
+    {
+        return $this->schema;
+    }
+
+    /**
+     * Set the value of schema
+     *
+     * @param string $schema
+     *
+     * @return self
+     */
+    public function setSchema(string $schema): self
+    {
+        $this->schema = $schema;
 
         return $this;
     }
