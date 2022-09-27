@@ -6,16 +6,20 @@ use Newageerp\SfReactTemplates\Template\Template;
 
 class ToolbarTabSwitch extends Template
 {
+    protected string $schema;
+
     protected array $tabs = [];
 
-    public function __construct(array $tabs)
+    public function __construct(string $schema, array $tabs)
     {
+        $this->schema = $schema;
         $this->tabs = $tabs;
     }
 
     public function getProps(): array
     {
         return [
+            'schema' => $this->getSchema(),
             'tabs' => $this->getTabs(),
         ];
     }
@@ -45,6 +49,30 @@ class ToolbarTabSwitch extends Template
     public function setTabs(array $tabs): self
     {
         $this->tabs = $tabs;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of schema
+     *
+     * @return string
+     */
+    public function getSchema(): string
+    {
+        return $this->schema;
+    }
+
+    /**
+     * Set the value of schema
+     *
+     * @param string $schema
+     *
+     * @return self
+     */
+    public function setSchema(string $schema): self
+    {
+        $this->schema = $schema;
 
         return $this;
     }
