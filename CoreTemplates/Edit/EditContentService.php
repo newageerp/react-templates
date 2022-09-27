@@ -64,6 +64,7 @@ class EditContentService {
             $groupedFields[$lineGroup][] = $field;
         }
 
+        $fieldIndex = 0;
         foreach ($groupedFields as $fields) {
             $flexRow = null;
             if (count($fields) > 1) {
@@ -71,7 +72,7 @@ class EditContentService {
                 $flexRow->setClassName('tw3-gap-2');
             }
 
-            foreach ($fields as $fieldIndex => $field) {
+            foreach ($fields as $field) {
                 if ($field['type'] === 'tagCloud') {
                     $wideRow = new WideRow();
                     $wideRow->getControlContent()->addTemplate(new FormFieldTagCloud($field['tagCloudField'], $field['tagCloudAction']));
@@ -285,6 +286,7 @@ class EditContentService {
                         $editableForm->getChildren()->addTemplate($wideRow);
                     }
                 }
+                $fieldIndex++;
             }
             if ($flexRow !== null) {
                 $editableForm->getChildren()->addTemplate($flexRow);
