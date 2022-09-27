@@ -103,7 +103,7 @@ class ListContentListener implements EventSubscriberInterface
                 // TABS EXPORT
                 if (isset($tab['exports']) && $tab['exports']) {
                     $listContent->getToolbar()->getToolbarRight()->addTemplate(
-                        new ToolbarExport($tab['exports'])
+                        new ToolbarExport($event->getData()['schema'], $tab['exports'])
                     );
                 }
 
