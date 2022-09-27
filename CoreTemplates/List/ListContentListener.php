@@ -114,7 +114,7 @@ class ListContentListener implements EventSubscriberInterface
                 );
                 if (count($sort) > 0) {
                     $listContent->getToolbar()->getToolbarRight()->addTemplate(
-                        new ToolbarSort($tab['exports'])
+                        new ToolbarSort($sort)
                     );
                 }
             }
