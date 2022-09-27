@@ -9,6 +9,8 @@ class Placeholder
      */
     protected array $templates = [];
 
+    protected array $placeholderTemplatesData = [];
+
     public function addTemplate(Template $template)
     {
         $this->templates[] = $template;
@@ -60,6 +62,30 @@ class Placeholder
             },
             $this->templates
         );
-        return array_merge(...$data);
+        return array_merge($this->getPlaceholderTemplatesData(), ...$data);
+    }
+
+    /**
+     * Get the value of placeholderTemplatesData
+     *
+     * @return array
+     */
+    public function getPlaceholderTemplatesData(): array
+    {
+        return $this->placeholderTemplatesData;
+    }
+
+    /**
+     * Set the value of placeholderTemplatesData
+     *
+     * @param array $placeholderTemplatesData
+     *
+     * @return self
+     */
+    public function setPlaceholderTemplatesData(array $placeholderTemplatesData): self
+    {
+        $this->placeholderTemplatesData = $placeholderTemplatesData;
+
+        return $this;
     }
 }
