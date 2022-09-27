@@ -5,8 +5,11 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 use Newageerp\SfAuth\Service\AuthService;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarExport;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarNewButton;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarQs;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarSort;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarTabSwitch;
 use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
@@ -61,6 +64,7 @@ class ListContentListener implements EventSubscriberInterface
                 $event->getData()['type'],
             );
             if ($tab) {
+                // CREATE BUTTON
                 $disableCreate = isset($tab['disableCreate']) && $tab['disableCreate'];
                 if (
                     !$disableCreate &&
@@ -74,6 +78,7 @@ class ListContentListener implements EventSubscriberInterface
                     );
                 }
 
+                // QS
                 $qsFields = $this->getTabsUtilsV3()->getTabQsFields(
                     $event->getData()['schema'],
                     $event->getData()['type'],
@@ -81,6 +86,35 @@ class ListContentListener implements EventSubscriberInterface
                 if (count($qsFields) > 0) {
                     $listContent->getToolbar()->getToolbarLeft()->addTemplate(
                         new ToolbarQs($qsFields)
+                    );
+                }
+
+                // TABS SWITCH
+                $tabsSwitch = $this->getTabsUtilsV3()->getTabsSwitchOptions(
+                    $event->getData()['schema'],
+                    $event->getData()['type'],
+                );
+                if (count($tabsSwitch) > 0) {
+                    $listContent->getToolbar()->getToolbarLeft()->addTemplate(
+                        new ToolbarTabSwitch($tabsSwitch)
+                    );
+                }
+
+                // TABS EXPORT
+                if (isset($tab['exports']) && $tab['exports']) {
+                    $listContent->getToolbar()->getToolbarRight()->addTemplate(
+                        new ToolbarExport($tab['exports'])
+                    );
+                }
+
+                // SORT
+                $sort = $this->getTabsUtilsV3()->getTabSort(
+                    $event->getData()['schema'],
+                    $event->getData()['type'],
+                );
+                if (count($sort) > 0) {
+                    $listContent->getToolbar()->getToolbarRight()->addTemplate(
+                        new ToolbarSort($tab['exports'])
                     );
                 }
             }
