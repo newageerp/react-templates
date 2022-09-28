@@ -53,7 +53,7 @@ class TableHeaderService
                 $str = new DataString($title);
                 $th = new TableTh();
 
-                $filterPath = isset($col['filterPath']) && $col['filterPath'] ? $col['filterPath'] : $col['path'];
+                $filterPath = isset($col['filterPath']) && $col['filterPath'] ? str_replace('i.', $schema.'.', $col['filterPath']) : $col['path'];
                 $prop = $this->getPropertiesUtilsV3()->getPropertyForPath($filterPath);
 
                 if ($prop) {
