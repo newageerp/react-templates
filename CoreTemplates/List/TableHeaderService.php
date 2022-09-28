@@ -63,7 +63,7 @@ class TableHeaderService
                     }
 
                     if ($prop['isDb'] && $title) {
-                        $enums = $this->getPropertiesUtilsV3()->getPropertyEnumsList($prop);
+                        $enums = $this->getPropertiesUtilsV3()->getDefaultPropertySearchOptions($prop, $col);
 
                         $propNaeType = $this->getPropertiesUtilsV3()->getPropertyNaeType($prop, $col);
                         if ($propNaeType === 'object') {
