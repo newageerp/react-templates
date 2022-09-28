@@ -11,6 +11,8 @@ class FormFieldLabel extends Template
 
     protected ?string $className = null;
 
+    protected ?string $width = null;
+
     public function __construct(string $title)
     {
         $this->title = $title;
@@ -21,6 +23,7 @@ class FormFieldLabel extends Template
         return [
             'title' => $this->getTitle(),
             'className' => $this->getClassName(),
+            'width' => $this->getWidth(),
         ];
     }
 
@@ -73,6 +76,30 @@ class FormFieldLabel extends Template
     public function setClassName(?string $className): self
     {
         $this->className = $className;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of width
+     *
+     * @return ?string
+     */
+    public function getWidth(): ?string
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set the value of width
+     *
+     * @param ?string $width
+     *
+     * @return self
+     */
+    public function setWidth(?string $width): self
+    {
+        $this->width = $width;
 
         return $this;
     }

@@ -149,6 +149,9 @@ class ViewContentService
                     $wideRow->setControlClassName(isset($field['inputClassName']) ? $field['inputClassName'] : '');
                     if (!$hideLabel) {
                         $label = new FormFieldLabel($title);
+                        if ($isCompact) {
+                            $label->setWidth('tw3-w-full');
+                        }
                         $wideRow->getLabelContent()->addTemplate($label);
                     }
 
