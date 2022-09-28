@@ -94,6 +94,9 @@ class TableHeaderService
                             'title' => $title,
                             'type' => $this->getPropertiesUtilsV3()->getDefaultPropertySearchComparison($prop, $col),
                             'options' => $enums,
+                            'propNaeType' => $propNaeType,// TODO REMOVE
+                            'prop' => $prop,// TODO REMOVE
+                            'fPath' => $filterPath // TODO REMOVE
                         ]);
                     }
                 }
