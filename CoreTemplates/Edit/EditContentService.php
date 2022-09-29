@@ -165,6 +165,9 @@ class EditContentService {
                         if (in_array($pathArray[1], $required)) {
                             $label->setIsRequired(true);
                         }
+                        if ($prop['description']) {
+                            $label->setTooltip(($prop['description']));
+                        }
                         $wideRow->getLabelContent()->addTemplate($label);
                     }
 

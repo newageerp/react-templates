@@ -15,6 +15,8 @@ class FormFieldLabel extends Template
 
     protected ?bool $isRequired = null;
 
+    protected ?string $tooltip = null;
+
     public function __construct(string $title)
     {
         $this->title = $title;
@@ -27,6 +29,7 @@ class FormFieldLabel extends Template
             'className' => $this->getClassName(),
             'width' => $this->getWidth(),
             'isRequired' => $this->getIsRequired(),
+            'tooltip' => $this->getTooltip(),
         ];
     }
 
@@ -127,6 +130,30 @@ class FormFieldLabel extends Template
     public function setIsRequired(?bool $isRequired): self
     {
         $this->isRequired = $isRequired;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tooltip
+     *
+     * @return ?string
+     */
+    public function getTooltip(): ?string
+    {
+        return $this->tooltip;
+    }
+
+    /**
+     * Set the value of tooltip
+     *
+     * @param ?string $tooltip
+     *
+     * @return self
+     */
+    public function setTooltip(?string $tooltip): self
+    {
+        $this->tooltip = $tooltip;
 
         return $this;
     }
