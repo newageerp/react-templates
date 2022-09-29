@@ -71,6 +71,11 @@ class ListContentListener implements EventSubscriberInterface
         }
 
         if ($event->isTemplateForAnyEntity('PageInlineList')) {
+            $addToolbar = isset($event->getData()['addToolbar']) && $event->getData()['addToolbar'];
+
+            $schema = $event->getData()['schema'];
+            $type = $event->getData()['type'];
+
             $listContent = new ListContent(
                 $event->getData()['schema'],
                 $event->getData()['type'],
@@ -85,6 +90,41 @@ class ListContentListener implements EventSubscriberInterface
                 $listDataSource->setExtraFilters(
                     $event->getData()['extraFilters']
                 );
+            }
+            if ($addToolbar) {
+                // toolbar
+                $tab = $this->getTabsUtilsV3()->getTabBySchemaAndType(
+                    $schema,
+                    $type,
+                );
+                if ($tab) {
+                    // QS
+                    $qsFields = $this->getTabsUtilsV3()->getTabQsFields(
+                        $schema,
+                        $type,
+                    );
+                    if (count($qsFields) > 0) {
+                        $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
+                            new ToolbarQs($qsFields)
+                        );
+                    }
+
+                    // SORT
+                    $sort = $this->getTabsUtilsV3()->getTabSort(
+                        $schema,
+                        $type,
+                    );
+                    if (count($sort) > 0) {
+                        $listDataSource->getToolbar()->getToolbarRight()->addTemplate(
+                            new ToolbarSort($schema, $sort)
+                        );
+                    }
+
+                    // DETAILED SEARCH
+                    $listDataSource->getToolbar()->getToolbarRight()->addTemplate(
+                        new ToolbarDetailedSearch($schema)
+                    );
+                }
             }
             $listTable = $this->getTableService()->buildTableData(
                 $event->getData()['schema'],
