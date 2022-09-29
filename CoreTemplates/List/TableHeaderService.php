@@ -32,10 +32,15 @@ class TableHeaderService
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
-    public function buildHeaderRow(string $schema, string $type): TableTr
+    public function buildHeaderRow(string $schema, string $type, ?bool $addSelectButton = false): TableTr
     {
         // BUILD TR/TH
         $tr = new TableTr();
+
+        if ($addSelectButton) {
+            $td = new TableTh();
+            $tr->getContents()->addTemplate($td);
+        }
 
         $tab = $this->getTabsUtilsV3()->getTabBySchemaAndType($schema, $type);
         if ($tab) {
@@ -53,7 +58,7 @@ class TableHeaderService
                 $str = new DataString($title);
                 $th = new TableTh();
 
-                $filterPath = isset($col['filterPath']) && $col['filterPath'] ? str_replace('i.', $schema.'.', $col['filterPath']) : $col['path'];
+                $filterPath = isset($col['filterPath']) && $col['filterPath'] ? str_replace('i.', $schema . '.', $col['filterPath']) : $col['path'];
                 $prop = $this->getPropertiesUtilsV3()->getPropertyForPath($filterPath);
 
                 if ($prop) {

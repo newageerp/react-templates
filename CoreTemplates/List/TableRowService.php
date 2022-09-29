@@ -26,6 +26,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\ObjectColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StatusColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StringArrayColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StringColumn;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\AddSelectButton;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTd;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTh;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTr;
@@ -53,10 +54,16 @@ class TableRowService
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
-    public function buildDataRow(string $schema, string $type): TableTr
+    public function buildDataRow(string $schema, string $type, ?bool $addSelectButton = false): TableTr
     {
         // BUILD TR/TH
         $tr = new TableTr();
+
+        if ($addSelectButton) {
+            $td = new TableTd();
+            $td->getContents()->addTemplate(new AddSelectButton());
+            $tr->getContents()->addTemplate($td);
+        }
 
         $tab = $this->getTabsUtilsV3()->getTabBySchemaAndType($schema, $type);
         if ($tab) {

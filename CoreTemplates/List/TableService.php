@@ -199,7 +199,7 @@ class TableService
         return $listDataSource;
     }
 
-    public function buildTableData(string $schema, string $type): ListDataTable
+    public function buildTableData(string $schema, string $type, ?bool $addSelectButton = false): ListDataTable
     {
 
         $thead = $this->tableHeaderService->buildHeaderRow(
@@ -209,6 +209,7 @@ class TableService
         $tbody = $this->tableRowService->buildDataRow(
             $schema,
             $type,
+            $addSelectButton,
         );
 
         $tableData = new ListDataTable();

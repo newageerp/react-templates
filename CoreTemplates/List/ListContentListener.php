@@ -89,6 +89,7 @@ class ListContentListener implements EventSubscriberInterface
             $listTable = $this->getTableService()->buildTableData(
                 $event->getData()['schema'],
                 $event->getData()['type'],
+                isset($event->getData()['addSelectButton']) && $event->getData()['addSelectButton']
             );
 
             $listDataSource->getChildren()->addTemplate($listTable);
@@ -101,9 +102,6 @@ class ListContentListener implements EventSubscriberInterface
                 $event->getPlaceholder()->addTemplate($popupWindow);
             } else {
                 $event->getPlaceholder()->addTemplate($listContent);
-
-                $toolbarTitle = new MainToolbarTitle($this->entitiesUtilsV3->getTitlePluralBySlug($event->getData()['schema']));
-                $event->getPlaceholder()->addTemplate($toolbarTitle);
             }
         }
     }
