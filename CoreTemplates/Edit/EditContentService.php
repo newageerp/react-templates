@@ -3,6 +3,8 @@
 namespace Newageerp\SfReactTemplates\CoreTemplates\Edit;
 
 use Newageerp\SfControlpanel\Console\EditFormsUtilsV3;
+use Newageerp\SfControlpanel\Console\EntitiesUtils;
+use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
 use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\ArrayEditableField;
 use Newageerp\SfReactTemplates\CoreTemplates\Form\EditableFields\AudioEditableField;
@@ -41,16 +43,23 @@ class EditContentService {
 
     protected PropertiesUtilsV3 $propertiesUtilsV3;
 
+    protected EntitiesUtilsV3 $entitiesUtilsV3;
+
     public function __construct(
         EditFormsUtilsV3 $editFormsUtilsV3,
         PropertiesUtilsV3 $propertiesUtilsV3,
+        EntitiesUtilsV3 $entitiesUtilsV3,
     ) {
         $this->editFormsUtilsV3 = $editFormsUtilsV3;
         $this->propertiesUtilsV3 = $propertiesUtilsV3;
+        $this->entitiesUtilsV3 = $entitiesUtilsV3;
     }
 
     public function fillFormContent(string $schema, string $type, EditFormContent $editContent, bool $isCompact = false)
     {
+
+        $required = $this->entitiesUtilsV3->getRequiredBySlug($schema);
+        
         $editableForm = new EditableForm(null, $isCompact);
 
         $editForm = $this->editFormsUtilsV3->getEditFormBySchemaAndType($schema, $type);
@@ -142,6 +151,9 @@ class EditContentService {
                         }
                     }
 
+                    $pathArray = explode(".", $field['path']);
+                    $level1Path = $pathArray[0] . '.' . $pathArray[1];
+
                     $wideRow = $isCompact ? new CompactRow() : new WideRow();
                     $wideRow->setLabelClassName(isset($field['labelClassName']) ? $field['labelClassName'] : '');
                     $wideRow->setControlClassName(isset($field['inputClassName']) ? $field['inputClassName'] : '');
@@ -150,11 +162,11 @@ class EditContentService {
                         if ($isCompact) {
                             $label->setWidth('tw3-w-full');
                         }
+                        if (in_array($pathArray[1], $required)) {
+                            $label->setIsRequired(true);
+                        }
                         $wideRow->getLabelContent()->addTemplate($label);
                     }
-
-                    $pathArray = explode(".", $field['path']);
-                    $level1Path = $pathArray[0] . '.' . $pathArray[1];
 
                     if (isset($field['componentName']) && $field['componentName']) {
                         $wideRow->getControlContent()->addTemplate(

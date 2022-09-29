@@ -13,6 +13,8 @@ class FormFieldLabel extends Template
 
     protected ?string $width = null;
 
+    protected ?bool $isRequired = null;
+
     public function __construct(string $title)
     {
         $this->title = $title;
@@ -24,6 +26,7 @@ class FormFieldLabel extends Template
             'title' => $this->getTitle(),
             'className' => $this->getClassName(),
             'width' => $this->getWidth(),
+            'isRequired' => $this->getIsRequired(),
         ];
     }
 
@@ -100,6 +103,30 @@ class FormFieldLabel extends Template
     public function setWidth(?string $width): self
     {
         $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isRequired
+     *
+     * @return ?bool
+     */
+    public function getIsRequired(): ?bool
+    {
+        return $this->isRequired;
+    }
+
+    /**
+     * Set the value of isRequired
+     *
+     * @param ?bool $isRequired
+     *
+     * @return self
+     */
+    public function setIsRequired(?bool $isRequired): self
+    {
+        $this->isRequired = $isRequired;
 
         return $this;
     }
