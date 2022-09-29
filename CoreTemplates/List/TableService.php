@@ -205,6 +205,7 @@ class TableService
         $thead = $this->tableHeaderService->buildHeaderRow(
             $schema,
             $type,
+            $addSelectButton,
         );
         $tbody = $this->tableRowService->buildDataRow(
             $schema,
