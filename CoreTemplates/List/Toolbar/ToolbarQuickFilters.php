@@ -10,31 +10,7 @@ class ToolbarQuickFilters extends Template
 
     public function __construct(array $filters)
     {
-        $quickFilters = array_map(
-            function ($item) use (&$hasStatusFilter) {
-                $item['property'] = $this->propertiesUtils->getPropertyForPath($item['path']);
-                $item['type'] = $this->propertiesUtils->getPropertyNaeType($item['property'], []);
-
-                $pathA = explode(".", $item['path']);
-                $pathA[0] = 'i';
-                $item['path'] = implode(".", $pathA);
-
-                if ($item['type'] === 'status') {
-                    $hasStatusFilter = true;
-                }
-
-                if ($item['type'] === 'object') {
-                    $item['sort'] = $this->defaultsService->getSortForSchema($item['property']['format']);
-                    $item['sortStr'] = json_encode($item['sort']);
-                }
-                if (!isset($item['sortStr']) || !$item['sortStr']) {
-                    $item['sortStr'] = json_encode([]);
-                }
-
-                return $item;
-            },
-            $filters
-        );
+        
         $this->filters = $filters;
     }
 

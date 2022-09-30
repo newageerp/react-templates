@@ -4,6 +4,7 @@ namespace Newageerp\SfReactTemplates\CoreTemplates\List;
 
 use Newageerp\SfAuth\Service\AuthService;
 use Newageerp\SfControlpanel\Console\EntitiesUtilsV3;
+use Newageerp\SfControlpanel\Console\PropertiesUtilsV3;
 use Newageerp\SfControlpanel\Console\TabsUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Cards\WhiteCard;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarDetailedSearch;
@@ -33,16 +34,20 @@ class TableService
 
     protected EntitiesUtilsV3 $entitiesUtilsV3;
 
+    protected PropertiesUtilsV3 $propertiesUtilsV3;
+
     public function __construct(
         TableHeaderService $tableHeaderService,
         TableRowService $tableRowService,
         TabsUtilsV3 $tabsUtilsV3,
         EntitiesUtilsV3 $entitiesUtilsV3,
+        PropertiesUtilsV3 $propertiesUtilsV3,
     ) {
         $this->tableHeaderService = $tableHeaderService;
         $this->tableRowService = $tableRowService;
         $this->tabsUtilsV3 = $tabsUtilsV3;
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+        $this->propertiesUtilsV3 = $propertiesUtilsV3;
     }
 
     public function buildListDataSourceWithToolbar(
@@ -95,6 +100,24 @@ class TableService
                 $type,
             );
             if (count($quickFilters) > 0) {
+                $quickFilters = array_map(
+                    function ($item) {
+                        $item['property'] = $this->getPropertiesUtilsV3()->getPropertyForPath($item['path']);
+                        $item['type'] = $this->getPropertiesUtilsV3()->getPropertyNaeType($item['property'], []);
+        
+                        $pathA = explode(".", $item['path']);
+                        $pathA[0] = 'i';
+                        $item['path'] = implode(".", $pathA);
+        
+                        if ($item['type'] === 'object') {
+                            $item['sort'] = $this->getEntitiesUtilsV3()->getDefaultSortForSchema($item['property']['typeFormat']);
+                        }
+        
+                        return $item;
+                    },
+                    $quickFilters
+                );
+
                 $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
                     new ToolbarQuickFilters($quickFilters)
                 );
@@ -275,6 +298,30 @@ class TableService
     public function setTabsUtilsV3(TabsUtilsV3 $tabsUtilsV3): self
     {
         $this->tabsUtilsV3 = $tabsUtilsV3;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of propertiesUtilsV3
+     *
+     * @return PropertiesUtilsV3
+     */
+    public function getPropertiesUtilsV3(): PropertiesUtilsV3
+    {
+        return $this->propertiesUtilsV3;
+    }
+
+    /**
+     * Set the value of propertiesUtilsV3
+     *
+     * @param PropertiesUtilsV3 $propertiesUtilsV3
+     *
+     * @return self
+     */
+    public function setPropertiesUtilsV3(PropertiesUtilsV3 $propertiesUtilsV3): self
+    {
+        $this->propertiesUtilsV3 = $propertiesUtilsV3;
 
         return $this;
     }

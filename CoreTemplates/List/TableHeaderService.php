@@ -8,7 +8,10 @@ use Newageerp\SfControlpanel\Console\TabsUtilsV3;
 use Newageerp\SfReactTemplates\CoreTemplates\Data\DataString;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTh;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTr;
+use Newageerp\SfReactTemplates\Event\TableHeaderFilterEnumEvent;
+use Newageerp\SfReactTemplates\Event\TableHeaderFilterQueryEvent;
 use Newageerp\SfUservice\Service\UService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TableHeaderService
 {
@@ -20,16 +23,20 @@ class TableHeaderService
 
     protected UService $uservice;
 
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
         PropertiesUtilsV3 $propertiesUtilsV3,
         TabsUtilsV3 $tabsUtilsV3,
         UService $uservice,
-        EntitiesUtilsV3 $entitiesUtilsV3
+        EntitiesUtilsV3 $entitiesUtilsV3,
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->propertiesUtilsV3 = $propertiesUtilsV3;
         $this->tabsUtilsV3 = $tabsUtilsV3;
         $this->uservice = $uservice;
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function buildHeaderRow(string $schema, string $type, ?bool $addSelectButton = false): TableTr
@@ -73,12 +80,17 @@ class TableHeaderService
                         $propNaeType = $this->getPropertiesUtilsV3()->getPropertyNaeType($prop, $col);
                         if ($propNaeType === 'object') {
                             $schema = $prop['typeFormat'];
+
+                            $filters = [];
+                            $event = new TableHeaderFilterQueryEvent($filters, $prop, $schema, $type);
+                            $this->eventDispatcher->dispatch($event, TableHeaderFilterQueryEvent::NAME);
+
                             $data = $this->getUservice()->getListDataForSchema(
                                 $schema,
                                 1,
                                 100,
                                 ['id', '_viewTitle'],
-                                [],
+                                $event->getFilters(),
                                 [],
                                 $this->getEntitiesUtilsV3()->getDefaultSortForSchema($schema),
                                 [],
@@ -94,6 +106,12 @@ class TableHeaderService
                                 $data['data'],
                             );
                         }
+
+                        $event = new TableHeaderFilterEnumEvent($enums, $prop, $schema, $type);
+                        $this->eventDispatcher->dispatch($event, TableHeaderFilterEnumEvent::NAME);
+
+                        $enums = $event->getEnums();
+
                         $th->setFilter([
                             'id' => PropertiesUtilsV3::swapSchemaToI($filterPath),
                             'title' => $title,
