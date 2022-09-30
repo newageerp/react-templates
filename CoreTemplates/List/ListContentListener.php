@@ -15,6 +15,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\MainToolbar\MainToolbarTitle;
 use Newageerp\SfReactTemplates\CoreTemplates\Popup\PopupWindow;
 use Newageerp\SfReactTemplates\Event\LoadTemplateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ListContentListener implements EventSubscriberInterface
 {
@@ -28,18 +29,22 @@ class ListContentListener implements EventSubscriberInterface
 
     protected TableService $tableService;
 
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
         EntitiesUtilsV3 $entitiesUtilsV3,
         TableHeaderService $tableHeaderService,
         TableRowService $tableRowService,
         TabsUtilsV3 $tabsUtilsV3,
         TableService $tableService,
+        EventDispatcherInterface $eventDispatcher,
     ) {
         $this->entitiesUtilsV3 = $entitiesUtilsV3;
         $this->tableHeaderService = $tableHeaderService;
         $this->tableRowService = $tableRowService;
         $this->tabsUtilsV3 = $tabsUtilsV3;
         $this->tableService = $tableService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function onTemplate(LoadTemplateEvent $event)
