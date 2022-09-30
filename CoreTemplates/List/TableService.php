@@ -10,6 +10,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarDetailedSearch;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarExport;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarNewButton;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarQs;
+use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarQuickFilters;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarSort;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Toolbar\ToolbarTabSwitch;
 use Newageerp\SfReactTemplates\Template\Placeholder;
@@ -86,6 +87,16 @@ class TableService
             if (count($qsFields) > 0) {
                 $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
                     new ToolbarQs($qsFields)
+                );
+            }
+
+            $quickFilters = $this->getTabsUtilsV3()->getTabQuickFilters(
+                $schema,
+                $type,
+            );
+            if (count($quickFilters) > 0) {
+                $listDataSource->getToolbar()->getToolbarLeft()->addTemplate(
+                    new ToolbarQuickFilters($quickFilters)
                 );
             }
 
