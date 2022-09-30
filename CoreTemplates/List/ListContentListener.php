@@ -58,6 +58,16 @@ class ListContentListener implements EventSubscriberInterface
             $listDataSource->setScrollToHeaderOnLoad(true);
             $listContent->getChildren()->addTemplate($listDataSource);
 
+            $pageMainListToolbarMiddleContent = new LoadTemplateEvent($listDataSource->getToolbar()->getToolbarMiddle(), 'PageMainListToolbarMiddleContent', $event->getData());
+            $this->eventDispatcher->dispatch($pageMainListToolbarMiddleContent, LoadTemplateEvent::NAME);
+            
+            $pageMainListToolbarLeftContent = new LoadTemplateEvent($listDataSource->getToolbar()->getToolbarLeft(), 'PageMainListToolbarLeftContent', $event->getData());
+            $this->eventDispatcher->dispatch($pageMainListToolbarLeftContent, LoadTemplateEvent::NAME);
+
+            $pageMainListToolbarRightContent = new LoadTemplateEvent($listDataSource->getToolbar()->getToolbarRight(), 'PageMainListToolbarRightContent', $event->getData());
+            $this->eventDispatcher->dispatch($pageMainListToolbarRightContent, LoadTemplateEvent::NAME);
+            
+
             if ($isPopup) {
                 $popupWindow = new PopupWindow();
                 $popupWindow->getChildren()->addTemplate($listContent);
