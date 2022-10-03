@@ -79,20 +79,20 @@ class TableHeaderService
 
                         $propNaeType = $this->getPropertiesUtilsV3()->getPropertyNaeType($prop, $col);
                         if ($propNaeType === 'object') {
-                            $schema = $prop['typeFormat'];
+                            $selectSchema = $prop['typeFormat'];
 
                             $filters = [];
                             $event = new TableHeaderFilterQueryEvent($filters, $prop, $schema, $type);
                             $this->eventDispatcher->dispatch($event, TableHeaderFilterQueryEvent::NAME);
 
                             $data = $this->getUservice()->getListDataForSchema(
-                                $schema,
+                                $selectSchema,
                                 1,
                                 100,
                                 ['id', '_viewTitle'],
                                 $event->getFilters(),
                                 [],
-                                $this->getEntitiesUtilsV3()->getDefaultSortForSchema($schema),
+                                $this->getEntitiesUtilsV3()->getDefaultSortForSchema($selectSchema),
                                 [],
                                 false
                             );
