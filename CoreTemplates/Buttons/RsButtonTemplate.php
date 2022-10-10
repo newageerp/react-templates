@@ -22,6 +22,7 @@ class RsButtonTemplate extends Template
         return [
             'schema' => $this->getSchema(),
             'children' => $this->getChildren()->toArray(),
+            'defaultClick' => $this->getDefaultClick(),
         ];
     }
 
