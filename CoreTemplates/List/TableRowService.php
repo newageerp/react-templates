@@ -219,7 +219,7 @@ class TableRowService
                         if ($tpl) {
                             if (isset($col['link']) && $col['link'] > 0 && $naeType !== 'object') {
                                 $rsButton = new RsButtonTemplate($prop['entity']);
-                                $rsButton->setDefaultClick($col['link'] === 10);
+                                $rsButton->setDefaultClick($col['link'] === 10 && !$forcePopup ? 'main' : 'popup');
                                 $rsButton->getChildren()->addTemplate($tpl);
 
                                 $td->getContents()->addTemplate($rsButton);
