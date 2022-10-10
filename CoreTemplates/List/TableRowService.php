@@ -56,6 +56,8 @@ class TableRowService
 
     public function buildDataRow(string $schema, string $type, ?bool $addSelectButton = false): TableTr
     {
+        $forcePopup = $addSelectButton;
+
         // BUILD TR/TH
         $tr = new TableTr();
 
@@ -184,7 +186,13 @@ class TableRowService
                             );
                             $objectField->setAs($prop['as']);
 
-                            $objectField->setHasLink((isset($col['link']) && $col['link'] > 0 ? ($col['link'] === 10 ? 'main' : 'popup') : null));
+                            if (isset($col['link']) && $col['link'] > 0) {
+                                $objectField->setHasLink($col['link'] === 10 && !$forcePopup ? 'main' : 'popup');
+                            } else {
+                                $objectField->setHasLink(null);
+                            }
+
+
 
                             $tpl = $objectField;
                         }

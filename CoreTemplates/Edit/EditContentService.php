@@ -278,6 +278,9 @@ class EditContentService {
                                 if (isset($field['relKeyExtraSelect']) && $field['relKeyExtraSelect']) {
                                     $objectField->setFieldExtraSelect(json_decode($field['relKeyExtraSelect'], true));
                                 }
+                                if (isset($field['allowCreateRel']) && $field['allowCreateRel']) {
+                                    $objectField->setAllowCreateRel($field['allowCreateRel']);
+                                }
 
                                 $wideRow->getControlContent()->addTemplate($objectField);
                             }

@@ -14,6 +14,7 @@ class ObjectEditableField extends FormBaseField
     protected ?string $as = null;
     protected ?string $fieldDependency = null;
     protected ?array $fieldExtraSelect = null;
+    protected bool $allowCreateRel = false;
 
     public function __construct(string $key, string $fieldSchema, string $relKey, string $relSchema)
     {
@@ -33,6 +34,7 @@ class ObjectEditableField extends FormBaseField
         $props['as'] = $this->getAs();
         $props['fieldDependency'] = $this->getFieldDependency();
         $props['fieldsExtraSelect'] = $this->getFieldExtraSelect();
+        $props['allowCreateRel'] = $this->getAllowCreateRel();
 
         return $props;
     }
@@ -182,6 +184,30 @@ class ObjectEditableField extends FormBaseField
     public function setFieldExtraSelect(?array $fieldExtraSelect): self
     {
         $this->fieldExtraSelect = $fieldExtraSelect;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of allowCreateRel
+     *
+     * @return bool
+     */
+    public function getAllowCreateRel(): bool
+    {
+        return $this->allowCreateRel;
+    }
+
+    /**
+     * Set the value of allowCreateRel
+     *
+     * @param bool $allowCreateRel
+     *
+     * @return self
+     */
+    public function setAllowCreateRel(bool $allowCreateRel): self
+    {
+        $this->allowCreateRel = $allowCreateRel;
 
         return $this;
     }
