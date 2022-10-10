@@ -27,6 +27,7 @@ use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StatusColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StringArrayColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\StringColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\List\Columns\AddSelectButton;
+use Newageerp\SfReactTemplates\CoreTemplates\List\EditableColumns\LargeTextEditableColumn;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTd;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTh;
 use Newageerp\SfReactTemplates\CoreTemplates\Table\TableTr;
@@ -162,7 +163,12 @@ class TableRowService
                             $tpl = new ImageColumn($pathArray[1]);
                         }
                         if ($naeType === 'text') {
-                            $tpl = new LargeTextColumn($pathArray[1], isset($prop['as']) ? $prop['as'] : '');
+                            if (isset($col['editable']) && $col['editable']) {
+                                $tpl = new LargeTextEditableColumn($pathArray[1], isset($prop['as']) ? $prop['as'] : '');
+                                $tpl->setSchema($schema);
+                            } else {
+                                $tpl = new LargeTextColumn($pathArray[1], isset($prop['as']) ? $prop['as'] : '');
+                            }
                         }
                         if ($naeType === 'number') {
                             $tpl = new NumberColumn($pathArray[1]);
