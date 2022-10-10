@@ -187,7 +187,11 @@ class TableRowService
                             $objectField->setAs($prop['as']);
 
                             if (isset($col['link']) && $col['link'] > 0) {
-                                $objectField->setHasLink($col['link'] === 10 && !$forcePopup ? 'main' : 'popup');
+                                if ($forcePopup) {
+                                    $objectField->setHasLink('none');
+                                } else {
+                                    $objectField->setHasLink($col['link'] === 10 ? 'main' : 'modal');
+                                }
                             } else {
                                 $objectField->setHasLink(null);
                             }
@@ -219,7 +223,11 @@ class TableRowService
                         if ($tpl) {
                             if (isset($col['link']) && $col['link'] > 0 && $naeType !== 'object') {
                                 $rsButton = new RsButtonTemplate($prop['entity']);
-                                $rsButton->setDefaultClick($col['link'] === 10 && !$forcePopup ? 'main' : 'popup');
+                                if ($forcePopup) {
+                                    $rsButton->setDefaultClick('none');
+                                } else {
+                                    $rsButton->setDefaultClick($col['link'] === 10 ? 'main' : 'modal');
+                                }
                                 $rsButton->getChildren()->addTemplate($tpl);
 
                                 $td->getContents()->addTemplate($rsButton);
